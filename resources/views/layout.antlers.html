@@ -1,0 +1,12 @@
+{{ partial:layout/head }}
+{{# {{ partial:layout/grid }} #}}
+{{ partial:layout/body }}
+  {{ partial:layout/header }}
+  {{ partial:layout/main }}
+  {{# <iframe width="560" height="315" src="https://www.rtr.ch/play/embed?urn=urn:rtr:video:d2e201d8-1820-4dc6-9568-10ed70ea7296&subdivisions=false" allowfullscreen allow="geolocation *; autoplay; encrypted-media"></iframe> #}}
+    {{# {{ template_content }} #}}
+  {{ /partial:layout/main }}
+  {{ partial:layout/footer }}
+{{ /partial:layout/body}}
+</html>
+

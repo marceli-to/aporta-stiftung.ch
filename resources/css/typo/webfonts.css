@@ -1,0 +1,19 @@
+@import url("https://p.typekit.net/p.css?s=1&k=wkr7saw&ht=tk&f=12101.12102.12103&a=86656064&app=typekit&e=css");
+
+@font-face {
+font-family:"neuzeit-grotesk";
+src:url("https://use.typekit.net/af/3213e5/000000000000000077359e94/30/l?primer=910544c2a24e07bd36d4eebe00f57471932a333736d0e1a6e554db1f68538239&fvd=n3&v=3") format("woff2"),url("https://use.typekit.net/af/3213e5/000000000000000077359e94/30/d?primer=910544c2a24e07bd36d4eebe00f57471932a333736d0e1a6e554db1f68538239&fvd=n3&v=3") format("woff"),url("https://use.typekit.net/af/3213e5/000000000000000077359e94/30/a?primer=910544c2a24e07bd36d4eebe00f57471932a333736d0e1a6e554db1f68538239&fvd=n3&v=3") format("opentype");
+font-display:swap;font-style:normal;font-weight:300;font-stretch:normal;
+}
+
+@font-face {
+font-family:"neuzeit-grotesk";
+src:url("https://use.typekit.net/af/341355/000000000000000077359e98/30/l?primer=910544c2a24e07bd36d4eebe00f57471932a333736d0e1a6e554db1f68538239&fvd=n4&v=3") format("woff2"),url("https://use.typekit.net/af/341355/000000000000000077359e98/30/d?primer=910544c2a24e07bd36d4eebe00f57471932a333736d0e1a6e554db1f68538239&fvd=n4&v=3") format("woff"),url("https://use.typekit.net/af/341355/000000000000000077359e98/30/a?primer=910544c2a24e07bd36d4eebe00f57471932a333736d0e1a6e554db1f68538239&fvd=n4&v=3") format("opentype");
+font-display:swap;font-style:normal;font-weight:400;font-stretch:normal;
+}
+
+@font-face {
+font-family:"neuzeit-grotesk";
+src:url("https://use.typekit.net/af/4a8a65/000000000000000077359e9c/30/l?primer=910544c2a24e07bd36d4eebe00f57471932a333736d0e1a6e554db1f68538239&fvd=n7&v=3") format("woff2"),url("https://use.typekit.net/af/4a8a65/000000000000000077359e9c/30/d?primer=910544c2a24e07bd36d4eebe00f57471932a333736d0e1a6e554db1f68538239&fvd=n7&v=3") format("woff"),url("https://use.typekit.net/af/4a8a65/000000000000000077359e9c/30/a?primer=910544c2a24e07bd36d4eebe00f57471932a333736d0e1a6e554db1f68538239&fvd=n7&v=3") format("opentype");
+font-display:swap;font-style:normal;font-weight:700;font-stretch:normal;
+}
