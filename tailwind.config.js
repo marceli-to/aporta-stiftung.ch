@@ -41,6 +41,10 @@ export default {
         'sky': '#E5EFF6',
         'aqua': '#8cafcb',
       },
+
+      screens: {
+        'xs': '450px',
+      },
     },
 
     spacing: {
