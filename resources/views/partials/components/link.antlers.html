@@ -1,0 +1,20 @@
+<a 
+href="{{ link }}" class="flex items-center group text-xl"
+target="{{ link_target }}"
+title="{{ link_text }}">
+
+  {{ if link_icon == 'external' }}
+    <span class="flex items-start justify-start w-20 h-20 mr-4">
+      {{ partial:icons/external class="group-hover:text-aqua transition-all w-auto h-18" }}
+    </span>
+  {{ /if }}
+
+  {{ if link_icon == 'download' }}
+    <span class="flex items-center justify-center w-20 h-20 mr-4">
+      {{ partial:icons/download class="group-hover:text-aqua transition-all w-14 h-auto" }}
+    </span>
+  {{ /if }}
+
+{{ link_text }}
+
+</a>
