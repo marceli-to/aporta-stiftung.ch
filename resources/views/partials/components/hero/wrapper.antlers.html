@@ -1,0 +1,9 @@
+{{ if hero_image | count > 1 }}
+  {{ hero_image sort="random" limit="1" }}
+    {{ partial:components/hero/image }}
+  {{ /hero_image }}
+{{ else }}
+  {{ hero_image }}
+    {{ partial:components/hero/image }}
+  {{ /hero_image }}
+{{ /if }}

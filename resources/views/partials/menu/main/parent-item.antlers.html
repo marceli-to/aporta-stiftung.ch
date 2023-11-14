@@ -1,0 +1,15 @@
+<li class="mt-16">
+  <a 
+    href="{{ url }}" 
+    class="font-bold text-[1.5625rem] no-underline relative hover:underline underline-offset-[19px] decoration-1 {{ is_current || is_parent ? '!underline' : '' }}"
+    title="{{ title }}">
+    {{ title }}
+  </a>
+  {{ if children }}
+    <ul class="{{ is_current || is_parent ? 'block' : 'hidden'}} absolute mt-26">
+      {{ children }}
+        {{ partial:menu/main/child-item }}
+      {{ /children }}
+    </ul>
+  {{ /if }}
+</li>

@@ -18,10 +18,12 @@ export default {
         'footer-texture': "url('img/texture.svg')",
       },
 
+      maxWidth: {
+        'page': '1290px',
+      },
+
       fontFamily: {
-        'neuzeit-bold': ['neuzeit-grotesk', ...defaultTheme.fontFamily.sans],
-        'neuzeit-regular': ['neuzeit-grotesk', ...defaultTheme.fontFamily.sans],
-        'neuzeit-light': ['neuzeit-grotesk', ...defaultTheme.fontFamily.sans],
+        'neuzeit': ['neuzeit-grotesk', ...defaultTheme.fontFamily.sans],
       },
 
       fontSize: {
@@ -44,6 +46,7 @@ export default {
 
       screens: {
         'xs': '450px',
+        'xl': '1200px',
       },
     },
 

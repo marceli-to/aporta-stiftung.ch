@@ -1,0 +1,22 @@
+title: 'Hero image'
+fields:
+  -
+    handle: hero_image
+    field:
+      min_files: 1
+      mode: list
+      container: assets
+      folder: images/header
+      restrict: false
+      allow_uploads: true
+      show_filename: true
+      show_set_alt: true
+      type: assets
+      display: Bilder
+      icon: assets
+      listable: hidden
+      instructions_position: above
+      visibility: visible
+      replicator_preview: true
+      hide_display: false
+      instructions: 'Sind mehrere Bilder hinterlegt, wird eines zufällig ausgewählt.'

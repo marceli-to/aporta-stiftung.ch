@@ -1,0 +1,17 @@
+{{ partial:layout/section }}
+
+{{ content }}
+  {{ if type == 'text' }}
+    {{ text }}
+  {{ /if }}
+
+  {{ if type == 'film_teaser' }}
+    {{ partial:components/teaser/film }}
+  {{ /if }}
+
+  {{ if type == 'page_link' }}
+    {{ partial:components/links/page class="mt-24" }}
+  {{ /if }}
+{{ /content }}
+
+{{ /partial:layout/section}}
