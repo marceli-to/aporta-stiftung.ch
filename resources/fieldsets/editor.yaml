@@ -44,18 +44,44 @@ fields:
           instructions: null
           icon: programming-module-box-cube
           sets:
-            page_link:
-              display: 'Page link'
+            lead:
+              display: Lead
+              instructions: null
+              icon: text-formatting-all-caps
+              fields:
+                -
+                  import: lead
+            link_page:
+              display: 'Link Page'
               instructions: null
               icon: link
               fields:
                 -
-                  import: page_link
+                  import: link_page
+            link_download:
+              display: 'Link Download'
+              instructions: null
+              icon: link
+              fields:
+                -
+                  import: link_download
+            link_external:
+              display: 'Link Extern'
+              instructions: null
+              icon: link-external
+              fields:
+                -
+                  import: link_external
         special_elements:
           display: 'Special Elements'
           instructions: null
           icon: favorite-star
           sets:
+            spacer:
+              display: Spacer
+              instructions: null
+              icon: setting-menu-horizontal-dots
+              fields: {  }
             film_teaser:
               display: 'Film teaser'
               instructions: null

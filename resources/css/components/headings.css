@@ -3,7 +3,7 @@ h1, h2, h3 {
 }
 
 h1 {
-  @apply text-3xl md:text-5xl mb-25;
+  @apply text-3xl md:text-5xl mb-32;
 }
 
 h2 {

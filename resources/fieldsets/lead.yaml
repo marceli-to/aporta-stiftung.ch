@@ -1,0 +1,16 @@
+title: Lead
+fields:
+  -
+    handle: text
+    field:
+      antlers: false
+      type: textarea
+      display: Text
+      icon: textarea
+      listable: hidden
+      instructions_position: above
+      visibility: visible
+      replicator_preview: true
+      hide_display: false
+      validate:
+        - required

@@ -8,11 +8,47 @@ body {
   @apply antialiased;
 }
 
-section p {
+section.content h2 {
+  @apply mt-25 md:mt-50
+}
+
+section.content p {
   @apply mb-25;
 }
 
-section strong,
-section b {
+section.content p:last-of-type {
+  @apply !mb-0;
+}
+
+section.content strong,
+section.content b {
   @apply font-bold;
+}
+
+section.content ul {
+  @apply list-disc;
+}
+section.content li {
+  @apply list-item mb-20 ml-20 pl-6 list-['–_']
+}
+
+section.content li p {
+  @apply inline;
+}
+
+section.content a.has-icon + a.has-icon {
+  @apply mt-10 md:mt-17;
+}
+
+section.content a:not(.has-icon) {
+  @apply hover:underline underline-offset-8 decoration-1
+}
+
+/* special pages */
+/* main.page-privacy section.content h2 {
+  @apply mt-40 md:mt-70;
+} */
+
+main.page-privacy section.content a {
+  @apply hover:no-underline underline underline-offset-8 decoration-1
 }

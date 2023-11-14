@@ -18,10 +18,10 @@ tabs:
               previews: true
               fullscreen: true
               sets:
-                neue_set-gruppe:
-                  display: 'Neue Set-Gruppe'
+                elements:
+                  display: Elements
                   instructions: null
-                  icon: null
+                  icon: programming-module-box-cube
                   sets:
                     banner:
                       display: Banner
@@ -37,6 +37,18 @@ tabs:
                       fields:
                         -
                           import: editor
+                special_elements:
+                  display: 'Special Element'
+                  instructions: null
+                  icon: favorite-star
+                  sets:
+                    neues_set:
+                      display: 'Neues Set'
+                      instructions: null
+                      icon: null
+                      fields:
+                        -
+                          import: spacer
               type: replicator
               display: Seitenelemente
               icon: replicator
@@ -115,3 +127,22 @@ tabs:
               type: template
               display: Template
               localizable: true
+          -
+            handle: page_class
+            field:
+              options:
+                page-privacy: Privacy
+              taggable: false
+              push_tags: false
+              multiple: false
+              clearable: false
+              searchable: true
+              cast_booleans: false
+              type: select
+              display: 'Page class'
+              icon: select
+              listable: hidden
+              instructions_position: above
+              visibility: visible
+              replicator_preview: true
+              hide_display: false

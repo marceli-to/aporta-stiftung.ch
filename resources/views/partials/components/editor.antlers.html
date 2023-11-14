@@ -5,13 +5,30 @@
     {{ text }}
   {{ /if }}
 
+  {{ if type == 'lead' }}
+    {{ partial:components/lead }}
+  {{ /if }}
+
   {{ if type == 'film_teaser' }}
     {{ partial:components/teaser/film }}
   {{ /if }}
 
-  {{ if type == 'page_link' }}
-    {{ partial:components/links/page class="mt-24" }}
+  {{ if type == 'link_page' }}
+    {{ partial:components/links/page }}
   {{ /if }}
+
+  {{ if type == 'link_download' }}
+    {{ partial:components/links/download }}
+  {{ /if }}
+
+  {{ if type == 'link_external' }}
+    {{ partial:components/links/external }}
+  {{ /if }}
+
+  {{ if type == 'spacer' }}
+    {{ partial:components/spacer }}
+  {{ /if }}
+
 {{ /content }}
 
 {{ /partial:layout/section}}

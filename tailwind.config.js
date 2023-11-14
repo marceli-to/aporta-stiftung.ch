@@ -33,6 +33,7 @@ export default {
         'md': '1.125rem',   // 18px
         'lg': '1.25rem',    // 20px
         'xl': '1.5rem',     // 24px
+        '1xl': '1.563rem',    // 25px
         '2xl': '1.875rem',  // 30px
         '3xl': '2.0rem',    // 32px
         '4xl': '2.25rem',   // 36px

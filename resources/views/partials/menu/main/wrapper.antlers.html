@@ -1,5 +1,5 @@
 <div class="w-full max-w-page mx-auto px-60 py-20 hidden xl:block">
-  <nav class="min-h-[230px]">
+  <nav class="{{ !is_homepage ? 'min-h-[230px]' : '' }}">
     <ul class="flex justify-between">
       {{ nav:main }}
         {{ partial:menu/main/parent-item }}

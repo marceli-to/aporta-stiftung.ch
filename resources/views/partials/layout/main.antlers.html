@@ -2,6 +2,6 @@
   {{ partial:components/hero/wrapper }}
 {{ /if }}
 {{ partial:menu/main/wrapper }}
-<main class="flex-1">
+<main class="flex-1 {{ page_class ? page_class : ''}}">
   {{ slot }}
 </main>

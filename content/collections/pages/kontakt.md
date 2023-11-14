@@ -4,7 +4,7 @@ blueprint: page
 title: Kontakt
 template: templates/content/default
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1699962613
+updated_at: 1699973885
 page_elements:
   -
     id: loy618jg
@@ -39,6 +39,14 @@ page_elements:
                 type: bold
           -
             type: text
+            marks:
+              -
+                type: link
+                attrs:
+                  href: 'tel:043 222 60 00'
+                  rel: null
+                  target: null
+                  title: null
             text: '043 222 60 00'
       -
         type: paragraph
@@ -98,11 +106,35 @@ page_elements:
             type: hardBreak
           -
             type: text
+            marks:
+              -
+                type: link
+                attrs:
+                  href: 'https://maps.app.goo.gl/moMmNCsUgq4gVcR59'
+                  rel: null
+                  target: _blank
+                  title: 'Google Maps öffnen'
             text: 'Kreuzstrasse 31'
           -
             type: hardBreak
+            marks:
+              -
+                type: link
+                attrs:
+                  href: 'https://maps.app.goo.gl/moMmNCsUgq4gVcR59'
+                  rel: null
+                  target: _blank
+                  title: 'Google Maps öffnen'
           -
             type: text
+            marks:
+              -
+                type: link
+                attrs:
+                  href: 'https://maps.app.goo.gl/moMmNCsUgq4gVcR59'
+                  rel: null
+                  target: _blank
+                  title: 'Google Maps öffnen'
             text: '8008 Zürich'
       -
         type: heading
@@ -126,10 +158,67 @@ page_elements:
                   target: null
                   title: 'E-Mail Adresse für Medienanfragen'
             text: medien@aporta-stiftung.ch
+      -
+        type: heading
+        attrs:
+          level: 2
+        content:
+          -
+            type: text
+            text: Wohnungsbewerbung
+      -
+        type: set
+        attrs:
+          id: loydv08h
+          values:
+            type: link_page
+            text: 'Formular Wohnungsbewerbung'
+            url: 'entry::d8a91971-e34b-46e2-8897-844e7b0e50b4'
+            target: _self
+      -
+        type: heading
+        attrs:
+          level: 2
+        content:
+          -
+            type: text
+            text: 'Beitragsgesuch (für juristische Personen wie Vereine und Stiftungen)'
+      -
+        type: set
+        attrs:
+          id: loye3k6m
+          values:
+            type: link_page
+            text: 'Formular Beitragsgesuch'
+            url: 'entry::dd5a0291-3cdb-462d-9a1f-5d814fd26497'
+            target: _self
+      -
+        type: heading
+        attrs:
+          level: 2
+        content:
+          -
+            type: text
+            text: 'Generelle Anfragen'
+      -
+        type: paragraph
+        content:
+          -
+            type: text
+            marks:
+              -
+                type: link
+                attrs:
+                  href: 'mailto:info@aporta-stiftung.ch'
+                  rel: null
+                  target: null
+                  title: null
+            text: info@aporta-stiftung.ch
     type: editor
     enabled: true
 image:
   - images/header/aporta-stiftung-header-medien.jpg
 hero_image:
   - images/header/aporta-stiftung-header-kontakt.jpg
+open_graph_description: 'Kontaktieren Sie unser Team! Wir sind für Sie da.'
 ---

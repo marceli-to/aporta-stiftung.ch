@@ -41,7 +41,7 @@ page_elements:
         attrs:
           id: loy56umf
           values:
-            type: page_link
+            type: link_page
             text: 'mehr Erfahren'
             url: 'entry::9ff6236e-937b-4940-aabd-4a09bbeb7676'
             target: _self

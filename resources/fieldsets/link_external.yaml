@@ -1,0 +1,47 @@
+title: 'Link external'
+fields:
+  -
+    handle: text
+    field:
+      input_type: text
+      antlers: false
+      type: text
+      display: Text
+      icon: text
+      listable: hidden
+      instructions_position: above
+      visibility: visible
+      replicator_preview: true
+      hide_display: false
+  -
+    handle: url
+    field:
+      type: link
+      display: URL
+      icon: link
+      listable: hidden
+      instructions_position: above
+      visibility: visible
+      replicator_preview: true
+      hide_display: false
+  -
+    handle: target
+    field:
+      options:
+        _self: 'Gleiches Fenster'
+        _blank: 'Neues Fenster'
+      taggable: false
+      push_tags: false
+      multiple: false
+      clearable: false
+      searchable: true
+      cast_booleans: false
+      default: _blank
+      type: select
+      display: Target
+      icon: select
+      listable: hidden
+      instructions_position: above
+      visibility: visible
+      replicator_preview: true
+      hide_display: false
