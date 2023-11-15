@@ -73,6 +73,13 @@ fields:
               fields:
                 -
                   import: image
+            image_gallery:
+              display: Bildergalerie
+              instructions: 'Bildergalerie für mehrere Bilder hinzufügen'
+              icon: media-image-picture-gallery
+              fields:
+                -
+                  import: image_gallery
             video_embed:
               display: 'Video Embed'
               instructions: 'Video Embed Code'

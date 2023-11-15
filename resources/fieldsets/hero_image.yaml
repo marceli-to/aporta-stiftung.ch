@@ -3,7 +3,6 @@ fields:
   -
     handle: hero_image
     field:
-      min_files: 1
       mode: list
       container: assets
       folder: images/header

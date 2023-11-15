@@ -4,7 +4,7 @@ blueprint: page
 title: Geschichte
 template: templates/content/default
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700038278
+updated_at: 1700044302
 page_elements:
   -
     id: lozif1fw
@@ -50,13 +50,24 @@ page_elements:
             type: text
             text: 'Stephan à Porta war zweimal verheiratet, aber beide Ehen blieben kinderlos. Um einen Nachfolger für sein Geschäft zu haben, nahm er im April 1927 Lorenz à Porta, den Sohn seines Cousins Jon à Porta, in die Firma auf. Per 1. Januar 1946 trat Stephan à Porta in den Ruhestand und übertrug seine 144 Liegenschaften im Wert von damals rund 6.5 Millionen Franken an die von ihm gegründete Dr. Stephan à Porta Stiftung. Damit sicherte er sein Lebenswerk und dessen sozialen Charakter. Der Selfmade-Millionär starb am 8. Januar 1947 im Alter von 78 Jahren.'
       -
-        type: paragraph
+        type: set
         attrs:
-          class: null
-        content:
-          -
-            type: text
-            text: '[Bildergalerie]'
+          id: lozlyz0h
+          values:
+            type: image_gallery
+            elements:
+              -
+                id: lozlzliv
+                image: images/aporta-stiftung_portrait-Dr_Stephan_aPorta_Jung.jpg
+                caption: 'Der junge Stephan à Porta'
+                type: image
+                enabled: true
+              -
+                id: lozm005o
+                image: images/aporta-stiftung_portrait-Dr_Stephan_aPorta.jpg
+                caption: 'Dr. Stephan à Porta beim Besuch einer Baustelle'
+                type: image
+                enabled: true
       -
         type: heading
         attrs:
@@ -80,6 +91,7 @@ page_elements:
           values:
             type: image
             image: images/aporta-stiftung_mitarbietende.jpg
+            caption: 'Mitarbeitende von Dr. Stephan à Porta'
       -
         type: heading
         attrs:
@@ -103,6 +115,7 @@ page_elements:
           values:
             type: image
             image: images/aporta-stiftung_Dr_Stephan_aPorta_Senior.jpg
+            caption: 'Dr. Stephan à Porta im Ruhestand'
       -
         type: heading
         attrs:

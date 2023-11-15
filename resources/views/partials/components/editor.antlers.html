@@ -29,6 +29,10 @@
     {{ partial:components/media/image }}
   {{ /if }}
 
+  {{ if type == 'image_gallery' }}
+    {{ partial:components/media/image-gallery }}
+  {{ /if }}
+
   {{ if type == 'video_embed' }}
     {{ partial:components/media/video-embed }}
   {{ /if }}
