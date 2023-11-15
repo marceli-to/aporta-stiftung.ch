@@ -1,0 +1,15 @@
+<li>
+  <a 
+    href="{{ url }}" 
+    class="block font-bold text-xl py-16 hover:underline underline-offset-[20px] decoration-1 {{ is_current || is_parent ? '!underline' : '' }}"
+    title="{{ title }}">
+    {{ title }}
+  </a>
+  {{ if children }}
+    <ul class="ml-40">
+      {{ children }}
+        {{ partial:menu/overlay/child-item }}
+      {{ /children }}
+    </ul>
+  {{ /if }}
+</li>
