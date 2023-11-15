@@ -2,7 +2,10 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 @import "typo/webfonts.css";
+
+@import "components/collapsible.css";
 @import "components/headings.css";
+@import "components/map.css";
 
 body {
   @apply antialiased;
@@ -48,7 +51,10 @@ section.content .responsive-video iframe {
   @apply block aspect-video;
 }
 
-
+/* Image state for real estate images */
+[data-image-source].is-active {
+  @apply border-black;
+}
 
 /* Privacy */
 main.page-privacy section.content a {

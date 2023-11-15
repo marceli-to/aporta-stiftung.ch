@@ -99,6 +99,7 @@ return [
 
         'presets' => [
           'small' => ['w' => 200, 'h' => 200, 'q' => 75, 'fit' => 'crop'],
+          'large' => ['w' => 1600, 'h' => 1000, 'q' => 90, 'fit' => 'crop'],
           // 'xs-avif' => ['w' => 320, 'h' => 10000, 'q' => 90, 'fit' => 'contain', 'fm' => 'avif'],
           // 'sm-avif' => ['w' => 480, 'h' => 10000, 'q' => 90, 'fit' => 'contain', 'fm' => 'avif'],
           // 'md-avif' => ['w' => 768, 'h' => 10000, 'q' => 90, 'fit' => 'contain', 'fm' => 'avif'],

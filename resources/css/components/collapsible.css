@@ -1,0 +1,27 @@
+::-webkit-details-marker {
+  display: none;
+}
+
+summary {
+  @apply outline-none
+}
+
+details p {
+  @apply mb-18;
+}
+
+details p:last-child {
+  @apply mb-0;
+}
+
+details .open {
+  @apply hidden
+}
+
+details[open] .close {
+  @apply hidden
+}
+
+details[open] .open {
+  @apply block
+}

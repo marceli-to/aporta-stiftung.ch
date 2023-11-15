@@ -1,0 +1,17 @@
+{{ real_estate_item }}
+  {{ partial:components/collapsible :id="id" }}
+    
+    {{ slot:header }}
+    <div class="flex">
+      <strong>{{ zone }}</strong>
+      <div class="relative after:block after:bg-black after:w-2 after:h-full after:mx-10 sm:after:mx-15"></div>
+      {{ title }}
+    </div>
+    {{ /slot:header}}
+
+    {{ slot:content }}
+      {{ partial:components/realestate/item }}
+    {{ /slot:content }}
+
+  {{ /partial:components/collapsible}}
+{{ /real_estate_item }}

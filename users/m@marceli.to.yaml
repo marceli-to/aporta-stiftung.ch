@@ -7,3 +7,9 @@ preferences:
   collections:
     pages:
       after_save: continue_editing
+    realestate:
+      columns:
+        - zone
+        - title
+        - slug
+        - status

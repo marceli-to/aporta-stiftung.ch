@@ -92,11 +92,6 @@ fields:
           instructions: null
           icon: favorite-star
           sets:
-            spacer:
-              display: Spacer
-              instructions: null
-              icon: setting-menu-horizontal-dots
-              fields: {  }
             film_teaser:
               display: 'Film teaser'
               instructions: null

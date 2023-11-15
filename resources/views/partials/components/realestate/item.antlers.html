@@ -1,0 +1,45 @@
+<div class="bg-sky p-15 sm:p-25" data-images>
+
+  <figure class="mb-10 sm:mb-15">
+    {{ images limit="1" }}
+      <img 
+        src="{{ glide:url preset='large' }}" 
+        alt="{{ alt }}" 
+        title="{{ alt }}" 
+        height="{{ height }}" 
+        width="{{ width }}"
+        class="block w-full h-auto"
+        loading="lazy"
+        data-image-stage>
+      <figcaption class="text-lg mt-16 min-h-[32px]">
+        {{ alt }}&nbsp;
+      </figcaption>
+    {{ /images }}
+  </figure>
+
+  <div class="flex flex-wrap gap-10 sm:gap-15">
+    {{ images }}
+      <a 
+        href="{{ glide:url preset='large' }}" 
+        class="block shrink-0 w-80 h-80 border-2 border-transparent active:border-black" 
+        target="_blank" 
+        title="{{ alt }}"
+        data-image-source>
+        <img 
+          src="{{ glide:url preset='small' }}" 
+          alt="{{ alt }}" 
+          title="{{ alt }}" 
+          height="{{ height }}" 
+          width="{{ width }}"
+          class="block w-full h-full"
+          loading="lazy">
+      </a>
+    {{ /images }}
+  </div>
+  <div class="mt-15 md:mt-25">
+    <a href="#map" class="flex items-center text-lg leading-none group !no-underline">
+      {{ partial:icons/chevron-up class="w-16 h-16 block mr-6 group-hover:text-aqua" }}
+      <div>Zurück zur Karte</div>
+    </a>
+  </div>
+</div>

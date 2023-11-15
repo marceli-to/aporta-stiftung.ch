@@ -1,0 +1,17 @@
+title: 'Real Estate'
+fields:
+  -
+    handle: real_estate_item
+    field:
+      mode: default
+      create: true
+      collections:
+        - realestate
+      type: entries
+      display: Liegenschaft
+      icon: entries
+      listable: hidden
+      instructions_position: above
+      visibility: visible
+      replicator_preview: true
+      hide_display: false

@@ -1,0 +1,47 @@
+.map-background {
+  fill: #E8EFF5;
+  stroke: #FFFFFF;
+  stroke-width: 0.75;
+  stroke-miterlimit: 10;
+}
+
+.map-background_only {
+  fill: #E8EFF5;
+}
+
+.map-outline {
+  fill: none;
+  stroke: #FFFFFF;
+  stroke-width: 0.75;
+  stroke-miterlimit: 10;
+}
+
+.map-empty {
+  fill: #E8EFF5;
+  stroke: #FFFFFF;
+  stroke-width: 0.75;
+  stroke-miterlimit: 10;
+}
+
+.map-lake {
+  opacity: 0.25;
+  fill: #8CAFCB;
+}
+
+.map-link .map-background,
+.map-link .map-background_only,
+.map-link .map-text {
+  transition: fill 0.2s ease-out;
+}
+
+.map-link:hover .map-background,
+.map-link:focus .map-background,
+.map-link:hover .map-background_only,
+.map-link:focus .map-background_only {
+  fill: #8cafcb;
+}
+
+.map-link:hover .map-text,
+.map-link:focus .map-text {
+  fill: #fff;
+}

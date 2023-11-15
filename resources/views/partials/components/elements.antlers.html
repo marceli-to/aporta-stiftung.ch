@@ -5,3 +5,14 @@
 {{ if type == 'editor' }}
   {{ partial:components/editor }}
 {{ /if }}
+
+{{ if type == 'realestate' }}
+  {{ partial:layout/section }}
+    <a name="map"></a>
+    {{ partial:components/realestate/map class="w-full h-auto max-w-[800px] mx-auto" }}
+  {{ /partial:layout/section }}
+
+  {{ partial:layout/section }}
+    {{ partial:components/realestate/items }}
+  {{ /partial:layout/section }}
+{{ /if }}

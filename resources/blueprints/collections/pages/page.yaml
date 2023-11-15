@@ -1,7 +1,7 @@
 title: Page
 tabs:
   main:
-    display: Hauptteil
+    display: Inhalt
     sections:
       -
         fields:
@@ -37,8 +37,15 @@ tabs:
                       fields:
                         -
                           import: editor
+                    realestate:
+                      display: Liegenschaften
+                      instructions: null
+                      icon: travel-map
+                      fields:
+                        -
+                          import: real_estate
               type: replicator
-              display: Seitenelemente
+              display: Inhalte
               icon: replicator
               listable: hidden
               instructions_position: above
@@ -46,10 +53,10 @@ tabs:
               replicator_preview: true
               hide_display: false
   media:
-    display: Media
+    display: Medien
     sections:
       -
-        display: Headerbilder
+        display: Medien
         fields:
           -
             import: hero_image
@@ -57,20 +64,35 @@ tabs:
     display: SEO
     sections:
       -
-        display: Suchmaschinenoptimierung
+        display: SEO
         fields:
+          -
+            handle: open_graph_titel
+            field:
+              input_type: text
+              antlers: false
+              type: text
+              display: Titel
+              icon: text
+              instructions: 'Kann als Ersatz für den Seitentitel verwendet werden'
+              listable: hidden
+              instructions_position: below
+              visibility: visible
+              replicator_preview: true
+              hide_display: false
           -
             handle: open_graph_description
             field:
               antlers: false
               type: textarea
-              display: Description
+              display: Beschreibung
               icon: textarea
               listable: hidden
-              instructions_position: above
+              instructions_position: below
               visibility: visible
               replicator_preview: true
               hide_display: false
+              instructions: 'Ein bis zwei beschreibende Sätze über den Inhalt der Seite.'
           -
             handle: open_graph_image
             field:
@@ -82,14 +104,15 @@ tabs:
               show_filename: true
               show_set_alt: true
               type: assets
-              display: 'Open Graph Image'
+              display: Bild
               icon: assets
               listable: hidden
-              instructions_position: above
+              instructions_position: below
               visibility: visible
               replicator_preview: true
               hide_display: false
               folder: images
+              instructions: 'Beim Sharing auf Social Media verwendetes Bild'
   sidebar:
     display: Sidebar
     sections:
