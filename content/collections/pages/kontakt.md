@@ -4,7 +4,7 @@ blueprint: page
 title: Kontakt
 template: templates/content/default
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1699973885
+updated_at: 1700000652
 page_elements:
   -
     id: loy618jg
@@ -19,12 +19,16 @@ page_elements:
             text: Kontakt
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Kontaktieren Sie unser Team! Wir sind für Sie da.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -50,6 +54,8 @@ page_elements:
             text: '043 222 60 00'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -74,6 +80,8 @@ page_elements:
             text: '14.00 bis 16.45 Uhr'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -98,6 +106,8 @@ page_elements:
             text: Adresse
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -146,6 +156,8 @@ page_elements:
             text: Medienanfragen
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -202,6 +214,8 @@ page_elements:
             text: 'Generelle Anfragen'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text

@@ -4,7 +4,7 @@ blueprint: page
 title: 'Unser Mietzinsniveau'
 template: templates/content/default
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1699980796
+updated_at: 1699997589
 page_elements:
   -
     id: loyk92h9
@@ -35,6 +35,15 @@ page_elements:
           -
             type: text
             text: " Auszug aus der\_Stiftungsurkunde vom 19. Mai 1945"
+      -
+        type: set
+        attrs:
+          id: loyuhcea
+          values:
+            type: image
+            image: images/aporta-stiftung_einordnung-der-quadratmeterpreise-gemaess-quantile.png
+      -
+        type: paragraph
     type: editor
     enabled: true
 hero_image:

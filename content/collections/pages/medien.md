@@ -4,7 +4,7 @@ blueprint: page
 title: Medien
 template: templates/content/default
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1699979055
+updated_at: 1699998532
 hero_image:
   - images/header/aporta-stiftung-header-medien.jpg
 page_elements:
@@ -21,6 +21,8 @@ page_elements:
             text: Medien
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -179,8 +181,6 @@ page_elements:
             text: '31.01.2020 | Interview mit Corinna à Porta (pdf, 505.71 KB)'
             url: 'asset::assets::downloads/sf_wtg_ch_2019_aportastiftung.pdf'
             target: _blank
-      -
-        type: paragraph
     type: editor
     enabled: true
 ---

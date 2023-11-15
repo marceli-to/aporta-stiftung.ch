@@ -25,30 +25,18 @@ tabs:
                   sets:
                     banner:
                       display: Banner
-                      instructions: null
+                      instructions: 'Banner hellblau hinzufügen'
                       icon: align-object-center
                       fields:
                         -
                           import: banner
                     editor:
                       display: Editor
-                      instructions: null
+                      instructions: 'Editorfeld hinzufügen'
                       icon: text-formatting-markdown
                       fields:
                         -
                           import: editor
-                special_elements:
-                  display: 'Special Element'
-                  instructions: null
-                  icon: favorite-star
-                  sets:
-                    neues_set:
-                      display: 'Neues Set'
-                      instructions: null
-                      icon: null
-                      fields:
-                        -
-                          import: spacer
               type: replicator
               display: Seitenelemente
               icon: replicator

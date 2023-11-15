@@ -25,9 +25,14 @@
     {{ partial:components/links/external }}
   {{ /if }}
 
-  {{ if type == 'spacer' }}
-    {{ partial:components/spacer }}
+  {{ if type == 'image' }}
+    {{ partial:components/media/image }}
   {{ /if }}
+
+  {{ if type == 'video_embed' }}
+    {{ partial:components/media/video-embed }}
+  {{ /if }}
+
 
 {{ /content }}
 

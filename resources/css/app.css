@@ -8,7 +8,7 @@ body {
   @apply antialiased;
 }
 
-section.content h2 {
+section.content h2:not(:first-child) {
   @apply mt-25 md:mt-50
 }
 
@@ -44,11 +44,13 @@ section.content a:not(.has-icon) {
   @apply hover:underline underline-offset-8 decoration-1
 }
 
-/* special pages */
-/* main.page-privacy section.content h2 {
-  @apply mt-40 md:mt-70;
-} */
+section.content .responsive-video iframe {
+  @apply block aspect-video;
+}
 
+
+
+/* Privacy */
 main.page-privacy section.content a {
   @apply hover:no-underline underline underline-offset-8 decoration-1
 }

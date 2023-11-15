@@ -4,7 +4,7 @@ blueprint: page
 title: Bauprojekte
 template: templates/content/default
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1699980079
+updated_at: 1699998373
 page_elements:
   -
     id: loyk5aa2
@@ -18,14 +18,17 @@ page_elements:
             type: text
             text: Bauprojekte
       -
-        type: set
+        type: paragraph
         attrs:
-          id: loyk5hu7
-          values:
-            type: lead
+          class: 'font-normal leading-[1.3] text-xl md:text-2xl mb-40 md:mb-60'
+        content:
+          -
+            type: text
             text: 'Dr. Stephan à Porta vermachte seiner Stiftung im Jahr 1946 ein grosses Portfolio an Liegenschaften in der Stadt Zürich. So grossartig dieses Vermächtnis war, so schwierig war die Aufgabe, die sich der Stiftung stellte. Der Stiftungszweck konnte nur erfüllt werden, wenn sich die Häuser in einem guten Zustand befanden.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -40,6 +43,8 @@ page_elements:
             text: 'Ersatzneubau Eglistrasse, Zürich'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -54,7 +59,16 @@ page_elements:
             url: 'https://www.eglistrasse.ch'
             target: _blank
       -
+        type: set
+        attrs:
+          id: loyurtk5
+          values:
+            type: image
+            image: images/aporta-stiftung_ersatzneubau-eglistrasse.jpg
+      -
         type: paragraph
+        attrs:
+          class: null
     type: editor
     enabled: true
 hero_image:

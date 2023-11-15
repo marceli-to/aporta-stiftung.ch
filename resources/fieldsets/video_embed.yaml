@@ -1,0 +1,15 @@
+title: 'Video Embed'
+fields:
+  -
+    handle: code
+    field:
+      antlers: false
+      type: textarea
+      display: Code
+      icon: textarea
+      instructions: 'Vimeo/Youtube Embed Code kann hier hineinkopiert werden'
+      listable: hidden
+      instructions_position: below
+      visibility: visible
+      replicator_preview: true
+      hide_display: false

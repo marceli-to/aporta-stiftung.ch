@@ -12,6 +12,7 @@ fields:
         - unorderedlist
         - removeformat
         - anchor
+        - lead
       smart_typography: false
       save_html: false
       inline: false
@@ -44,34 +45,41 @@ fields:
           instructions: null
           icon: programming-module-box-cube
           sets:
-            lead:
-              display: Lead
-              instructions: null
-              icon: text-formatting-all-caps
-              fields:
-                -
-                  import: lead
             link_page:
-              display: 'Link Page'
-              instructions: null
+              display: Seitenlink
+              instructions: 'Link auf eine interne oder externe Seite'
               icon: link
               fields:
                 -
                   import: link_page
             link_download:
-              display: 'Link Download'
-              instructions: null
+              display: Downloadlink
+              instructions: 'Link auf eine Datei'
               icon: link
               fields:
                 -
                   import: link_download
             link_external:
-              display: 'Link Extern'
-              instructions: null
+              display: 'Externer Link'
+              instructions: 'Link auf ein externes Ziel'
               icon: link-external
               fields:
                 -
                   import: link_external
+            image:
+              display: Bild
+              instructions: 'Einzelnes Bild hinzufügen'
+              icon: media-image-picture-orientation
+              fields:
+                -
+                  import: image
+            video_embed:
+              display: 'Video Embed'
+              instructions: 'Video Embed Code'
+              icon: social-vimeo
+              fields:
+                -
+                  import: video_embed
         special_elements:
           display: 'Special Elements'
           instructions: null

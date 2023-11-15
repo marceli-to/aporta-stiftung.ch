@@ -4,7 +4,7 @@ blueprint: page
 title: Datenschutz
 template: templates/content/default
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1699972777
+updated_at: 1699998494
 page_elements:
   -
     id: loyf77j5
@@ -18,14 +18,17 @@ page_elements:
             type: text
             text: Datenschutzerklärung
       -
-        type: set
+        type: paragraph
         attrs:
-          id: loyf8z7n
-          values:
-            type: lead
+          class: 'font-normal leading-[1.3] text-xl md:text-2xl mb-40 md:mb-60'
+        content:
+          -
+            type: text
             text: 'Wir möch­ten an die­ser Stelle er­klä­ren, wie wir Ihre Da­ten schüt­zen und was es für Sie be­deu­tet, wenn Sie un­se­re Web­si­te nut­zen.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -40,6 +43,8 @@ page_elements:
             text: Verantwortlicher
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -56,6 +61,8 @@ page_elements:
             text: '8008 Zürich'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -87,6 +94,8 @@ page_elements:
             content:
               -
                 type: paragraph
+                attrs:
+                  class: null
                 content:
                   -
                     type: text
@@ -96,6 +105,8 @@ page_elements:
             content:
               -
                 type: paragraph
+                attrs:
+                  class: null
                 content:
                   -
                     type: text
@@ -105,6 +116,8 @@ page_elements:
             content:
               -
                 type: paragraph
+                attrs:
+                  class: null
                 content:
                   -
                     type: text
@@ -114,6 +127,8 @@ page_elements:
             content:
               -
                 type: paragraph
+                attrs:
+                  class: null
                 content:
                   -
                     type: text
@@ -123,6 +138,8 @@ page_elements:
             content:
               -
                 type: paragraph
+                attrs:
+                  class: null
                 content:
                   -
                     type: text
@@ -137,6 +154,8 @@ page_elements:
             text: 'Kategorien betroffener Personen'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -157,6 +176,8 @@ page_elements:
             content:
               -
                 type: paragraph
+                attrs:
+                  class: null
                 content:
                   -
                     type: text
@@ -166,6 +187,8 @@ page_elements:
             content:
               -
                 type: paragraph
+                attrs:
+                  class: null
                 content:
                   -
                     type: text
@@ -175,6 +198,8 @@ page_elements:
             content:
               -
                 type: paragraph
+                attrs:
+                  class: null
                 content:
                   -
                     type: text
@@ -184,6 +209,8 @@ page_elements:
             content:
               -
                 type: paragraph
+                attrs:
+                  class: null
                 content:
                   -
                     type: text
@@ -198,36 +225,48 @@ page_elements:
             text: 'Verwendete Begrifflichkeiten'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: '«Personenbezogene Daten» umfassen alle Informationen, die sich auf eine identifizierte oder identifizierbare natürliche Person (im Folgenden «betroffene Person») beziehen; als identifizierbar wird eine natürliche Person angesehen, die direkt oder indirekt, insbesondere mittels Zuordnung anhand einer Kennung wie einem Namen, einer Kennnummer, Standortdaten, einer Onlinekennung (z. B. Cookie) oder einem oder mehreren besonderen Merkmalen identifiziert werden kann, die Ausdruck der physischen, physiologischen, genetischen, psychischen, wirtschaftlichen, kulturellen oder sozialen Identität dieser natürlichen Person sind.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: '«Verarbeitung» ist jeder ausgeführte Vorgang, mit oder ohne Hilfe automatisierter Verfahren, oder jede solche Vorgangsreihe im Zusammenhang mit personenbezogenen Daten. Der Begriff reicht weit und umfasst praktisch jeden Umgang mit Daten.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Die «Pseudonymisierung» verarbeitet personenbezogene Daten in einer Weise, sodass die personenbezogenen Daten ohne Hinzuziehung zusätzlicher Informationen nicht mehr einer spezifischen betroffenen Person zugeordnet werden können, sofern diese zusätzlichen Informationen gesondert aufbewahrt werden und technischen und organisatorischen Massnahmen unterliegen, die gewährleisten, dass die personenbezogenen Daten nicht einer identifizierten oder identifizierbaren natürlichen Person zugewiesen werden.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Das «Profiling» umfasst jede Art der automatisierten Verarbeitung personenbezogener Daten, bei der personenbezogene Daten verwendet werden, um bestimmte persönliche Aspekte, die sich auf eine natürliche Person beziehen, zu bewerten, insbesondere um Aspekte bezüglich Arbeitsleistung, Wirtschaftslage, Gesundheit, persönlicher Vorlieben, Interessen, Zuverlässigkeit, Verhalten, Aufenthaltsort oder um Ortswechsel jener natürlichen Person zu analysieren oder vorherzusagen.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Als «Verantwortlicher» wird die natürliche oder juristische Person, Behörde, Einrichtung oder andere Stelle, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten entscheidet, bezeichnet.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -245,6 +284,8 @@ page_elements:
             text: 'Massgebliche Rechtsgrundlagen'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -262,12 +303,16 @@ page_elements:
             text: 'Zusammenarbeit mit Auftragsverarbeitern, gemeinsam Verantwortlichen und Dritten'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Sofern wir im Rahmen unserer Verarbeitung Daten gegenüber anderen Personen und Unternehmen (Auftragsverarbeitern, gemeinsam Verantwortlichen oder Dritten) offenbaren, sie an diese übermitteln oder ihnen sonst Zugriff auf die Daten gewähren, erfolgt dies nur auf Grundlage einer gesetzlichen Erlaubnis (z. B. wenn eine Übermittlung der Daten an Dritte, wie an Zahlungsdienstleister, zur Vertragserfüllung erforderlich ist) oder Nutzer eingewilligt haben, dies eine rechtliche Verpflichtung vorsieht oder auf Grundlage unserer berechtigten Interessen (z. B. beim Einsatz von Beauftragten, Webhostern usw.).'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -285,6 +330,8 @@ page_elements:
             text: 'Übermittlungen in Drittländer'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -302,6 +349,8 @@ page_elements:
             text: 'Rechte der betroffenen Personen'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -339,6 +388,8 @@ page_elements:
             text: Widerrufsrecht
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -356,6 +407,8 @@ page_elements:
             text: Widerspruchsrecht
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -373,24 +426,32 @@ page_elements:
             text: 'Cookies und Widerspruchsrecht bei Direktwerbung'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Als «Cookies» werden kleine Dateien bezeichnet, die auf Rechnern der Nutzer gespeichert werden. Innerhalb der Cookies können unterschiedliche Angaben gespeichert werden. Ein Cookie dient primär dazu, die Angaben zu einem Nutzer (bzw. dem Gerät, auf dem das Cookie gespeichert ist) während oder auch nach seinem Besuch innerhalb eines Onlineangebotes zu speichern. Als temporäre Cookies, bzw. «Session-Cookies» oder «transiente Cookies», werden Cookies bezeichnet, die gelöscht werden, nachdem ein Nutzer ein Onlineangebot verlässt und seinen Browser schliesst. In einem solchen Cookie kann z. B. der Inhalt eines Warenkorbs in einem Onlineshop oder ein Login-Status gespeichert werden. Als «permanent» oder «persistent» werden Cookies bezeichnet, die auch nach dem Schliessen des Browsers gespeichert bleiben. So kann z. B. der Login-Status gespeichert werden, wenn die Nutzer diese nach mehreren Tagen aufsuchen. Ebenso können in einem solchen Cookie die Interessen der Nutzer gespeichert werden, die für Reichweitenmessung oder Marketingzwecke verwendet werden. Als «Third-Party-Cookie» werden Cookies bezeichnet, die von anderen Anbietern als dem Verantwortlichen, der das Onlineangebot betreibt, angeboten werden (andernfalls, wenn es nur dessen Cookies sind, spricht man von «First-Party-Cookies»).'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Wir können temporäre und permanente Cookies einsetzen und klären hierüber im Rahmen unserer Datenschutzerklärung auf.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Falls die Nutzer nicht möchten, dass Cookies auf ihrem Rechner gespeichert werden, werden sie gebeten die entsprechende Option in den Systemeinstellungen ihres Browsers zu deaktivieren. Gespeicherte Cookies können in den Systemeinstellungen des Browsers gelöscht werden. Der Ausschluss von Cookies kann zu Funktionseinschränkungen dieses Onlineangebotes führen.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -436,12 +497,16 @@ page_elements:
             text: 'Löschung von Daten'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Die von uns verarbeiteten Daten werden nach Massgabe der gesetzlichen Vorgaben gelöscht oder in ihrer Verarbeitung eingeschränkt. Sofern nicht im Rahmen dieser Datenschutzerklärung ausdrücklich angegeben, werden die bei uns gespeicherten Daten gelöscht, sobald sie für ihre Zweckbestimmung nicht mehr erforderlich sind und der Löschung keine gesetzlichen Aufbewahrungspflichten entgegenstehen.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -459,36 +524,48 @@ page_elements:
             text: 'Vertragliche Leistungen'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Wir verarbeiten die Daten unserer Vertragspartner und Interessenten sowie anderer Auftraggeber, Kunden, Mandanten, Klienten oder Vertragspartner (einheitlich bezeichnet als «Vertragspartner») entsprechend Art. 6 Abs. 1 lit. b. DSGVO, um diesen gegenüber unsere vertraglichen oder vorvertraglichen Leistungen zu erbringen. Die hierbei verarbeiteten Daten, die Art, der Umfang, der Zweck und die Erforderlichkeit ihrer Verarbeitung, erfolgen nach dem zugrundeliegenden Vertragsverhältnis.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Zu den verarbeiteten Daten gehören die Stammdaten unserer Vertragspartner (z. B.: Namen und Adressen), Kontaktdaten (z. B. E-Mail-Adressen und Telefonnummern) sowie Vertragsdaten (z. B. in Anspruch genommene Leistungen, Vertragsinhalte, vertragliche Kommunikation, Namen von Kontaktpersonen) und Zahlungsdaten (z. B. Bankverbindungen, Zahlungshistorie).'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Besondere Kategorien personenbezogener Daten verarbeiten wir grundsätzlich nicht, ausser wenn diese Bestandteile einer beauftragten oder vertragsgemässen Verarbeitung sind.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Wir verarbeiten Daten, die zur Begründung und Erfüllung der vertraglichen Leistungen erforderlich sind und weisen auf die Erforderlichkeit ihrer Angabe hin, sofern diese für die Vertragspartner nicht evident ist. Eine Offenlegung an externe Personen oder Unternehmen erfolgt nur, wenn sie im Rahmen eines Vertrags erforderlich ist. Bei der Verarbeitung der uns im Rahmen eines Auftrags überlassenen Daten, handeln wir entsprechend den Weisungen der Auftraggeber sowie der gesetzlichen Vorgaben.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Im Rahmen der Inanspruchnahme unserer Onlinedienste, können wir die IP-Adresse und den Zeitpunkt der jeweiligen Nutzerhandlung speichern. Die Speicherung erfolgt auf Grundlage unserer berechtigten Interessen, als auch der Interessen der Nutzer am Schutz vor Missbrauch und sonstiger unbefugter Nutzung. Eine Weitergabe dieser Daten an Dritte erfolgt grundsätzlich nicht, ausser sie ist zur Verfolgung unserer Ansprüche gem. Art. 6 Abs. 1 lit. f. DSGVO erforderlich oder es besteht hierzu eine gesetzliche Verpflichtung gem. Art. 6 Abs. 1 lit. c. DSGVO.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -506,18 +583,24 @@ page_elements:
             text: 'Administration, Finanzbuchhaltung, Büroorganisation, Kontaktverwaltung'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Wir verarbeiten Daten im Rahmen der Verwaltungsaufgaben, Organisation unseres Betriebs, Finanzbuchhaltung und Befolgung der gesetzlichen Pflichten, wie z. B. der Archivierung. Hierbei verarbeiten wir dieselben Daten, die wir im Rahmen der Erbringung unserer vertraglichen Leistungen verarbeiten. Die Verarbeitungsgrundlagen sind Art. 6 Abs. 1 lit. c. DSGVO, Art. 6 Abs. 1 lit. f. DSGVO. Von der Verarbeitung sind Kunden, Interessenten, Geschäftspartner und Websitebesucher betroffen. Der Zweck und unser Interesse an der Verarbeitung liegt in der Administration, Finanzbuchhaltung, Büroorganisation, Archivierung von Daten, also Aufgaben, die der Aufrechterhaltung unserer Geschäftstätigkeiten, Wahrnehmung unserer Aufgaben und Erbringung unserer Leistungen dienen. Die Löschung der Daten, im Hinblick auf vertragliche Leistungen und Kommunikation, entspricht den bei diesen Verarbeitungstätigkeiten genannten Angaben.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Wir offenbaren oder übermitteln hierbei Daten an die Finanzverwaltung, Berater, wie z. B.: Steuerberater oder Wirtschaftsprüfer sowie weitere Gebührenstellen und Zahlungsdienstleister.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -535,12 +618,16 @@ page_elements:
             text: Kontaktaufnahme
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Bei der Kontaktaufnahme mit uns (z. B. per Kontaktformular, E-Mail, Telefon) werden die Angaben des Nutzers zur Bearbeitung der Kontaktanfrage und deren Abwicklung gem. Art. 6 Abs. 1 lit. b (im Rahmen vertraglicher/vorvertraglicher Beziehungen), Art. 6 Abs. 1 lit. f (andere Anfragen) DSGVO verarbeitet. Die Nutzerangaben können in einem Customer-Relationship-Management-System («CRM-System») oder in einer vergleichbaren Anfrageorganisation gespeichert werden.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -558,12 +645,16 @@ page_elements:
             text: 'Hosting und E-Mail-Versand'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Die von uns in Anspruch genommenen Hosting-Leistungen dienen der Zurverfügungstellung der folgenden Leistungen: Infrastruktur- und Plattformdienstleistungen, Rechenkapazität, Speicherplatz und Datenbankdienste, E-Mail-Versand, Sicherheitsleistungen sowie technische Wartungsleistungen, die wir zum Zwecke des Betriebs dieses Onlineangebotes einsetzen.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -581,12 +672,16 @@ page_elements:
             text: 'Erhebung von Zugriffsdaten und Logfiles'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Wir, bzw. unser Hosting-Anbieter, erheben auf Grundlage unserer berechtigten Interessen im Sinne des Art. 6 Abs. 1 lit. f DSGVO Daten über jeden Zugriff auf den Server, auf dem sich dieser Dienst befindet (sogenannte Serverlogfiles). Zu den Zugriffsdaten gehören Name der abgerufenen Webseite, Datei, Datum und Uhrzeit des Abrufs, übertragene Datenmenge, Meldung über erfolgreichen Abruf, Browsertyp nebst Version, das Betriebssystem des Nutzers, Referrer URL (die zuvor besuchte Seite), IP-Adresse und der anfragende Provider.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -604,6 +699,8 @@ page_elements:
             text: 'Google Universal Analytics'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -621,24 +718,32 @@ page_elements:
             text: 'Google Analytics'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Wir setzen auf Grundlage unserer berechtigten Interessen (d. h. Interesse an der Analyse, Optimierung und wirtschaftlichem Betrieb unseres Onlineangebotes im Sinne des Art. 6 Abs. 1 lit. f DSGVO) Google Analytics, einen Webanalysedienst der Google LLC («Google») ein. Google verwendet Cookies. Die durch das Cookie erzeugten Informationen über die Benutzung des Onlineangebotes des Nutzers werden in der Regel an einen Server von Google in den USA übertragen und dort gespeichert.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Google wird diese Informationen in unserem Auftrag benutzen, um die Nutzung unseres Onlineangebotes der Nutzer auszuwerten, um Reports über die Aktivitäten innerhalb dieses Onlineangebotes zusammenzustellen und um weitere, mit der Nutzung dieses Onlineangebotes und der Internetnutzung verbundenen Dienstleistungen, uns gegenüber zu erbringen. Dabei können aus den verarbeiteten Daten pseudonyme Nutzungsprofile der Nutzer erstellt werden.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
             text: 'Wir setzen Google Analytics nur mit aktivierter IP-Anonymisierung ein. Das bedeutet, die IP-Adresse der Nutzer wird von Google innerhalb von Mitgliedstaaten der Europäischen Union oder in anderen Vertragsstaaten des Abkommens über den Europäischen Wirtschaftsraum gekürzt. Nur in Ausnahmefällen wird die volle IP-Adresse an einen Server von Google in den USA übertragen und dort gekürzt.'
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -659,6 +764,8 @@ page_elements:
             text: "\_und installieren."
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
@@ -693,6 +800,8 @@ page_elements:
             text: .
       -
         type: paragraph
+        attrs:
+          class: null
         content:
           -
             type: text
