@@ -13,3 +13,8 @@ preferences:
         - title
         - slug
         - status
+    projects:
+      columns:
+        - slug
+        - type
+        - status

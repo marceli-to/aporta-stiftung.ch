@@ -1,10 +1,8 @@
-title: Page
 tabs:
   main:
     display: Inhalt
     sections:
       -
-        display: Inhalt
         fields:
           -
             handle: title
@@ -21,48 +19,46 @@ tabs:
               antlers: false
               hide_display: false
           -
-            handle: page_elements
+            import: editor
+  teaser:
+    display: Teaser
+    sections:
+      -
+        display: Teaser
+        fields:
+          -
+            handle: quote
             field:
-              collapse: false
-              previews: true
-              fullscreen: true
-              sets:
-                elements:
-                  display: Elements
-                  instructions: null
-                  icon: programming-module-box-cube
-                  sets:
-                    banner:
-                      display: Banner
-                      instructions: 'Banner hellblau hinzufügen'
-                      icon: align-object-center
-                      fields:
-                        -
-                          import: banner
-                    editor:
-                      display: Editor
-                      instructions: 'Editorfeld hinzufügen'
-                      icon: text-formatting-markdown
-                      fields:
-                        -
-                          import: editor
-                    realestate:
-                      display: Liegenschaften
-                      instructions: 'Liegenschaft hinzufügen'
-                      icon: travel-map
-                      fields:
-                        -
-                          import: real_estate
-                    project_teaser:
-                      display: 'Projekt Teaser'
-                      instructions: 'Projekt Teaser hinzufügen'
-                      icon: align-object-center
-                      fields:
-                        -
-                          import: project_teaser
-              type: replicator
-              display: Inhalte
-              icon: replicator
+              antlers: false
+              type: textarea
+              display: Zitat
+              icon: textarea
+              listable: hidden
+              instructions_position: above
+              visibility: visible
+              replicator_preview: true
+              hide_display: false
+          -
+            handle: author_name
+            field:
+              input_type: text
+              antlers: false
+              type: text
+              display: Autor
+              icon: text
+              listable: hidden
+              instructions_position: above
+              visibility: visible
+              replicator_preview: true
+              hide_display: false
+          -
+            handle: author_position
+            field:
+              input_type: text
+              antlers: false
+              type: text
+              display: Funktion
+              icon: text
               listable: hidden
               instructions_position: above
               visibility: visible
@@ -72,15 +68,46 @@ tabs:
     display: Medien
     sections:
       -
-        display: Medien
+        display: 'Neuer Abschnitt'
         fields:
           -
-            import: hero_image
+            handle: image
+            field:
+              max_files: 1
+              min_files: 1
+              mode: list
+              container: assets
+              restrict: false
+              allow_uploads: true
+              show_filename: true
+              show_set_alt: true
+              type: assets
+              display: Bild
+              icon: assets
+              listable: hidden
+              instructions_position: above
+              visibility: visible
+              replicator_preview: true
+              hide_display: false
+          -
+            handle: video_url
+            field:
+              input_type: text
+              antlers: false
+              type: text
+              display: 'Video URL'
+              icon: text
+              instructions: 'Video URL (z.B. https://vimeo.com/604646233)'
+              listable: hidden
+              instructions_position: below
+              visibility: visible
+              replicator_preview: true
+              hide_display: false
   seo:
     display: SEO
     sections:
       -
-        display: SEO
+        display: 'Neuer Abschnitt'
         fields:
           -
             handle: open_graph_title
@@ -103,12 +130,12 @@ tabs:
               type: textarea
               display: Beschreibung
               icon: textarea
+              instructions: 'Ein bis zwei beschreibende Sätze über das Projekt.'
               listable: hidden
               instructions_position: below
               visibility: visible
               replicator_preview: true
               hide_display: false
-              instructions: 'Ein bis zwei beschreibende Sätze über den Inhalt der Seite.'
           -
             handle: open_graph_image
             field:
@@ -122,13 +149,12 @@ tabs:
               type: assets
               display: Bild
               icon: assets
+              instructions: 'Beim Sharing auf Social Media verwendetes Bild'
               listable: hidden
               instructions_position: below
               visibility: visible
               replicator_preview: true
               hide_display: false
-              folder: images
-              instructions: 'Beim Sharing auf Social Media verwendetes Bild'
   sidebar:
     display: Sidebar
     sections:
@@ -144,45 +170,29 @@ tabs:
             field:
               type: entries
               collections:
-                - pages
+                - projects
               max_items: 1
               listable: false
               localizable: true
           -
-            handle: page_class
+            handle: type
             field:
               options:
-                page-privacy: Privacy
+                project: Förderprojekt
+                partnership: Partnerschaft
               taggable: false
               push_tags: false
               multiple: false
               clearable: false
               searchable: true
               cast_booleans: false
+              default: project
               type: select
-              display: 'Page class'
+              display: Typ
               icon: select
               listable: hidden
               instructions_position: above
               visibility: visible
               replicator_preview: true
               hide_display: false
-          -
-            handle: template
-            field:
-              type: template
-              display: Template
-              localizable: true
-          -
-            handle: layout
-            field:
-              hide_partials: true
-              blueprint: false
-              type: template
-              display: Layout
-              icon: template
-              listable: hidden
-              instructions_position: above
-              visibility: visible
-              replicator_preview: true
-              hide_display: false
+title: Projekte

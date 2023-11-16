@@ -1,0 +1,41 @@
+{{ collection from="projects" sort="random" limit="1" quote:exists="true" }}
+  {{ scope:project }}
+    {{ title as="title" }}
+    {{ quote as="quote" }}
+    {{ author_name as="author_name" }}
+    {{ author_position as="author_position" }}
+  {{ /scope:project }}
+{{ /collection }}
+
+{{ partial:layout/head }}
+
+{{ partial:layout/body }}
+
+  {{ partial:layout/header }}
+
+  {{ if hero_image }}
+
+    {{ partial:components/hero/wrapper }}
+
+  {{ /if }}
+
+  {{ partial:menu/main/wrapper }}
+
+  <main class="flex-1 xl:-mt-40">
+
+    {{ partial:projects/teaser :project="project" }}
+
+    {{ page_elements }}
+    
+      {{ partial:components/elements }}
+    
+    {{ /page_elements }}
+
+  </main>
+  
+  {{ partial:layout/footer }}
+
+{{ /partial:layout/body}}
+
+</html>
+

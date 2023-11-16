@@ -1,0 +1,21 @@
+{{ partial:layout/section class="bg-sky font-normal text-xl md:text-2xl leading-[1.3]" }}
+
+    {{ if project:quote }}
+      <h1 class="font-bold text-center text-xl md:text-2xl max-w-[80%] mx-auto mb-32 leading-[1.3]">
+        «{{ project:quote | nl2br }}»
+      </h1>
+    {{ /if }}
+
+    {{ if project:author_name || project:author_position }}
+      <p class="mt-24 mb-16 md:mb-32 md:text-lg leading-[1.7rem]">
+        {{ if project:author_name }}
+          {{ project:author_name }}<br>
+        {{ /if }}
+
+        {{ if project:author_position }}
+          {{ project:author_position }}
+        {{ /if }}
+      </p>
+    {{ /if }}
+
+{{ /partial:layout/section }}

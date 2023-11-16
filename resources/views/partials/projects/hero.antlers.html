@@ -1,0 +1,46 @@
+{{ collection from="projects" sort="random" limit="1" quote:exists="true" }}
+  {{ if quote }}
+    <section class="min-h-[calc(100vh_-_221px)] relative">
+      {{ if image }}
+        <picture>
+          <source media="(min-width: 1280px)" srcset="{{ glide:image preset='2xl-webp' }}" type="image/webp">
+          <source media="(min-width: 1024px)" srcset="{{ glide:image preset='xl-webp' }}" type="image/webp">
+          <source media="(min-width: 768px)" srcset="{{ glide:image preset='lg-webp' }}" type="image/webp">
+          <source srcset="{{ glide:image preset='md-webp' }}" type="image/webp">
+          <img 
+            src="{{ glide:image preset='md' }}" 
+            alt="{{ image:alt }}" 
+            title="{{ image:alt }}" 
+            height="{{ height }}" 
+            width="{{ width }}"
+            class="block object-cover absolute h-full w-full top-0 left-0"
+            loading="lazy">
+        </picture>
+      {{ /if }}
+      <div class="relative flex items-center justify-center py-32 min-h-[calc(100vh_-_221px)]">
+        <div class="rounded-full flex items-center justify-center p-16 bg-white bg-opacity-75 min-h-[350px] min-w-[350px] xs:w-[400px] xs:h-[400px] md:w-[600px] md:h-[600px] text-center">
+          <div class="p-32 md:p-48">
+            {{ if quote }}
+              <h1 class="text-xl md:text-2xl mt-14 mb-16 font-bold leading-[1.5rem] md:leading-[1.16667]">
+                «{{ quote | nl2br }}»
+              </h1>
+            {{ /if }}
+            {{ if author_name || author_position }}
+              <p class="mt-24 mb-16 md:mb-32 md:text-lg leading-[1.7rem]">
+                {{ if author_name }}
+                  {{ author_name }}<br>
+                {{ /if }}
+                {{ if author_position }}
+                  {{ author_position }}
+                {{ /if }}
+              </p>
+            {{ /if }}
+            <div class="text-center">
+              {{ partial:components/links/page text='mehr erfahren' class="font-bold" }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  {{ /if }}
+{{ /collection }}

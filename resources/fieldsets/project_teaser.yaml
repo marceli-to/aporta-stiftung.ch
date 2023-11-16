@@ -1,0 +1,18 @@
+title: 'Project Teaser'
+fields:
+  -
+    handle: teaser
+    field:
+      mode: default
+      create: true
+      collections:
+        - projects
+      type: entries
+      display: Teaser
+      icon: entries
+      instructions: 'Zufällige Auswahl eines Projektes'
+      listable: hidden
+      instructions_position: below
+      visibility: visible
+      replicator_preview: true
+      hide_display: false
