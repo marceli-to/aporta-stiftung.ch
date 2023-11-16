@@ -105,16 +105,16 @@ return [
 
           // Hero images
           // webp
-          'hero-md-webp' => ['w' => 1024, 'h' => 490, 'q' => 90, 'fit' => 'crop_focal', 'fm' => 'webp'],
-          'hero-lg-webp' => ['w' => 1280, 'h' => 615, 'q' => 90, 'fit' => 'crop_focal', 'fm' => 'webp'],
-          'hero-xl-webp' => ['w' => 1440, 'h' => 675, 'q' => 90, 'fit' => 'crop_focal', 'fm' => 'webp'],
-          'hero-2xl-webp' => ['w' => 1900, 'h' => 910, 'q' => 90, 'fit' => 'crop_focal', 'fm' => 'webp'],
+          'hero-md-webp' => ['w' => 1024, 'h' => 490, 'q' => 85, 'fit' => 'crop_focal', 'fm' => 'webp'],
+          'hero-lg-webp' => ['w' => 1280, 'h' => 615, 'q' => 85, 'fit' => 'crop_focal', 'fm' => 'webp'],
+          'hero-xl-webp' => ['w' => 1440, 'h' => 675, 'q' => 85, 'fit' => 'crop_focal', 'fm' => 'webp'],
+          'hero-2xl-webp' => ['w' => 1900, 'h' => 910, 'q' => 85, 'fit' => 'crop_focal', 'fm' => 'webp'],
 
           // jpg, png
-          'hero-md' => ['w' => 1024, 'h' => 490, 'q' => 90, 'fit' => 'crop_focal'],
-          'hero-lg' => ['w' => 1280, 'h' => 615, 'q' => 90, 'fit' => 'crop_focal'],
-          'hero-xl' => ['w' => 1440, 'h' => 675, 'q' => 90, 'fit' => 'crop_focal'],
-          'hero-2xl' => ['w' => 1900, 'h' => 910, 'q' => 90, 'fit' => 'crop_focal'],
+          'hero-md' => ['w' => 1024, 'h' => 490, 'q' => 85, 'fit' => 'crop_focal'],
+          'hero-lg' => ['w' => 1280, 'h' => 615, 'q' => 85, 'fit' => 'crop_focal'],
+          'hero-xl' => ['w' => 1440, 'h' => 675, 'q' => 85, 'fit' => 'crop_focal'],
+          'hero-2xl' => ['w' => 1900, 'h' => 910, 'q' => 85, 'fit' => 'crop_focal'],
 
           // Standard images
           'xs-webp' => ['w' => 320, 'h' => 10000, 'q' => 90, 'fit' => 'contain', 'fm' => 'webp'],
