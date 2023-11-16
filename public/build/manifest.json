@@ -1,12 +1,12 @@
 {
-  "public/img/texture.svg": {
-    "file": "assets/texture-876dbfe0.svg",
-    "src": "public/img/texture.svg"
-  },
   "resources/css/app.css": {
     "file": "assets/app-a5cc2d74.css",
     "isEntry": true,
     "src": "resources/css/app.css"
+  },
+  "resources/img/texture.svg": {
+    "file": "assets/texture-876dbfe0.svg",
+    "src": "resources/img/texture.svg"
   },
   "resources/js/app.js": {
     "file": "assets/app-6c950509.js",

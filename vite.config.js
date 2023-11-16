@@ -6,7 +6,7 @@ import { resolve } from 'path';
 export default defineConfig({
   resolve: {
     alias: {
-      $img: resolve('./public/img')
+      $img: resolve('resources/img')
     }
   },
   plugins: [
