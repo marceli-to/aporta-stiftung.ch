@@ -3,7 +3,7 @@ id: 0d7eb5c8-7498-452e-878b-709ec47a26b2
 blueprint: page
 title: Liegenschaften
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700169598
+updated_at: 1700172741
 template: templates/content/default
 page_elements:
   -
@@ -88,4 +88,5 @@ page_elements:
       - 660cb814-8cd7-40b2-ad13-f7021be96dbc
 hero_image:
   - images/header/aporta-stiftung-header-liegenschaften.jpg
+open_graph_title: 'Die Liegenschaften à Porta-Stiftung in der Stadt Zürich'
 ---
