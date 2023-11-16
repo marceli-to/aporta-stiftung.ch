@@ -3,7 +3,7 @@ id: 0d7eb5c8-7498-452e-878b-709ec47a26b2
 blueprint: page
 title: Liegenschaften
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700056479
+updated_at: 1700169598
 template: templates/content/default
 page_elements:
   -
@@ -34,7 +34,7 @@ page_elements:
                   href: 'mailto:info@aporta-stiftung.ch'
                   rel: null
                   target: null
-                  title: null
+                  title: 'Kontaktieren Sie uns'
             text: info@aporta-stiftung.ch
       -
         type: paragraph

@@ -4,7 +4,7 @@ blueprint: page
 title: Kontakt
 template: templates/content/default
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700000652
+updated_at: 1700169557
 page_elements:
   -
     id: loy618jg
@@ -50,7 +50,7 @@ page_elements:
                   href: 'tel:043 222 60 00'
                   rel: null
                   target: null
-                  title: null
+                  title: 'Rufen Sie uns an'
             text: '043 222 60 00'
       -
         type: paragraph
@@ -226,7 +226,7 @@ page_elements:
                   href: 'mailto:info@aporta-stiftung.ch'
                   rel: null
                   target: null
-                  title: null
+                  title: 'Schreiben Sie uns'
             text: info@aporta-stiftung.ch
     type: editor
     enabled: true

@@ -4,7 +4,7 @@ blueprint: page
 title: 'Gemeinnütziges Engagement'
 author: 3f4934a7-72ef-446c-bf12-5336d13e6898
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700150200
+updated_at: 1700168972
 page_elements:
   -
     id: lp10inxt
@@ -46,6 +46,14 @@ page_elements:
           -
             type: text
             text: 'Der von der Stiftung durch die Vermietung von preisgünstigem Wohnraum erwirtschaftete Reingewinn wird jährlich nach einem in der Stiftungsurkunde festgelegten Schüssel verteilt. 75 % gehen an Empfänger in Zürich und 25 % an solche im Bündnerland. Seit 1946 hat die Stiftung mehr als 50 Mio. Franken ausgeschüttet. Das entspricht im Mittel einem jährlichen Betrag von über 675‘000 Franken. Die Auszahlungen konnten im Laufe der Jahrzehnte sukzessive gesteigert werden. Seit 2007 erreichen sie jährlich einen Wert von 1,4 Mio. Franken.'
+      -
+        type: heading
+        attrs:
+          level: 2
+        content:
+          -
+            type: text
+            text: 'Liste der Förderprojekte'
     type: editor
     enabled: true
 layout: templates/projects
