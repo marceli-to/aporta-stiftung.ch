@@ -60,3 +60,7 @@ section.content .responsive-video iframe {
 main.page-privacy section.content a {
   @apply hover:no-underline underline underline-offset-8 decoration-1
 }
+
+footer {
+  @apply bg-[url('$img/texture.svg')];
+}

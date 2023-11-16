@@ -1,6 +1,10 @@
 {
+  "public/img/texture.svg": {
+    "file": "assets/texture-876dbfe0.svg",
+    "src": "public/img/texture.svg"
+  },
   "resources/css/app.css": {
-    "file": "assets/app-3e20b92b.css",
+    "file": "assets/app-a5cc2d74.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
