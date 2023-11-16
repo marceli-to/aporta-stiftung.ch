@@ -18,6 +18,10 @@ export default {
         'footer-texture': "url('img/texture.svg')",
       },
 
+      brightness: {
+        10: '.1',
+      },
+
       maxWidth: {
         'page': '1290px',
       },

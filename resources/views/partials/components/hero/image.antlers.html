@@ -1,11 +1,14 @@
-<figure class="w-full h-[400px] relative">
+<figure class="w-full h-[400px] 2xl:h-[500px] relative">
   <picture>
-    <source media="(min-width: 1280px)" srcset="{{ glide:url preset='2xl-webp' }}" type="image/webp">
-    <source media="(min-width: 1024px)" srcset="{{ glide:url preset='xl-webp' }}" type="image/webp">
-    <source media="(min-width: 768px)" srcset="{{ glide:url preset='lg-webp' }}" type="image/webp">
-    <source srcset="{{ glide:url preset='md-webp' }}" type="image/webp">
+    <source media="(min-width: 1280px)" srcset="{{ glide:url preset='hero-2xl-webp' }}" type="image/webp">
+    <source media="(min-width: 1024px)" srcset="{{ glide:url preset='hero-xl-webp' }}" type="image/webp">
+    <source media="(min-width: 768px)" srcset="{{ glide:url preset='hero-lg-webp' }}" type="image/webp">
+    <source srcset="{{ glide:url preset='hero-md-webp' }}" type="image/webp">
+    <source media="(min-width: 1280px)" srcset="{{ glide:url preset='hero-2xl' }}" type="image/jpeg">
+    <source media="(min-width: 1024px)" srcset="{{ glide:url preset='hero-xl' }}" type="image/jpeg">
+    <source media="(min-width: 768px)" srcset="{{ glide:url preset='hero-lg' }}" type="image/jpeg">
     <img 
-      src="{{ glide:url preset='md' }}" 
+      src="{{ glide:url preset='hero-md' }}" 
       alt="{{ title }}" 
       title="{{ title }}" 
       height="{{ height }}" 

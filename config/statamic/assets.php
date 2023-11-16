@@ -98,20 +98,32 @@ return [
         */
 
         'presets' => [
-          'small' => ['w' => 200, 'h' => 200, 'q' => 75, 'fit' => 'crop'],
-          'large' => ['w' => 1600, 'h' => 1000, 'q' => 90, 'fit' => 'crop'],
-          // 'xs-avif' => ['w' => 320, 'h' => 10000, 'q' => 90, 'fit' => 'contain', 'fm' => 'avif'],
-          // 'sm-avif' => ['w' => 480, 'h' => 10000, 'q' => 90, 'fit' => 'contain', 'fm' => 'avif'],
-          // 'md-avif' => ['w' => 768, 'h' => 10000, 'q' => 90, 'fit' => 'contain', 'fm' => 'avif'],
-          // 'lg-avif' => ['w' => 1280, 'h' => 10000, 'q' => 90, 'fit' => 'contain', 'fm' => 'avif'],
-          // 'xl-avif' => ['w' => 1440, 'h' => 10000, 'q' => 100, 'fit' => 'contain', 'fm' => 'avif'],
-          // '2xl-avif' => ['w' => 1680, 'h' => 10000, 'q' => 100, 'fit' => 'contain', 'fm' => 'avif'],
+          
+          // Misc
+          'thumb' => ['w' => 200, 'h' => 200, 'q' => 75, 'fit' => 'crop_focal'],
+          'large' => ['w' => 1600, 'h' => 1000, 'q' => 90, 'fit' => 'crop_focal'],
+
+          // Hero images
+          // webp
+          'hero-md-webp' => ['w' => 1024, 'h' => 490, 'q' => 90, 'fit' => 'crop_focal', 'fm' => 'webp'],
+          'hero-lg-webp' => ['w' => 1280, 'h' => 615, 'q' => 90, 'fit' => 'crop_focal', 'fm' => 'webp'],
+          'hero-xl-webp' => ['w' => 1440, 'h' => 675, 'q' => 90, 'fit' => 'crop_focal', 'fm' => 'webp'],
+          'hero-2xl-webp' => ['w' => 1900, 'h' => 910, 'q' => 90, 'fit' => 'crop_focal', 'fm' => 'webp'],
+
+          // jpg, png
+          'hero-md' => ['w' => 1024, 'h' => 490, 'q' => 90, 'fit' => 'crop_focal'],
+          'hero-lg' => ['w' => 1280, 'h' => 615, 'q' => 90, 'fit' => 'crop_focal'],
+          'hero-xl' => ['w' => 1440, 'h' => 675, 'q' => 90, 'fit' => 'crop_focal'],
+          'hero-2xl' => ['w' => 1900, 'h' => 910, 'q' => 90, 'fit' => 'crop_focal'],
+
+          // Standard images
           'xs-webp' => ['w' => 320, 'h' => 10000, 'q' => 90, 'fit' => 'contain', 'fm' => 'webp'],
           'sm-webp' => ['w' => 480, 'h' => 10000, 'q' => 90, 'fit' => 'contain', 'fm' => 'webp'],
           'md-webp' => ['w' => 768, 'h' => 10000, 'q' => 90, 'fit' => 'contain', 'fm' => 'webp'],
           'lg-webp' => ['w' => 1280, 'h' => 10000, 'q' => 90, 'fit' => 'contain', 'fm' => 'webp'],
           'xl-webp' => ['w' => 1440, 'h' => 10000, 'q' => 90, 'fit' => 'contain', 'fm' => 'webp'],
           '2xl-webp' => ['w' => 1680, 'h' => 10000, 'q' => 90, 'fit' => 'contain', 'fm' => 'webp'],
+
           'xs' => ['w' => 320, 'h' => 10000, 'q' => 90, 'fit' => 'contain'],
           'sm' => ['w' => 480, 'h' => 10000, 'q' => 90, 'fit' => 'contain'],
           'md' => ['w' => 768, 'h' => 10000, 'q' => 90, 'fit' => 'contain'],
@@ -131,7 +143,7 @@ return [
         |
         */
 
-        'generate_presets_on_upload' => true,
+        'generate_presets_on_upload' => false,
 
     ],
 

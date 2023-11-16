@@ -60,6 +60,13 @@ tabs:
                       fields:
                         -
                           import: project_teaser
+                    project_list:
+                      display: 'Projekt Liste'
+                      instructions: 'Auswahl von Projekten'
+                      icon: file-content-list
+                      fields:
+                        -
+                          import: project_list
               type: replicator
               display: Inhalte
               icon: replicator

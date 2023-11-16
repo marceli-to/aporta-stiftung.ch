@@ -15,6 +15,7 @@ preferences:
         - status
     projects:
       columns:
+        - title
         - slug
         - type
         - status

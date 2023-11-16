@@ -99,3 +99,10 @@ fields:
               fields:
                 -
                   import: film_teaser
+            project_list:
+              display: 'Projekt Liste'
+              instructions: 'Auswahl von Projekten hinzufügen'
+              icon: file-content-list
+              fields:
+                -
+                  import: project_list

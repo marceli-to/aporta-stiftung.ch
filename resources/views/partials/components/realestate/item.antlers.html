@@ -21,12 +21,12 @@
     {{ images }}
       <a 
         href="{{ glide:url preset='large' }}" 
-        class="block shrink-0 w-80 h-80 border-2 border-transparent active:border-black" 
+        class="block shrink-0 w-80 h-80 border-2 border-transparent hover:border-black active:border-black transition-all" 
         target="_blank" 
         title="{{ alt }}"
         data-image-source>
         <img 
-          src="{{ glide:url preset='small' }}" 
+          src="{{ glide:url preset='thumb' }}" 
           alt="{{ alt }}" 
           title="{{ alt }}" 
           height="{{ height }}" 

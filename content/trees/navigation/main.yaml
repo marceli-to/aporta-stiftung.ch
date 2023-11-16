@@ -4,8 +4,9 @@ tree:
     entry: 9ff6236e-937b-4940-aabd-4a09bbeb7676
     children:
       -
-        id: 2d460843-9d63-4d25-a29e-bf47e15d335e
-        entry: 3825abfd-4579-4d79-9f4d-d966f80b2afe
+        id: 24dcc44b-6fce-44ef-9afe-781874936471
+        title: 'Liste der Förderprojekte'
+        url: '/gemeinnuetziges-engagement/#liste-der-foerderprojekte'
       -
         id: c0dbc981-e2cf-40c5-8f2a-5abbc39ce810
         entry: 0cd67189-07e2-41c5-bc12-f7c9f0037798

@@ -6,16 +6,20 @@
       </h1>
     {{ /if }}
 
-    {{ if project:author_name || project:author_position }}
-      <p class="mt-24 mb-16 md:mb-32 md:text-lg leading-[1.7rem]">
-        {{ if project:author_name }}
-          {{ project:author_name }}<br>
-        {{ /if }}
+    <div class="max-w-[80%] mx-auto text-center">
+      {{ if project:author_name || project:author_position }}
+        <div class="font-light mt-24 mb-16 md:mb-32 md:text-lg leading-[1.7rem]">
+          {{ if project:author_name }}
+            <strong>{{ project:author_name }}</strong><br>
+          {{ /if }}
 
-        {{ if project:author_position }}
-          {{ project:author_position }}
-        {{ /if }}
-      </p>
-    {{ /if }}
-
+          {{ if project:author_position }}
+            {{ project:author_position }}
+          {{ /if }}
+        </div>
+      {{ /if }}
+      {{ if hasMoreLink }}
+        {{ partial:components/links/page text="mehr erfahren" class="font-bold" }}
+      {{ /if }}
+    </div>
 {{ /partial:layout/section }}

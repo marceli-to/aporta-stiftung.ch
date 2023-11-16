@@ -1,0 +1,17 @@
+title: 'Project List'
+fields:
+  -
+    handle: project_list
+    field:
+      mode: default
+      create: true
+      collections:
+        - projects
+      type: entries
+      display: 'Projekt Liste'
+      icon: entries
+      listable: hidden
+      instructions_position: above
+      visibility: visible
+      replicator_preview: true
+      hide_display: false

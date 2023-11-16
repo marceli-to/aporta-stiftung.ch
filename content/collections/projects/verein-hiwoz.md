@@ -5,12 +5,12 @@ title: 'Verein hiwoz'
 quote: 'Dank der à Porta-Stiftung können wir hindernisfreie Wohnungen zu attraktiven Konditionen anbieten.'
 author_name: 'Matyas Sagi-Kiss'
 author_position: 'Präsident Verein hiwoz'
-image: images/projekte/aporta-stiftung-hiwoz.jpg
 video_url: 'https://vimeo.com/659923678'
 open_graph_description: 'Der Verein hiwoz (vormals Verein Wohnhaus Röschibach) wurde 1966 von Menschen mit einer Mobilitätsbehinderung gegründet. Ihnen war es ein grosses Bedürfnis, unabhängig und selbstbestimmt zu wohnen. Die Dr. Stephan à Porta-Stiftung unterstützte diese Idee massgeblich. Bis heute stellt sie dem Verein die Liegenschaft an der Röschibachstrasse zu vorteilhaften Bedingungen zur Verfügung.'
 type: partnership
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700127863
+updated_at: 1700147799
+image: images/projekte/aporta-stiftung-hiwoz.jpg
 content:
   -
     type: paragraph

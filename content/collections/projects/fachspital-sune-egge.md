@@ -5,7 +5,7 @@ title: 'Fachspital Sune-Egge'
 image: images/projekte/aporta-stiftung-fachspital-sune-egge.jpg
 open_graph_description: 'Das Sozialwerk Pfarrer Sieber (Gassenarbeit, Notschlafstellen, Sozialberatung, Tagesstrukturen und medizinische Versorgung) bietet benachteiligten Menschen in Not auf vielfältige Art und Weise unbürokratische Hilfe an. Im Sunne-Egge, dem auf Sozialmedizin und Abhängigkeitserkrankungen spezialisierten Fachspital, erhalten sozial benachteiligte Menschen mit kombinierten somatischen und psychiatrischen Erkrankungen ambulante und stationäre Behandlung.'
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700126797
+updated_at: 1700148747
 video_url: 'https://vimeo.com/604646233'
 type: project
 quote: 'Wer eine überzeugende Idee präsentiert, erhält von der à Porta-Stiftung die nötige Unterstützung rasch und ohne Umschweife.'

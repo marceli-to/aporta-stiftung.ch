@@ -4,6 +4,7 @@
     {{ quote as="quote" }}
     {{ author_name as="author_name" }}
     {{ author_position as="author_position" }}
+    {{ image as="image" }}
   {{ /scope:project }}
 {{ /collection }}
 
@@ -13,22 +14,24 @@
 
   {{ partial:layout/header }}
 
-  {{ if hero_image }}
-
-    {{ partial:components/hero/wrapper }}
-
+  {{ if project:image }}
+    {{ partial:components/hero/image 
+        :url="project:image:url" 
+        :title="project:title" 
+        :width="project:image:width" 
+        :height="project:image:height" }}
   {{ /if }}
 
   {{ partial:menu/main/wrapper }}
 
-  <main class="flex-1 xl:-mt-40">
+  <main class="flex-1 xl:-mt-30">
 
-    {{ partial:projects/teaser :project="project" }}
+    {{ partial:projects/teaser :project="project" hasMoreLink="true" }}
 
     {{ page_elements }}
-    
+
       {{ partial:components/elements }}
-    
+      
     {{ /page_elements }}
 
   </main>
