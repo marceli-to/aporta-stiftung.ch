@@ -10,8 +10,9 @@ video_url: 'https://vimeo.com/658527975'
 open_graph_description: 'George Reinhart, Filmproduzent und Kunstförderer, betrieb seine Geschäfte in der Liegenschaft Josefstrasse 106. Peter Brunner und Doris Aebi waren oft dort und hatten das Bedürfnis, dem Fixerstrich und Drogenumschlagplatz etwas entgegenzusetzen: sogar Theater!'
 type: partnerschaften
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700216690
+updated_at: 1700225834
 video_poster: images/projekte/aporta-stiftung-sogartheater-video-poster.jpg
+open_graph_title: 'Partnerschaft: sogar Theater'
 content:
   -
     type: heading

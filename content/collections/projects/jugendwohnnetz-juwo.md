@@ -12,8 +12,9 @@ open_graph_description: |-
   Die Dr. Stephan à Porta-Stiftung überlässt dem Juwo seit Jahren Wohnungen für kürzere oder längere Zwischennutzungen. Zudem stellt die Stiftung dem Juwo in der neuen Siedlung Eglistrasse vier massgeschneiderte WG-Wohnungen für insgesamt 30 Bewohnerinnen und Bewohner zur Verfügung.
 type: partnerschaften
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700216525
+updated_at: 1700225811
 video_poster: images/projekte/aporta-stiftung-jugendwohnnetz-juwo-video-poster.jpg
+open_graph_title: 'Partnerschaft: Jugendwohnnetz JUWO'
 content:
   -
     type: heading

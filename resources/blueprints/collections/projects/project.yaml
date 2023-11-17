@@ -126,7 +126,7 @@ tabs:
     display: SEO
     sections:
       -
-        display: 'Neuer Abschnitt'
+        display: SEO
         fields:
           -
             handle: open_graph_title

@@ -4,3 +4,4 @@ window.Alpine = Alpine
 Alpine.start();
 
 import './modules/realestate.js';
+import './modules/video.js';

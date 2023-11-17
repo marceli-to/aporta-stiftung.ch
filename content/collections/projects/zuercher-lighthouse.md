@@ -10,8 +10,9 @@ video_url: 'https://vimeo.com/658527787'
 open_graph_description: 'Das Zürcher Lighthouse bietet unheilbar kranken, sterbenden Menschen seit über 30 Jahren einen Ort, um zur Ruhe zu kommen. Den Bewohnerinnen und Bewohnern verhilft es zu höchstmöglicher Lebensqualität und einem möglichst autonomen Abschied. Das interdisziplinäre Team garantiert sowohl eine ganzheitliche Pflege und persönliche Betreuung wie auch ein letztes Zuhause. Im Lighthouse leben und tragen alle Mitarbeitenden die Haltung von Offenheit und Ehrlichkeit und respektieren die Wertehaltung jedes Menschen.'
 type: partnerschaften
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700216602
+updated_at: 1700225820
 video_poster: images/projekte/aporta-stiftung-zuercher-lighthouse-video-poster.jpg
+open_graph_title: 'Partnerschaft: Zürcher Lighthouse'
 content:
   -
     type: heading

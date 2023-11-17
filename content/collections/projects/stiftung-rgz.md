@@ -8,10 +8,11 @@ video_url: 'https://vimeo.com/604741370'
 open_graph_description: 'Die Stiftung RgZ unterstützt seit über 60 Jahren die Entwicklung, Lebensgestaltung und soziale Integration von Menschen mit Bewegungsauffälligkeiten, Entwicklungsbeeinträchtigungen, geistiger oder mehrfacher Behinderung, ungeachtet des Schweregrades. Rund 280 Mitarbeitende fördern und betreuen jährlich mehr als 2700 Kinder, Jugendliche und Erwachsene in verschiedenen heil- und sozialpädagogischen Einrichtungen, geschützten Werkstätten, betreuten Wohnungen sowie einem Wohnheim für Erwachsene. Die Stiftung RGZ ist eine politisch und konfessionell neutrale Organisation.'
 type: aktuelle-foerderprojekte
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700216282
+updated_at: 1700225802
 author_name: 'Rudolf Ditz'
 author_position: 'Geschäftsführer Stiftung RgZ'
 video_poster: images/projekte/aporta-stiftung-stiftung-rgz-video-poster.jpg
+open_graph_title: 'Förderprojekt: Stiftung RgZ'
 content:
   -
     type: heading

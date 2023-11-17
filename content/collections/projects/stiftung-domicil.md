@@ -8,10 +8,11 @@ video_url: 'https://vimeo.com/604743646'
 open_graph_description: 'Die Stiftung Domicil unterstützt Familien mit bescheidenem Budget bei der Suche einer guten und bezahlbaren Wohnung in Zürich und hilft ihren Mieterinnen und Mietern auf eine sensible Art bei allen Problemen, die beim Zusammenleben in einer Hausgemeinschaft auftauchen können. Das Ziel der Stiftung ist es, die Wohnsituation der Betroffenen langfristig zu sichern.'
 type: aktuelle-foerderprojekte
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700216226
+updated_at: 1700225792
 author_name: 'Claudia Biagini'
 author_position: 'Bereichsleiterin Wohnraumsicherung, Stv. GL Stiftung Domicil'
 video_poster: images/projekte/aporta-stiftung-stiftung-domicil-video-poster.jpg
+open_graph_title: 'Förderprojekt: Stiftung Domicil'
 content:
   -
     type: heading
