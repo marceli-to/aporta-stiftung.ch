@@ -4,7 +4,7 @@ blueprint: page
 title: 'Gemeinnütziges Engagement'
 author: 3f4934a7-72ef-446c-bf12-5336d13e6898
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700208135
+updated_at: 1700222463
 page_elements:
   -
     id: lp10inxt
@@ -5569,10 +5569,6 @@ page_elements:
                       -
                         type: bold
                     text: "Rheumaliga St. Gallen, Fürstentum Lichtenstein, Bad Ragaz und Graubünden\_\_\_\_\_\_"
-      -
-        type: paragraph
-        attrs:
-          class: null
     type: editor
     enabled: true
 layout: templates/projects

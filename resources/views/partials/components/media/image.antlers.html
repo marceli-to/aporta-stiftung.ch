@@ -14,6 +14,9 @@
       height="{{ image:height }}" 
       width="{{ image:width }}"
       class="block w-full h-auto object-cover {{ image:height > image:width ? 'max-w-[70%]' : '' }}"
+      {{ if isPoster }}
+      data-poster
+      {{ /if }}
       loading="lazy">
   </picture>
   {{ if caption }}

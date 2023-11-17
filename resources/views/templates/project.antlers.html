@@ -6,6 +6,7 @@
   {{ image as="image" }}
   {{ url as="url" }}
   {{ video_url as="video_url" }}
+  {{ video_poster as="video_poster" }}
 {{ /scope:project }}
 
 {{ partial:layout/head }}
@@ -29,6 +30,10 @@
     {{ partial:projects/teaser :project="project" }}
 
     {{ partial:components/editor }}
+
+    {{ if project:video_url }}
+      {{ partial:projects/video :url="project:video_url" :poster="project:video_poster" }}
+    {{ /if }}
 
   </main>
   
