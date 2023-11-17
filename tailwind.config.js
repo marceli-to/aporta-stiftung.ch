@@ -19,7 +19,6 @@ export default {
       },
 
       brightness: {
-        10: '.1',
         85: '.85',
       },
 

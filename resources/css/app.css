@@ -31,6 +31,7 @@ section.content b {
 section.content ul {
   @apply list-disc;
 }
+
 section.content li {
   @apply list-item mb-20 ml-20 pl-6 list-['–_']
 }
@@ -64,3 +65,5 @@ main.page-privacy section.content a {
 footer {
   @apply bg-[url('$img/texture.svg')];
 }
+
+[x-cloak] { display: none !important; }

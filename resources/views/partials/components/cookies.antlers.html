@@ -1,0 +1,15 @@
+{{ if slug != 'datenschutz' }}
+<div x-data="{ show: !localStorage.getItem('cookies-accept')}">
+  <div x-cloak x-show="show"
+    class="bg-sky border border-white text-md md:text-lg fixed w-full sm:w-[420px] lg:w-[500px] hyphens-auto right-0 sm:right-20 bottom-0 sm:bottom-20 p-30">
+    <p>Diese Website benutzt Cookies. Wenn Sie die Website weiter nutzen, gehen wir von Ihrem Einverständnis aus. <a href="{{ link to="datenschutz" }}" target="_blank" class="underline underline-offset-4 decoration-1 hover:no-underline">Datenschutzerklärung lesen</a></p>
+    <div class="mt-24">
+      <button
+        @click="localStorage.setItem('cookies-accept', true); show = false"
+        class="bg-black hover:bg-aqua transition-all font-bold text-white leading-none py-8 px-16">
+        OK
+    </button>
+    </div>
+  </div>
+</div>
+{{ /if }}
