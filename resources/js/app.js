@@ -5,3 +5,4 @@ Alpine.start();
 
 import './modules/realestate.js';
 import './modules/video.js';
+import './modules/menu.js';

@@ -1,11 +1,27 @@
 <header>
   <div class="bg-white flex items-center justify-center relative h-130">
+
     <a href="/" title="Startseite Dr. Stephan à Porta-Stiftung">
       {{ partial:icons/logo class="w-134 h-auto" }}
     </a>
-    <a href="javascript:;" x-on:click="menu = ! menu" title="Menü anzeigen" class="absolute h-130 top-0 right-0 px-30 flex justify-center items-center xl:hidden">
+
+    <a 
+      href="javascript:;" 
+      x-on:click="menu = ! menu" 
+      title="Menü anzeigen" 
+      class="absolute h-130 top-0 right-0 px-30 flex justify-center items-center xl:hidden">
       {{ partial:icons/burger class="w-24 h-auto" }}
     </a>
+
+    <a 
+      href="javascript:;" 
+      x-on:click="menu = ! menu" 
+      title="Menü anzeigen" 
+      class="fixed h-50 w-50 top-40 right-16 rounded-full z-[40] bg-sky hidden justify-center items-center"
+      data-sticky-menu-btn>
+      {{ partial:icons/burger class="w-24 h-auto" }}
+    </a>
+    
     {{ partial:menu/overlay/wrapper }}
   </div>
 </header>
