@@ -4,7 +4,7 @@ blueprint: page
 title: 'Aktuelle Förderprojekte'
 template: templates/content/default
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700152411
+updated_at: 1700208168
 hero_image:
   - images/projekte/aporta-stiftung-fachspital-sune-egge.jpg
   - images/projekte/aporta-stiftung-stiftung-domicil.jpg
@@ -27,12 +27,13 @@ page_elements:
         attrs:
           id: lp1eu8bz
           values:
-            type: project_list
-            project_list:
+            type: project_previews
+            project_previews:
               - 0c462b85-d608-4e0c-90c0-03139dc286fe
               - c527276e-355c-424f-a851-87a089560294
               - 556a6eee-4a1e-40e5-83ed-113292516be5
               - 76c925b3-579b-4461-8eb3-357b578813f2
     type: editor
     enabled: true
+open_graph_title: 'Aktuelle Förderprojekte der à Porta-Stiftung'
 ---

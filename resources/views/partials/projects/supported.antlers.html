@@ -1,0 +1,25 @@
+{{ partial:components/collapsible :id="id" }}
+    
+{{ slot:header }}
+  <div class="flex">
+    <strong>{{ year }}</strong>
+  </div>
+{{ /slot:header}}
+
+{{ slot:content }}
+  <div class="bg-sky p-18">
+    <div class="text-2xl font-bold mb-16">{{ total }}</div>
+    <div class="text-lg leading-[1.3] sm:grid sm:grid-cols-12 sm:gap-x-60">
+      <div class="sm:col-span-6">
+        <h2 class="text-1xl">Zürich</h2>
+        {{ zone_zurich }}
+      </div>
+      <div class="sm:col-span-6">
+        <h2 class="text-1xl mt-48 sm:mt-0">Graubünden</h2>
+        {{ zone_graubunden }}
+      </div>
+    </div>
+  </div>
+{{ /slot:content }}
+
+{{ /partial:components/collapsible}}

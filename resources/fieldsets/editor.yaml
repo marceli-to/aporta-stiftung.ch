@@ -41,7 +41,7 @@ fields:
       hide_display: false
       sets:
         elements:
-          display: Elements
+          display: Elemente
           instructions: null
           icon: programming-module-box-cube
           sets:
@@ -99,10 +99,24 @@ fields:
               fields:
                 -
                   import: film_teaser
-            project_list:
-              display: 'Projekt Liste'
+            project_previews:
+              display: 'Projekt Vorschau'
               instructions: 'Auswahl von Projekten hinzufügen'
               icon: file-content-list
               fields:
                 -
-                  import: project_list
+                  import: project_previews
+            supported_projects:
+              display: 'Unterstützte Projekte'
+              instructions: 'Unterstützte Projekte hinzufügen'
+              icon: form-drop-down-menu
+              fields:
+                -
+                  import: supported_projects
+            anchor:
+              display: Anchor
+              instructions: 'Anker / Scrollziel hinzufügen'
+              icon: link
+              fields:
+                -
+                  import: anchor

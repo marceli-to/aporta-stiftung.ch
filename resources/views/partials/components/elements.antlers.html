@@ -17,20 +17,20 @@
   {{ partial:layout/section }}
     <a name="map"></a>
 
-    {{ partial:components/realestate/map class="w-full h-auto max-w-[800px] mx-auto" }}
+    {{ partial:realestate/map class="w-full h-auto max-w-[800px] mx-auto" }}
 
   {{ /partial:layout/section }}
 
   {{ partial:layout/section }}
 
-    {{ partial:components/realestate/items }}
+    {{ partial:realestate/items }}
 
   {{ /partial:layout/section }}
 
 {{ /if }}
 
-{{ if type == 'project_list' }}
+{{ if type == 'project_previews' }}
 
-  {{ partial:projects/list }}
+  {{ partial:projects/previews }}
 
 {{ /if }}

@@ -49,8 +49,8 @@ page_elements:
         attrs:
           id: lp1eurbp
           values:
-            type: project_list
-            project_list:
+            type: project_previews
+            project_previews:
               - f2927110-1c2e-4573-b78e-18e0d526ac05
               - 3450738f-5ff3-4c10-a079-4c49063c937b
               - 6b75cdc0-20c3-4653-9b91-e7e7ae21160a

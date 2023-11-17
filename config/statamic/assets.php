@@ -103,7 +103,7 @@ return [
           'thumb' => ['w' => 200, 'h' => 200, 'q' => 75, 'fit' => 'crop_focal'],
           'large' => ['w' => 1600, 'h' => 1000, 'q' => 90, 'fit' => 'crop_focal'],
 
-          // Hero images
+          // Hero Images
           // webp
           'hero-md-webp' => ['w' => 1024, 'h' => 490, 'q' => 85, 'fit' => 'crop_focal', 'fm' => 'webp'],
           'hero-lg-webp' => ['w' => 1280, 'h' => 615, 'q' => 85, 'fit' => 'crop_focal', 'fm' => 'webp'],

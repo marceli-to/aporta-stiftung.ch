@@ -37,11 +37,24 @@
     {{ partial:components/media/video-embed }}
   {{ /if }}
 
-  {{ if type == 'project_list' }}
+  {{ if type == 'project_previews' }}
 
-    {{ partial:projects/list }}
+    {{ partial:projects/previews }}
 
   {{ /if }}
+
+  {{ if type == 'supported_projects' }}
+
+    {{ partial:projects/supported }}
+
+  {{ /if }}
+
+  {{ if type == 'anchor' }}
+
+    {{ partial:components/anchor }}
+
+  {{ /if }}
+
 
 
 {{ /content }}

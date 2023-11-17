@@ -1,14 +1,14 @@
-title: 'Project List'
+title: 'Project Previews'
 fields:
   -
-    handle: project_list
+    handle: project_previews
     field:
       mode: default
       create: true
       collections:
         - projects
       type: entries
-      display: 'Projekt Liste'
+      display: 'Projekt Vorschau'
       icon: entries
       listable: hidden
       instructions_position: above

@@ -18,6 +18,10 @@ details .open {
   @apply hidden
 }
 
+details[open] {
+  @apply border-none
+}
+
 details[open] .close {
   @apply hidden
 }

@@ -1,4 +1,4 @@
-<details class="border-b border-b-black mb-8 sm:mb-16 scroll-mt-5 {{ class }}" data-collapsible-item="{{ id }}">
+<details class="border-b border-b-black mb-8 scroll-mt-5 {{ class }}" data-collapsible-item="{{ id }}">
   <summary class="flex items-center leading-none justify-between cursor-pointer group">
     <div class="select-none text-left leading-none py-12 text-1xl sm:text-3xl md:text-4xl">
       {{ slot:header }}
@@ -6,7 +6,7 @@
     {{ partial:icons/plus class="close w-18 h-18 sm:w-22 sm:h-22 shrink-0" }}
     {{ partial:icons/minus class="open w-18 h-18 sm:w-22 sm:h-22 shrink-0" }}
   </summary>
-  <div class="py-18 pb-36">
+  <div class="pt-9 pb-18 {{ innerClass }}">
     {{ slot:content }}
   </div>
 </details>
