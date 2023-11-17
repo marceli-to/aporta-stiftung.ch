@@ -7,9 +7,9 @@ updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
 updated_at: 1700152431
 hero_image:
   - images/projekte/aporta-stiftung-juwo.jpg
-  - images/projekte/aporta-stiftung-lighthouse_zh.jpg
+  - images/projekte/aporta-stiftung-zuercher-lighthouse.jpg
   - images/projekte/aporta-stiftung-sogartheater.jpg
-  - images/projekte/aporta-stiftung-hiwoz.jpg
+  - images/projekte/aporta-stiftung-verein-hiwoz.jpg
 page_elements:
   -
     id: lp1e3oxq

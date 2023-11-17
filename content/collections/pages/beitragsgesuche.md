@@ -4,16 +4,7 @@ blueprint: page
 title: Beitragsgesuche
 template: templates/content/default
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700063766
-hero_image:
-  - images/header/aporta-stiftung-header-arbeitskette.jpg
-  - images/header/aporta-stiftung-header-juwo.jpg
-  - images/header/aporta-stiftung-header-stiftungdomicil.jpg
-  - images/header/aporta-stiftung-header-sogartheater.jpg
-  - images/header/aporta-stiftung-header-sieber.jpg
-  - images/header/aporta-stiftung-header-rgz.jpg
-  - images/header/aporta-stiftung-header-lighthouse_zh.jpg
-  - images/header/aporta-stiftung-header-verein-hiwoz.jpg
+updated_at: 1700216957
 page_elements:
   -
     id: lozxse8j
@@ -151,4 +142,6 @@ page_elements:
             target: _blank
     type: editor
     enabled: true
+hero_image:
+  - images/header/aporta-stiftung-header-beitragsgesuche.jpg
 ---

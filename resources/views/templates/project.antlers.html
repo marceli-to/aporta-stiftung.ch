@@ -1,0 +1,39 @@
+{{ scope:project }}
+  {{ title as="title" }}
+  {{ quote as="quote" }}
+  {{ author_name as="author_name" }}
+  {{ author_position as="author_position" }}
+  {{ image as="image" }}
+  {{ url as="url" }}
+  {{ video_url as="video_url" }}
+{{ /scope:project }}
+
+{{ partial:layout/head }}
+
+{{ partial:layout/body }}
+
+  {{ partial:layout/header }}
+
+  {{ if project:image }}
+    {{ partial:components/hero/image 
+        :url="project:image:url" 
+        :title="project:title" 
+        :width="project:image:width" 
+        :height="project:image:height" }}
+  {{ /if }}
+
+  {{ partial:menu/main/wrapper }}
+
+  <main class="flex-1 xl:-mt-30">
+
+    {{ partial:projects/teaser :project="project" }}
+
+    {{ partial:components/editor }}
+
+  </main>
+  
+  {{ partial:layout/footer }}
+
+{{ /partial:layout/body}}
+
+</html>

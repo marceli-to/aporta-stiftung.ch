@@ -68,7 +68,7 @@ tabs:
     display: Medien
     sections:
       -
-        display: 'Neuer Abschnitt'
+        display: Medien
         fields:
           -
             handle: image
@@ -100,6 +100,25 @@ tabs:
               instructions: 'Video URL (z.B. https://vimeo.com/604646233)'
               listable: hidden
               instructions_position: below
+              visibility: visible
+              replicator_preview: true
+              hide_display: false
+          -
+            handle: video_poster
+            field:
+              max_files: 1
+              min_files: 1
+              mode: list
+              container: assets
+              restrict: false
+              allow_uploads: true
+              show_filename: true
+              show_set_alt: true
+              type: assets
+              display: 'Video Poster'
+              icon: assets
+              listable: hidden
+              instructions_position: above
               visibility: visible
               replicator_preview: true
               hide_display: false
@@ -178,8 +197,8 @@ tabs:
             handle: type
             field:
               options:
-                project: Förderprojekt
-                partnership: Partnerschaft
+                aktuelle-foerderprojekte: 'Aktuelle Förderprojekte'
+                partnerschaften: Partnerschaften
               taggable: false
               push_tags: false
               multiple: false
@@ -188,8 +207,22 @@ tabs:
               cast_booleans: false
               default: project
               type: select
-              display: Typ
+              display: Kategorie
               icon: select
+              listable: hidden
+              instructions_position: above
+              visibility: visible
+              replicator_preview: true
+              hide_display: false
+          -
+            handle: template
+            field:
+              hide_partials: true
+              blueprint: false
+              folder: partials/projects
+              type: template
+              display: Template
+              icon: template
               listable: hidden
               instructions_position: above
               visibility: visible

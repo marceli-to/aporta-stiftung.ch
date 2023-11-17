@@ -1,7 +1,8 @@
 title: Projekte
-template: default
-layout: layout
+template: templates/content/default
+layout: templates/project
 revisions: false
+route: 'gemeinnuetziges-engagement/{type}/{slug}'
 sort_dir: asc
 date_behavior:
   past: public

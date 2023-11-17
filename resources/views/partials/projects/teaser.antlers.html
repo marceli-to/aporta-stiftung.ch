@@ -19,7 +19,7 @@
         </div>
       {{ /if }}
       {{ if hasMoreLink }}
-        {{ partial:components/links/page text="mehr erfahren" class="font-bold" }}
+        {{ partial:components/links/page text="mehr erfahren" class="font-bold" :url="project:url" }}
       {{ /if }}
     </div>
 {{ /partial:layout/section }}

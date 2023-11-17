@@ -10,10 +10,19 @@ video_url: 'https://vimeo.com/646453428'
 open_graph_description: |-
   Das Jugendwohnnetz Juwo wurde während der Jugendbewegung anfangs der 80er Jahre gegründet. Seit 1983 vermietet die gemeinnützige Organisation bezahlbaren Wohnraum an junge Menschen in Ausbildung.
   Die Dr. Stephan à Porta-Stiftung überlässt dem Juwo seit Jahren Wohnungen für kürzere oder längere Zwischennutzungen. Zudem stellt die Stiftung dem Juwo in der neuen Siedlung Eglistrasse vier massgeschneiderte WG-Wohnungen für insgesamt 30 Bewohnerinnen und Bewohner zur Verfügung.
-type: partnership
+type: partnerschaften
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700127435
+updated_at: 1700216525
+video_poster: images/projekte/aporta-stiftung-jugendwohnnetz-juwo-video-poster.jpg
 content:
+  -
+    type: heading
+    attrs:
+      level: 1
+    content:
+      -
+        type: text
+        text: 'Jugendwohnnetz JUWO'
   -
     type: paragraph
     attrs:

@@ -5,13 +5,22 @@ title: 'Stiftung Arbeitskette'
 quote: 'Wir konnten dank der à Porta-Stiftung die Produktionsküche neu aufbauen und so Arbeits- und Ausbildungsplätze retten.'
 image: images/projekte/aporta-stiftung-stiftung-arbeitskette.jpg
 video_url: 'https://vimeo.com/604751666'
-type: project
+type: aktuelle-foerderprojekte
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700126807
+updated_at: 1700216149
 open_graph_description: 'Die Stiftung Arbeitskette wurde im Jahr 1977 gegründet und engagiert sich in verschiedenen Arbeitsintegrationsprojekten. Als Pionierin eröffnete sie 1994 den ersten eigenen Gastronomiebetrieb in der Schweiz mit Integrationsarbeitsplätzen. Das Restaurant Limmathof steht noch heute erfolgreich unter Führung der Arbeitskette. Inzwischen gehören sechs weitere, von Gastroprofis geführte Betriebe zur Familie der Arbeitskette. Dies ist ein klarer Erfolgsausweis für dieses Modell.'
 author_name: 'Daniela Küng'
 author_position: 'Präsidentin des Stiftungsrates, Stiftung Arbeitskette'
+video_poster: images/projekte/aporta-stiftung-stiftung-arbeitskette-video-poster.jpg
 content:
+  -
+    type: heading
+    attrs:
+      level: 1
+    content:
+      -
+        type: text
+        text: 'Stiftung Arbeitskette'
   -
     type: paragraph
     attrs:
