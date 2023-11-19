@@ -9,17 +9,23 @@
       <form>
         <h2>Personendaten</h2>
         <form-grid>
-          <form-group class="col-span-6">
-            <form-label :required="true" :errors="errors.main_tenant_salutation">Anrede</form-label>
-            <select v-model="form.main_tenant_salutation" class="border ring-0 focus:ring-0 focus:border-black px-12 py-10 w-full text-lg outline-none">
-              <option value="Frau">Frau</option>
-              <option value="Herr">Herr</option>
-            </select>
-          </form-group>
-        </form-grid>
-        <form-grid>
-          <form-group :error="errors.main_tenant_lastname" class="mb-15 sm:mb-0">
-            <form-label :required="true" :error="errors.main_tenant_lastname">Familienname</form-label>
+          <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
+            <form-group :error="errors.main_tenant_salutation">
+              <form-label :error="errors.main_tenant_salutation">Anrede</form-label>
+              <form-select 
+                v-model="form.main_tenant_salutation" 
+                :options="[
+                  { label: 'Frau', value: 'Frau' },
+                  { label: 'Herr', value: 'Herr' },
+                ]"
+                :error="errors.main_tenant_salutation"
+                @blur="validateField('main_tenant_salutation')"
+                @focus="removeError('main_tenant_salutation')">
+              </form-select>
+            </form-group>
+          </div>
+          <form-group :error="errors.main_tenant_lastname">
+            <form-label :error="errors.main_tenant_lastname">Familienname</form-label>
             <form-input 
               type="text" 
               v-model="form.main_tenant_lastname" 
@@ -29,7 +35,7 @@
             </form-input>
           </form-group>
           <form-group :error="errors.main_tenant_firstname">
-            <form-label :required="true" :error="errors.main_tenant_firstname">Vorname</form-label>
+            <form-label :error="errors.main_tenant_firstname">Vorname</form-label>
             <form-input 
               type="text" 
               v-model="form.main_tenant_firstname" 
@@ -38,10 +44,8 @@
               @focus="removeError('main_tenant_firstname')">
             </form-input>
           </form-group>
-        </form-grid>
-        <form-grid>
-          <form-group :error="errors.main_tenant_street_number" class="mb-15 sm:mb-0">
-            <form-label :required="true" :error="errors.main_tenant_street_number">Strasse und Hausnummer</form-label>
+          <form-group :error="errors.main_tenant_street_number">
+            <form-label :error="errors.main_tenant_street_number">Strasse und Hausnummer</form-label>
             <form-input 
               type="text" 
               v-model="form.main_tenant_street_number" 
@@ -51,7 +55,7 @@
             </form-input>
           </form-group>
           <form-group :error="errors.main_tenant_postal_code_city">
-            <form-label :required="true" :error="errors.main_tenant_postal_code_city">PLZ und Ort</form-label>
+            <form-label :error="errors.main_tenant_postal_code_city">PLZ und Ort</form-label>
             <form-input 
               type="text" 
               v-model="form.main_tenant_postal_code_city" 
@@ -60,10 +64,8 @@
               @focus="removeError('main_tenant_postal_code_city')">
             </form-input>
           </form-group>
-        </form-grid>
-        <form-grid>
-          <form-group :error="errors.main_tenant_birthdate" class="mb-15 sm:mb-0">
-            <form-label :required="true" :error="errors.main_tenant_birthdate">Geburtsdatum</form-label>
+          <form-group :error="errors.main_tenant_birthdate">
+            <form-label :error="errors.main_tenant_birthdate">Geburtsdatum</form-label>
             <form-input 
               type="date" 
               v-model="form.main_tenant_birthdate" 
@@ -74,29 +76,40 @@
             </form-input>
           </form-group>
           <form-group :error="errors.main_tenant_marital_status">
-            <form-label :required="true" :error="errors.main_tenant_marital_status">Familienstand</form-label>
-            <select v-model="form.main_tenant_marital_status" class="border ring-0 focus:ring-0 focus:border-black px-12 py-10 w-full text-lg outline-none">
+            <form-label :error="errors.main_tenant_marital_status">Familienstand</form-label>
+            <form-select v-model="form.main_tenant_marital_status">
               <option value="ledig">ledig</option>
               <option value="verheiratet">verheiratet</option>
               <option value="geschieden">geschieden</option>
               <option value="eingetragene Partnerschaft">eingetragene Partnerschaft</option>
               <option value="aufgelöste Partnerschaft">aufgelöste Partnerschaft</option>
               <option value="verwitwet">verwitwet</option>
-            </select>
+            </form-select>
           </form-group>
-        </form-grid>
-        <form-grid>
-          <form-group :error="errors.main_tenant_nationality" class="col-span-6">
-            <form-label :required="true" :errors="errors.main_tenant_nationality">Nationalität</form-label>
-            <select v-model="form.main_tenant_nationality" class="border ring-0 focus:ring-0 focus:border-black px-12 py-10 w-full text-lg outline-none">
-              <option value="CH">CH</option>
-              <option value="Andere">Andere</option>
-            </select>
+          <form-group :error="errors.main_tenant_nationality">
+            <form-label :error="errors.main_tenant_nationality">Nationalität</form-label>
+            <form-select v-model="form.main_tenant_nationality"
+              :options="[
+                { label: 'CH', value: 'CH' },
+                { label: 'Andere', value: 'Andere' },
+              ]"
+              :error="errors.main_tenant_nationality"
+              @blur="validateField('main_tenant_nationality')"
+              @focus="removeError('main_tenant_nationality')">
+            </form-select>
           </form-group>
-        </form-grid>
-        <form-grid>
+          <form-group :error="errors.main_tenant_home_town">
+            <form-label :error="errors.main_tenant_home_town">Heimatort</form-label>
+            <form-input 
+              type="text" 
+              v-model="form.main_tenant_home_town" 
+              :error="errors.main_tenant_home_town"
+              @blur="validateField('main_tenant_home_town')"
+              @focus="removeError('main_tenant_home_town')">
+            </form-input>
+          </form-group>
           <form-group :error="errors.main_tenant_private_phone">
-            <form-label :required="true" :error="errors.main_tenant_private_phone">Telefon* (privat)</form-label>
+            <form-label :error="errors.main_tenant_private_phone">Telefon* (privat)</form-label>
             <form-input 
               type="text" 
               v-model="form.main_tenant_private_phone" 
@@ -106,7 +119,7 @@
             </form-input>
           </form-group>
           <form-group :error="errors.main_tenant_work_phone">
-            <form-label :required="true" :error="errors.main_tenant_work_phone">Telefon* (geschäftlich)</form-label>
+            <form-label :error="errors.main_tenant_work_phone">Telefon* (geschäftlich)</form-label>
             <form-input 
               type="text" 
               v-model="form.main_tenant_work_phone" 
@@ -115,10 +128,8 @@
               @focus="removeError('main_tenant_work_phone')">
             </form-input>
           </form-group>
-        </form-grid>
-        <form-grid>
           <form-group :error="errors.main_tenant_email">
-            <form-label :required="true" :error="errors.main_tenant_email">E-Mail-Adresse</form-label>
+            <form-label :error="errors.main_tenant_email">E-Mail-Adresse</form-label>
             <form-input 
               type="email" 
               v-model="form.main_tenant_email" 
@@ -128,7 +139,7 @@
             </form-input>
           </form-group>
           <form-group :error="errors.main_tenant_occupation">
-            <form-label :required="true" :error="errors.main_tenant_occupation">Beruf</form-label>
+            <form-label :error="errors.main_tenant_occupation">Beruf</form-label>
             <form-input 
               type="text" 
               v-model="form.main_tenant_occupation" 
@@ -137,45 +148,128 @@
               @focus="removeError('main_tenant_occupation')">
             </form-input>
           </form-group>
-        </form-grid>
-        <form-grid>
           <form-group :error="errors.main_tenant_employment_status">
-            <form-label :required="true" :error="errors.main_tenant_employment_status">Erwerbssituation</form-label>
-            <select v-model="form.main_tenant_employment_status" class="border ring-0 focus:ring-0 focus:border-black px-12 py-10 w-full text-lg outline-none">
-              <option value="Angestellt">Angestellt</option>
-              <option value="Student*in">Student*in</option>
-              <option value="Selbständig">Selbständig</option>
-              <option value="Arbeitslos">Arbeitslos</option>
-              <option value="IV-Rente">IV-Rente</option>
-              <option value="Im Ruhestand (pensioniert)">Im Ruhestand (pensioniert)</option>
-              <option value="Familienmanager*in">Familienmanager*in</option>
-            </select>
+            <form-label :error="errors.main_tenant_employment_status">Erwerbssituation</form-label>
+            <form-select v-model="form.main_tenant_employment_status"
+              :options="[
+                { label: 'Student*in', value: 'Student*in' },
+                { label: 'Selbständig', value: 'Selbständig' },
+                { label: 'Arbeitslos', value: 'Arbeitslos' },
+                { label: 'IV-Rente', value: 'IV-Rente' },
+                { label: 'Im Ruhestand (pensioniert)', value: 'Im Ruhestand (pensioniert)' },
+                { label: 'Familienmanager*in', value: 'Familienmanager*in' },
+              ]"
+              :error="errors.main_tenant_employment_status"
+              @blur="validateField('main_tenant_employment_status')"
+              @focus="removeError('main_tenant_employment_status')">
+            </form-select>
           </form-group>
           <form-group :error="errors.main_tenant_debt_enforcement_yn">
-            <form-label :required="true" :error="errors.main_tenant_debt_enforcement_yn">Betreibungen</form-label>
-            <select v-model="form.main_tenant_debt_enforcement_yn" class="border ring-0 focus:ring-0 focus:border-black px-12 py-10 w-full text-lg outline-none">
-              <option value="Ja, ich hatte Betreibungen in den letzten zwei Jahren">Ja, ich hatte Betreibungen in den letzten zwei Jahren</option>
-              <option value="Nein, ich hatte keine Betreibungen in den letzten zwei Jahren">Nein, ich hatte keine Betreibungen in den letzten zwei Jahren</option>
-            </select>
+            <form-label :error="errors.main_tenant_debt_enforcement_yn">Betreibungen</form-label>
+            <form-select v-model="form.main_tenant_debt_enforcement_yn"
+              :options="[
+                { label: 'Ja, ich hatte Betreibungen in den letzten zwei Jahren', value: 'Ja, ich hatte Betreibungen in den letzten zwei Jahren' },
+                { label: 'Nein, ich hatte keine Betreibungen in den letzten zwei Jahren', value: 'Nein, ich hatte keine Betreibungen in den letzten zwei Jahren' },
+              ]"
+              :error="errors.main_tenant_debt_enforcement_yn"
+              @blur="validateField('main_tenant_debt_enforcement_yn')"
+              @focus="removeError('main_tenant_debt_enforcement_yn')">
+            </form-select>
           </form-group>
         </form-grid>
         <h2>Aktuelle Wohnsituation</h2>
         <form-grid>
           <form-group :error="errors.main_tenant_current_rent_tenant_role">
-            <form-label :required="true" :error="errors.main_tenant_current_rent_tenant_role">Aktuelle Wohnsituation</form-label>
-            <select v-model="form.main_tenant_current_rent_tenant_role" class="border ring-0 focus:ring-0 focus:border-black px-12 py-10 w-full text-lg outline-none">
-              <option value="Ich bin Hauptmieter*in">Ich bin Hauptmieter*in</option>
-              <option value="Ich bin Untermieter*in">Ich bin Untermieter*in</option>
-            </select>
+            <form-label :error="errors.main_tenant_current_rent_tenant_role">Aktuelle Wohnsituation</form-label>
+            <form-select v-model="form.main_tenant_current_rent_tenant_role"
+              :options="[
+                { label: 'Ich bin Hauptmieter*in', value: 'Ich bin Hauptmieter*in' },
+                { label: 'Ich bin Untermieter*in', value: 'Ich bin Untermieter*in' },
+              ]"
+              :error="errors.main_tenant_current_rent_tenant_role"
+              @blur="validateField('main_tenant_current_rent_tenant_role')"
+              @focus="removeError('main_tenant_current_rent_tenant_role')">
+            </form-select>
           </form-group>
           <form-group :error="errors.main_tenant_current_rent_terminator">
-            <form-label :required="true" :error="errors.main_tenant_current_rent_terminator">Wurde Ihr aktuelles Mietverhältnis durch Ihre*n Vermieter*in gekündigt?</form-label>
-            <select v-model="form.main_tenant_current_rent_terminator" class="border ring-0 focus:ring-0 focus:border-black px-12 py-10 w-full text-lg outline-none">
-              <option value="Ja">Ja</option>
-              <option value="Nein">Nein</option>
-            </select>
+            <form-label :error="errors.main_tenant_current_rent_terminator">Wurde Ihr aktuelles Mietverhältnis durch Ihre*n Vermieter*in gekündigt?</form-label>
+            <form-select v-model="form.main_tenant_current_rent_terminator"
+              :options="[
+                { label: 'Ja', value: 'Ja' },
+                { label: 'Nein', value: 'Nein' },
+              ]"
+              :error="errors.main_tenant_current_rent_terminator"
+              @blur="validateField('main_tenant_current_rent_terminator')"
+              @focus="removeError('main_tenant_current_rent_terminator')">
+            </form-select>
+          </form-group>
+          <form-group :error="errors.main_tenant_current_renter_name">
+            <form-label :error="errors.main_tenant_current_renter_name">Aktuelle*r Vermieter*in*</form-label>
+            <form-input 
+              type="text" 
+              v-model="form.main_tenant_current_renter_name" 
+              :error="errors.main_tenant_current_renter_name"
+              @blur="validateField('main_tenant_current_renter_name')"
+              @focus="removeError('main_tenant_current_renter_name')">
+            </form-input>
+          </form-group>
+          <form-group :error="errors.main_tenant_current_renter_phone">
+            <form-label :error="errors.main_tenant_current_renter_phone">Vermieter*in Telefon</form-label>
+            <form-input 
+              type="text" 
+              v-model="form.main_tenant_current_renter_phone" 
+              :error="errors.main_tenant_current_renter_phone"
+              @blur="validateField('main_tenant_current_renter_phone')"
+              @focus="removeError('main_tenant_current_renter_phone')">
+            </form-input>
+          </form-group>
+          <form-group :error="errors.main_tenant_current_renter_rent_duration">
+            <form-label :error="errors.main_tenant_current_renter_rent_duration">Wie lange leben Sie in der aktuellen Wohnung?</form-label>
+            <form-select v-model="form.main_tenant_current_renter_rent_duration"
+              :options="[
+                { label: 'Weniger als 1 Jahr', value: 'Weniger als 1 Jahr' },
+                { label: '1 bis 2 Jahre', value: '1 bis 2 Jahre' },
+                { label: 'Mehr als 2 Jahre', value: 'Mehr als 2 Jahre' },
+              ]"
+              :error="errors.main_tenant_current_renter_rent_duration"
+              @blur="validateField('main_tenant_current_renter_rent_duration')"
+              @focus="removeError('main_tenant_current_renter_rent_duration')">
+            </form-select>
           </form-group>
         </form-grid>
+        <h2>Weitere Person</h2>
+        <form-grid>
+          <form-group :error="errors.sub_tenant_yn">
+            <form-label :error="errors.sub_tenant_yn">Werden Sie die Wohnung teilen?</form-label>
+            <form-select
+              v-model="form.sub_tenant_yn"
+              :options="[
+                { label: 'Ja', value: 'Ja' },
+                { label: 'Nein', value: 'Nein' },
+              ]"
+              :error="errors.sub_tenant_yn"
+              @blur="validateField('sub_tenant_yn')"
+              @focus="removeError('sub_tenant_yn')">
+            </form-select>
+          </form-group>
+          <template v-if="form.sub_tenant_yn == 'Ja'">
+            <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
+            <form-group>
+              <form-label class="mb-12">Mit wem werden Sie die Wohnung teilen?</form-label>
+              <div class="grid grid-cols-12 gap-15">
+                <form-group>
+                  <form-checkbox id="sub_tenant_1" v-model="form.sub_tenant_type_1">
+                    <template v-slot:label>
+                      Ehepartner*in
+                    </template>
+                  </form-checkbox>
+                </form-group>
+              </div>
+            </form-group>
+            </div>
+          </template>
+        </form-grid>
+        
         <!--
         <form-grid>
           <form-group class="col-span-12">
@@ -208,6 +302,7 @@ import FormGrid from '@/form/components/form/Grid.vue';
 import FormGroup from '@/form/components/form/Group.vue';
 import FormLabel from '@/form/components/form/Label.vue';
 import FormInput from '@/form/components/form/Input.vue';
+import FormSelect from '@/form/components/form/Select.vue';
 import FormCheckbox from '@/form/components/form/Checkbox.vue';
 import FormTextarea from '@/form/components/form/Textarea.vue';
 import ValidationErrors from '@/form/components/form/ValidationErrors.vue';
@@ -220,6 +315,7 @@ export default {
     FormGroup,
     FormLabel,
     FormInput,
+    FormSelect,
     FormTextarea,
     FormCheckbox,
     ValidationErrors,
@@ -227,9 +323,7 @@ export default {
   },
 
   data() {
-
     return {
-
       form: {
         main_tenant_salutation: 'Frau',
         main_tenant_lastname: null,
@@ -239,6 +333,7 @@ export default {
         main_tenant_birthdate: null,
         main_tenant_marital_status: 'ledig',
         main_tenant_nationality: 'CH',
+        main_tenant_home_town: null,
         main_tenant_email: null,
         main_tenant_private_phone: null,
         main_tenant_work_phone: null,
@@ -247,6 +342,11 @@ export default {
         main_tenant_debt_enforcement_yn: 'Ja, ich hatte Betreibungen in den letzten zwei Jahren',
         main_tenant_current_rent_tenant_role: 'Ich bin Hauptmieter*in',
         main_tenant_current_rent_terminator: 'Ja',
+        main_tenant_current_renter_name: null,
+        main_tenant_current_renter_phone: null,
+        main_tenant_current_renter_rent_duration: 'Weniger als 1 Jahr',
+        sub_tenant_yn: 'Nein',
+        sub_tenant_type_1: null,
       },
 
       errors: {
@@ -258,6 +358,7 @@ export default {
         main_tenant_birthdate: null,
         main_tenant_marital_status: null,
         main_tenant_nationality: null,
+        main_tenant_home_town: null,
         main_tenant_email: null,
         main_tenant_private_phone: null,
         main_tenant_work_phone: null,
@@ -266,7 +367,20 @@ export default {
         main_tenant_debt_enforcement_yn: null,
         main_tenant_current_rent_tenant_role: null,
         main_tenant_current_rent_terminator: null,
+        main_tenant_current_renter_name: null,
+        main_tenant_current_renter_phone: null,
+        main_tenant_current_renter_rent_duration: null,
+        sub_tenant_yn: null,
+        sub_tenant_type: null,
       },
+
+      sub_tenant_types: [
+        'Ehepartner*in',
+        'Lebenspartner*in mit eingetragener Partnerschaft',
+        'Lebenspartner*in',
+        'Mitbewohner*in',
+        'Kinder'
+      ],
 
       validationErrors: [],
 
@@ -345,6 +459,15 @@ export default {
       this.form = {};
       this.errors = {};
     },
+  },
+
+  watch: {
+    form: {
+      handler(newValue, oldValue) {
+        console.log(this.form);
+      },
+      deep: true
+    }
   },
 
   computed: {

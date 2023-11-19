@@ -1,5 +1,5 @@
 <template>
-  <label :class="[$props.error ? 'text-red-500' : '', 'text-lg mb-6 block']">
+  <label :class="[$props.error ? 'text-red-500' : '', 'text-md mb-6 block']">
     <slot />
     <strong v-if="required">*</strong>
   </label>
@@ -9,7 +9,7 @@ export default {
   props: {
     required: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     error: {
       type: Boolean,
