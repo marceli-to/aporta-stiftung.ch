@@ -95,7 +95,7 @@
           </form-group>
         </form-grid>
         <form-grid>
-          <form-group :error="errors.main_tenant_private_phone" class="mb-15 md:mb-0">
+          <form-group :error="errors.main_tenant_private_phone">
             <form-label :required="true" :error="errors.main_tenant_private_phone">Telefon* (privat)</form-label>
             <form-input 
               type="text" 
@@ -117,7 +117,7 @@
           </form-group>
         </form-grid>
         <form-grid>
-          <form-group :error="errors.main_tenant_email" class="mb-15 md:mb-0">
+          <form-group :error="errors.main_tenant_email">
             <form-label :required="true" :error="errors.main_tenant_email">E-Mail-Adresse</form-label>
             <form-input 
               type="email" 
@@ -139,7 +139,7 @@
           </form-group>
         </form-grid>
         <form-grid>
-          <form-group :error="errors.main_tenant_employment_status" class="mb-15 md:mb-0">
+          <form-group :error="errors.main_tenant_employment_status">
             <form-label :required="true" :error="errors.main_tenant_employment_status">Erwerbssituation</form-label>
             <select v-model="form.main_tenant_employment_status" class="border ring-0 focus:ring-0 focus:border-black px-12 py-10 w-full text-lg outline-none">
               <option value="Angestellt">Angestellt</option>
@@ -161,11 +161,18 @@
         </form-grid>
         <h2>Aktuelle Wohnsituation</h2>
         <form-grid>
-          <form-group>
+          <form-group :error="errors.main_tenant_current_rent_tenant_role">
             <form-label :required="true" :error="errors.main_tenant_current_rent_tenant_role">Aktuelle Wohnsituation</form-label>
             <select v-model="form.main_tenant_current_rent_tenant_role" class="border ring-0 focus:ring-0 focus:border-black px-12 py-10 w-full text-lg outline-none">
               <option value="Ich bin Hauptmieter*in">Ich bin Hauptmieter*in</option>
               <option value="Ich bin Untermieter*in">Ich bin Untermieter*in</option>
+            </select>
+          </form-group>
+          <form-group :error="errors.main_tenant_current_rent_terminator">
+            <form-label :required="true" :error="errors.main_tenant_current_rent_terminator">Wurde Ihr aktuelles Mietverhältnis durch Ihre*n Vermieter*in gekündigt?</form-label>
+            <select v-model="form.main_tenant_current_rent_terminator" class="border ring-0 focus:ring-0 focus:border-black px-12 py-10 w-full text-lg outline-none">
+              <option value="Ja">Ja</option>
+              <option value="Nein">Nein</option>
             </select>
           </form-group>
         </form-grid>
@@ -239,6 +246,7 @@ export default {
         main_tenant_employment_status: 'Angestellt',
         main_tenant_debt_enforcement_yn: 'Ja, ich hatte Betreibungen in den letzten zwei Jahren',
         main_tenant_current_rent_tenant_role: 'Ich bin Hauptmieter*in',
+        main_tenant_current_rent_terminator: 'Ja',
       },
 
       errors: {
@@ -257,6 +265,7 @@ export default {
         main_tenant_employment_status: null,
         main_tenant_debt_enforcement_yn: null,
         main_tenant_current_rent_tenant_role: null,
+        main_tenant_current_rent_terminator: null,
       },
 
       validationErrors: [],
