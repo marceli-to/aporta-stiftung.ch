@@ -67,6 +67,13 @@ tabs:
                       fields:
                         -
                           import: project_previews
+                    application_form:
+                      display: Bewerbungsformular
+                      instructions: null
+                      icon: form-text-field
+                      fields:
+                        -
+                          import: application_form
               type: replicator
               display: Inhalte
               icon: replicator

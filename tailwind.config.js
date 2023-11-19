@@ -47,6 +47,7 @@ export default {
       colors: {
         'sky': '#E5EFF6',
         'aqua': '#8cafcb',
+        'steel': '#818084',
       },
 
       screens: {
@@ -312,5 +313,6 @@ export default {
 
   plugins: [
     require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
   ],
 };

@@ -4,7 +4,7 @@ blueprint: page
 title: Wohnungsbewerbung
 template: templates/content/default
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1699998587
+updated_at: 1700243757
 hero_image:
   - images/header/aporta-stiftung-header-wohnungsbewerbung.jpg
 page_elements:
@@ -44,5 +44,9 @@ page_elements:
             type: text
             text: 'Wir werden an dieser Stelle informieren, sobald wir wieder neue Bewerbungen entgegennehmen können. Vielen Dank für Ihr Verständnis.'
     type: editor
+    enabled: true
+  -
+    id: lp2x8c6k
+    type: application_form
     enabled: true
 ---
