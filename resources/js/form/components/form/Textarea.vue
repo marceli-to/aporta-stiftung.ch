@@ -5,7 +5,7 @@
     :value="modelValue"
     :placeholder="placeholder"
     @input="updateInput"
-    :class="[$props.error ? 'bg-red-100' : 'bg-white', ' border-0 ring-0 focus:ring-0 px-10 lg:py-15 w-full text-base placeholder:text-base placeholder:text-graphite min-h-[150px]']">
+    :class="[$props.error ? 'border-red-500' : 'bg-white', 'border ring-0 focus:ring-0 focus:border-black px-12 py-10 w-full text-lg min-h-[150px]']">
   </textarea>
 </template>
 <script>

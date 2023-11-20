@@ -7,6 +7,7 @@
     <template v-else>
       <validation-errors :validationErrors="validationErrors" v-if="validationErrors.length > 0" />
       <form>
+        
         <h2>Personendaten</h2>
         <form-grid>
           <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
@@ -162,6 +163,7 @@
             </form-select>
           </form-group>
         </form-grid>
+        
         <h2>Aktuelle Wohnsituation</h2>
         <form-grid>
           <form-group :error="errors.main_tenant_current_rent_tenant_role">
@@ -182,6 +184,15 @@
               @focus="removeError('main_tenant_current_rent_terminator')">
             </form-select>
           </form-group>
+          <template v-if="form.main_tenant_current_rent_terminator == 'Ja'">
+            <form-group class="!col-span-12" :error="errors.main_tenant_current_rent_terminator_reason">
+              <form-label :error="errors.main_tenant_current_rent_terminator_reason">Geben Sie bitte den Grund an, weshalb Ihnen Ihr*e Vermieter*in gekündigt hat:</form-label>
+              <form-textarea :error="errors.main_tenant_current_rent_terminator_reason" v-model="form.main_tenant_current_rent_terminator_reason"
+                @blur="validateField('main_tenant_current_rent_terminator_reason')"
+                @focus="removeError('main_tenant_current_rent_terminator_reason')">
+              </form-textarea>
+            </form-group>
+          </template>
           <form-group :error="errors.main_tenant_current_renter_name">
             <form-label :error="errors.main_tenant_current_renter_name">Aktuelle*r Vermieter*in*</form-label>
             <form-input 
@@ -211,7 +222,20 @@
               @focus="removeError('main_tenant_current_renter_rent_duration')">
             </form-select>
           </form-group>
+          <template v-if="form.main_tenant_current_renter_rent_duration == 'Weniger als 1 Jahr'">
+            <form-group class="!col-span-12" :error="errors.main_tenant_current_renter_previous_renter">
+              <form-label :error="errors.main_tenant_current_renter_previous_renter">Geben Sie bitte Name und Telefonnummer des/der früheren Vermieters/Vermieterin an.</form-label>
+              <form-input 
+                type="text" 
+                v-model="form.main_tenant_current_renter_previous_renter" 
+                :error="errors.main_tenant_current_renter_previous_renter"
+                @blur="validateField('main_tenant_current_renter_previous_renter')"
+                @focus="removeError('main_tenant_current_renter_previous_renter')">
+              </form-input>
+            </form-group>
+          </template>
         </form-grid>
+        
         <h2>Weitere Person</h2>
         <form-grid>
           <form-group :error="errors.sub_tenant_yn">
@@ -225,11 +249,11 @@
             </form-select>
           </form-group>
           <template v-if="form.sub_tenant_yn == 'Ja'">
-            <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
-              <form-group class="col-span-10">
+            <form-grid class="col-span-12 !mb-0">
+              <form-group class="!col-span-12">
                 <form-label class="mb-12">Mit wem werden Sie die Wohnung teilen?</form-label>
-                <div class="grid grid-cols-12 gap-15">
-                  <form-group class="col-span-4" v-for="(type, index) in tenant_types" :key="index">
+                <div class="grid grid-cols-12 gap-30">
+                  <form-group class="!col-span-4" v-for="(type, index) in tenant_types" :key="index">
                     <form-checkbox
                       :id="`sub_tenant_${index}`" 
                       v-model="form.sub_tenant_type"
@@ -240,54 +264,273 @@
                   </form-group>
                 </div>
               </form-group>
-            </div>
+            </form-grid>
           </template>
         </form-grid>
-        <!-- if form.sub_tenant_type contains 'Kinder' show the message -->
-        <template v-if="form.sub_tenant_type.includes('Kinder')">
-          <div class="text-md">Angaben zum Kind/zu den Kindern folgen weiter unten.</div>
-        </template>
         
+        <template v-if="form.sub_tenant_type.includes('Kinder')">
+          <div class="text-md my-30">Angaben zum Kind/zu den Kindern folgen weiter unten.</div>
+        </template>
+
         <template v-if="form.sub_tenant_type.some(item => tenant_types.includes(item)) && !(form.sub_tenant_type.length == 1 && form.sub_tenant_type.includes('Kinder'))">
           <form-grid>
             <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
-              <form-group :error="errors.main_tenant_salutation">
-                <form-label :error="errors.main_tenant_salutation">Anrede</form-label>
+              <form-group :error="errors.sub_tenant_salutation">
+                <form-label :error="errors.sub_tenant_salutation">Anrede</form-label>
                 <form-select 
-                  v-model="form.main_tenant_salutation" 
+                  v-model="form.sub_tenant_salutation" 
                   :options="salutations"
-                  :error="errors.main_tenant_salutation"
-                  @blur="validateField('main_tenant_salutation')"
-                  @focus="removeError('main_tenant_salutation')">
+                  :error="errors.sub_tenant_salutation"
+                  @blur="validateField('sub_tenant_salutation')"
+                  @focus="removeError('sub_tenant_salutation')">
                 </form-select>
               </form-group>
             </div>
-            <form-group :error="errors.main_tenant_lastname">
-              <form-label :error="errors.main_tenant_lastname">Familienname</form-label>
+            <form-group :error="errors.sub_tenant_lastname">
+              <form-label :error="errors.sub_tenant_lastname">Familienname</form-label>
               <form-input 
                 type="text" 
-                v-model="form.main_tenant_lastname" 
-                :error="errors.main_tenant_lastname"
-                @blur="validateField('main_tenant_lastname')"
-                @focus="removeError('main_tenant_lastname')">
+                v-model="form.sub_tenant_lastname" 
+                :error="errors.sub_tenant_lastname"
+                @blur="validateField('sub_tenant_lastname')"
+                @focus="removeError('sub_tenant_lastname')">
               </form-input>
             </form-group>
-            <form-group :error="errors.main_tenant_firstname">
-              <form-label :error="errors.main_tenant_firstname">Vorname</form-label>
+            <form-group :error="errors.sub_tenant_firstname">
+              <form-label :error="errors.sub_tenant_firstname">Vorname</form-label>
               <form-input 
                 type="text" 
-                v-model="form.main_tenant_firstname" 
-                :error="errors.main_tenant_firstname"
-                @blur="validateField('main_tenant_firstname')"
-                @focus="removeError('main_tenant_firstname')">
+                v-model="form.sub_tenant_firstname" 
+                :error="errors.sub_tenant_firstname"
+                @blur="validateField('sub_tenant_firstname')"
+                @focus="removeError('sub_tenant_firstname')">
               </form-input>
             </form-group>
+            <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
+              <form-group :error="errors.sub_tenant_same_adress">
+                <form-label :error="errors.sub_tenant_same_adress">Aktuell gleiche Adresse wie Hauptmieter?</form-label>
+                <form-select
+                  v-model="form.sub_tenant_same_adress"
+                  :options="yes_no"
+                  :error="errors.sub_tenant_same_adress"
+                  @blur="validateField('sub_tenant_same_adress')"
+                  @focus="removeError('sub_tenant_same_adress')">
+                </form-select>
+              </form-group>
+            </div>
+            <template v-if="form.sub_tenant_same_adress == 'Nein'">
+              <form-group :error="errors.sub_tenant_street">
+                <form-label :error="errors.sub_tenant_street">Strasse und Hausnummer</form-label>
+                <form-input 
+                  type="text" 
+                  v-model="form.sub_tenant_street" 
+                  :error="errors.sub_tenant_street"
+                  @blur="validateField('sub_tenant_street')"
+                  @focus="removeError('sub_tenant_street')">
+                </form-input>
+              </form-group>
+              <form-group :error="errors.sub_tenant_postal_code_city">
+                <form-label :error="errors.sub_tenant_postal_code_city">PLZ und Ort</form-label>
+                <form-input 
+                  type="text" 
+                  v-model="form.sub_tenant_postal_code_city" 
+                  :error="errors.sub_tenant_postal_code_city"
+                  @blur="validateField('sub_tenant_postal_code_city')"
+                  @focus="removeError('sub_tenant_postal_code_city')">
+                </form-input>
+              </form-group>
+            </template>
+            <form-group :error="errors.sub_tenant_birthdate">
+              <form-label :error="errors.main_tenant_birthdate">Geburtsdatum</form-label>
+              <form-input 
+                type="date" 
+                v-model="form.main_tenant_birthdate" 
+                placeholder="TT.MM.JJJJ"
+                :error="errors.main_tenant_birthdate"
+                @blur="validateField('main_tenant_birthdate')"
+                @focus="removeError('main_tenant_birthdate')">
+              </form-input>
+            </form-group>
+            <form-group :error="errors.sub_tenant_marital_status">
+              <form-label :error="errors.main_tenant_marital_status">Familienstand</form-label>
+              <form-select
+                  v-model="form.main_tenant_marital_status"
+                  :options="marital_status"
+                  :error="errors.main_tenant_marital_status"
+                  @blur="validateField('main_tenant_marital_status')"
+                  @focus="removeError('main_tenant_marital_status')">
+              </form-select>
+            </form-group>
+            <form-group :error="errors.sub_tenant_nationality">
+              <form-label :error="errors.main_tenant_nationality">Nationalität</form-label>
+              <form-select v-model="form.main_tenant_nationality"
+                :options="nationality"
+                :error="errors.main_tenant_nationality"
+                @blur="validateField('main_tenant_nationality')"
+                @focus="removeError('main_tenant_nationality')">
+              </form-select>
+            </form-group>
+            <form-group :error="errors.sub_tenant_home_town">
+              <template v-if="form.main_tenant_nationality == 'CH'">
+                <form-label :error="errors.main_tenant_home_town">Heimatort</form-label>
+                <form-input 
+                  type="text" 
+                  v-model="form.main_tenant_home_town" 
+                  :error="errors.main_tenant_home_town"
+                  @blur="validateField('main_tenant_home_town')"
+                  @focus="removeError('main_tenant_home_town')">
+                </form-input>
+              </template>
+            </form-group>
+            <form-group :error="errors.sub_tenant_private_phone">
+              <form-label :error="errors.main_tenant_private_phone">Telefon* (privat)</form-label>
+              <form-input 
+                type="text" 
+                v-model="form.main_tenant_private_phone" 
+                :error="errors.main_tenant_private_phone"
+                @blur="validateField('main_tenant_private_phone')"
+                @focus="removeError('main_tenant_private_phone')">
+              </form-input>
+            </form-group>
+            <form-group :error="errors.sub_tenant_work_phone">
+              <form-label :error="errors.main_tenant_work_phone">Telefon* (geschäftlich)</form-label>
+              <form-input 
+                type="text" 
+                v-model="form.main_tenant_work_phone" 
+                :error="errors.main_tenant_work_phone"
+                @blur="validateField('main_tenant_work_phone')"
+                @focus="removeError('main_tenant_work_phone')">
+              </form-input>
+            </form-group>
+            <form-group :error="errors.sub_tenant_email">
+              <form-label :error="errors.main_tenant_email">E-Mail-Adresse</form-label>
+              <form-input 
+                type="email" 
+                v-model="form.main_tenant_email" 
+                :error="errors.main_tenant_email"
+                @blur="validateEmail('main_tenant_email')"
+                @focus="removeError('main_tenant_email')">
+              </form-input>
+            </form-group>
+            <form-group :error="errors.sub_tenant_occupation">
+              <form-label :error="errors.main_tenant_occupation">Beruf</form-label>
+              <form-input 
+                type="text" 
+                v-model="form.main_tenant_occupation" 
+                :error="errors.main_tenant_occupation"
+                @blur="validateField('main_tenant_occupation')"
+                @focus="removeError('main_tenant_occupation')">
+              </form-input>
+            </form-group>
+            <form-group :error="errors.sub_tenant_employment_status">
+              <form-label :error="errors.main_tenant_employment_status">Erwerbssituation</form-label>
+              <form-select v-model="form.main_tenant_employment_status"
+                :options="employment_status"
+                :error="errors.main_tenant_employment_status"
+                @blur="validateField('main_tenant_employment_status')"
+                @focus="removeError('main_tenant_employment_status')">
+              </form-select>
+            </form-group>
+            <form-group :error="errors.sub_tenant_debt_enforcement_yn">
+              <form-label :error="errors.main_tenant_debt_enforcement_yn">Betreibungen</form-label>
+              <form-select v-model="form.main_tenant_debt_enforcement_yn"
+                :options="debt_enforcement"
+                :error="errors.main_tenant_debt_enforcement_yn"
+                @blur="validateField('main_tenant_debt_enforcement_yn')"
+                @focus="removeError('main_tenant_debt_enforcement_yn')">
+              </form-select>
+            </form-group>
+          </form-grid>
+          <h2>Aktuelle Wohnsituation der weiteren Person</h2>
+          <form-grid>
+            <form-group :error="errors.sub_tenant_current_rent_tenant_role">
+              <form-label :error="errors.sub_tenant_current_rent_tenant_role">Aktuelle Wohnsituation</form-label>
+              <form-select v-model="form.sub_tenant_current_rent_tenant_role"
+                :options="tenant_roles"
+                :error="errors.sub_tenant_current_rent_tenant_role"
+                @blur="validateField('sub_tenant_current_rent_tenant_role')"
+                @focus="removeError('sub_tenant_current_rent_tenant_role')">
+              </form-select>
+            </form-group>
+            <form-group :error="errors.sub_tenant_current_rent_terminator">
+              <form-label :error="errors.sub_tenant_current_rent_terminator">Wurde Ihr aktuelles Mietverhältnis durch Ihre*n Vermieter*in gekündigt?</form-label>
+              <form-select v-model="form.sub_tenant_current_rent_terminator"
+                :options="yes_no"
+                :error="errors.sub_tenant_current_rent_terminator"
+                @blur="validateField('sub_tenant_current_rent_terminator')"
+                @focus="removeError('sub_tenant_current_rent_terminator')">
+              </form-select>
+            </form-group>
+            <template v-if="form.sub_tenant_current_rent_terminator == 'Ja'">
+              <form-group class="!col-span-12" :error="errors.sub_tenant_current_rent_terminator_reason">
+                <form-label :error="errors.sub_tenant_current_rent_terminator_reason">Geben Sie bitte den Grund an, weshalb Ihnen Ihr*e Vermieter*in gekündigt hat:</form-label>
+                <form-textarea :error="errors.sub_tenant_current_rent_terminator_reason" v-model="form.sub_tenant_current_rent_terminator_reason"
+                  @blur="validateField('sub_tenant_current_rent_terminator_reason')"
+                  @focus="removeError('sub_tenant_current_rent_terminator_reason')">
+                </form-textarea>
+              </form-group>
+            </template>
+            <form-group :error="errors.sub_tenant_current_renter_name">
+              <form-label :error="errors.sub_tenant_current_renter_name">Aktuelle*r Vermieter*in*</form-label>
+              <form-input 
+                type="text" 
+                v-model="form.sub_tenant_current_renter_name" 
+                :error="errors.sub_tenant_current_renter_name"
+                @blur="validateField('sub_tenant_current_renter_name')"
+                @focus="removeError('sub_tenant_current_renter_name')">
+              </form-input>
+            </form-group>
+            <form-group :error="errors.sub_tenant_current_renter_phone">
+              <form-label :error="errors.sub_tenant_current_renter_phone">Vermieter*in Telefon</form-label>
+              <form-input 
+                type="text" 
+                v-model="form.sub_tenant_current_renter_phone" 
+                :error="errors.sub_tenant_current_renter_phone"
+                @blur="validateField('sub_tenant_current_renter_phone')"
+                @focus="removeError('sub_tenant_current_renter_phone')">
+              </form-input>
+            </form-group>
+            <form-group :error="errors.sub_tenant_current_renter_rent_duration">
+              <form-label :error="errors.sub_tenant_current_renter_rent_duration">Wie lange leben Sie in der aktuellen Wohnung?</form-label>
+              <form-select v-model="form.sub_tenant_current_renter_rent_duration"
+                :options="rent_duration"
+                :error="errors.sub_tenant_current_renter_rent_duration"
+                @blur="validateField('sub_tenant_current_renter_rent_duration')"
+                @focus="removeError('sub_tenant_current_renter_rent_duration')">
+              </form-select>
+            </form-group>
+            <template v-if="form.sub_tenant_current_renter_rent_duration == 'Weniger als 1 Jahr'">
+              <form-group class="!col-span-12" :error="errors.sub_tenant_current_renter_previous_renter">
+                <form-label :error="errors.sub_tenant_current_renter_previous_renter">Geben Sie bitte Name und Telefonnummer des/der früheren Vermieters/Vermieterin an.</form-label>
+                <form-input 
+                  type="text" 
+                  v-model="form.sub_tenant_current_renter_previous_renter" 
+                  :error="errors.sub_tenant_current_renter_previous_renter"
+                  @blur="validateField('sub_tenant_current_renter_previous_renter')"
+                  @focus="removeError('sub_tenant_current_renter_previous_renter')">
+                </form-input>
+              </form-group>
+            </template>
           </form-grid>
         </template>
 
-
-
-
+        <h2>Präferenzen</h2>
+        <form-grid class="col-span-12 !mb-0">
+          <form-group class="!col-span-12">
+            <form-label class="mb-12">In welchen Stadtkreisen möchten Sie wohnen?</form-label>
+            <div class="grid grid-cols-12 gap-30">
+              <form-group class="!col-span-3" v-for="(district, index) in districts" :key="index">
+                <form-checkbox
+                  :id="`rent_pref_district_${index}`" 
+                  v-model="form.rent_pref_district_id"
+                  :value="district"
+                  @update="updateCheckboxInput($event, 'rent_pref_district_id')">
+                  <template v-slot:label>{{ district }}</template>
+                </form-checkbox>
+              </form-group>
+            </div>
+          </form-group>
+        </form-grid>
         <!--
         <form-grid>
           <form-group class="col-span-12">
@@ -357,14 +600,39 @@ export default {
         main_tenant_work_phone: null,
         main_tenant_occupation: null,
         main_tenant_employment_status: 'Angestellt',
-        main_tenant_debt_enforcement_yn: 'Ja, ich hatte Betreibungen in den letzten zwei Jahren',
+        main_tenant_debt_enforcement_yn: 'Nein, ich hatte keine Betreibungen in den letzten zwei Jahren',
         main_tenant_current_rent_tenant_role: 'Ich bin Hauptmieter*in',
-        main_tenant_current_rent_terminator: 'Ja',
+        main_tenant_current_rent_terminator: 'Nein',
+        main_tenant_current_rent_terminator_reason: null,
         main_tenant_current_renter_name: null,
         main_tenant_current_renter_phone: null,
-        main_tenant_current_renter_rent_duration: 'Weniger als 1 Jahr',
+        main_tenant_current_renter_rent_duration: 'Mehr als 2 Jahre',
+        main_tenant_current_renter_previous_renter: null,
         sub_tenant_yn: 'Nein',
         sub_tenant_type: [],
+        sub_tenant_salutation: 'Frau',
+        sub_tenant_lastname: null,
+        sub_tenant_same_adress: 'Ja',
+        sub_tenant_street: null,
+        sub_tenant_postal_code_city: null,
+        sub_tenant_birthdate: null,
+        sub_tenant_marital_status: 'ledig',
+        sub_tenant_nationality: 'CH',
+        sub_tenant_home_town: null,
+        sub_tenant_private_phone: null,
+        sub_tenant_work_phone: null,
+        sub_tenant_email: null,
+        sub_tenant_occupation: null,
+        sub_tenant_employment_status: 'Angestellt',
+        sub_tenant_debt_enforcement_yn: 'Nein, ich hatte keine Betreibungen in den letzten zwei Jahren',
+        sub_tenant_current_rent_tenant_role: 'Ich bin Hauptmieter*in',
+        sub_tenant_current_rent_terminator: 'Nein',
+        sub_tenant_current_renter_name: null,
+        sub_tenant_current_renter_phone: null,
+        sub_tenant_current_renter_rent_duration: 'Mehr als 2 Jahre',
+        sub_tenant_current_renter_previous_renter: null,
+        sub_tenant_current_rent_terminator_reason: null,
+        rent_pref_district_id: [],
       },
 
       errors: {
@@ -385,11 +653,34 @@ export default {
         main_tenant_debt_enforcement_yn: null,
         main_tenant_current_rent_tenant_role: null,
         main_tenant_current_rent_terminator: null,
+        main_tenant_current_rent_terminator_reason: null,
         main_tenant_current_renter_name: null,
         main_tenant_current_renter_phone: null,
         main_tenant_current_renter_rent_duration: null,
+        main_tenant_current_renter_previous_renter: null,
         sub_tenant_yn: null,
         sub_tenant_type: null,
+        sub_tenant_salutation: null,
+        sub_tenant_same_adress: null,
+        sub_tenant_street: null,
+        sub_tenant_postal_code_city: null,
+        sub_tenant_birthdate: null,
+        sub_tenant_marital_status: null,
+        sub_tenant_nationality: null,
+        sub_tenant_home_town: null,
+        sub_tenant_private_phone: null,
+        sub_tenant_work_phone: null,
+        sub_tenant_email: null,
+        sub_tenant_occupation: null,
+        sub_tenant_employment_status: null,
+        sub_tenant_debt_enforcement_yn: null,
+        sub_tenant_current_rent_tenant_role: null,
+        sub_tenant_current_rent_terminator: null,
+        sub_tenant_current_renter_name: null,
+        sub_tenant_current_renter_phone: null,
+        sub_tenant_current_renter_rent_duration: null,
+        sub_tenant_current_renter_previous_renter: null,
+        sub_tenant_current_rent_terminator_reason: null,
       },
 
       salutations: [
@@ -448,6 +739,15 @@ export default {
       debt_enforcement: [
         { label: 'Ja, ich hatte Betreibungen in den letzten zwei Jahren', value: 'Ja, ich hatte Betreibungen in den letzten zwei Jahren' },
         { label: 'Nein, ich hatte keine Betreibungen in den letzten zwei Jahren', value: 'Nein, ich hatte keine Betreibungen in den letzten zwei Jahren' },
+      ],
+
+      districts: [
+       'Kreis 4',
+       'Kreis 5',
+       'Kreis 6',
+       'Kreis 7',
+       'Kreis 8',
+       'Kreis 10',
       ],
 
       validationErrors: [],
