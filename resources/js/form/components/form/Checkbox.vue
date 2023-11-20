@@ -4,9 +4,9 @@
       <input
         :id="id"
         type="checkbox"
-        :value="modelValue"
+        :value="$props.value"
         :placeholder="placeholder"
-        @input="updateInput"
+        @input="update"
         class="opacity-0 absolute cursor-pointer h-0 w-0"
       />
       <span class="border border-black w-30 h-30 absolute left-0 top-0 flex items-center justify-center">
@@ -34,6 +34,11 @@ export default {
       default: "",
     },
 
+    value: {
+      type: [String, Number, Array],
+      default: "",
+    },
+
     type: {
       type: String,
       default: "text",
@@ -46,8 +51,8 @@ export default {
   },
 
   methods: {
-    updateInput(event) {
-      this.$emit("update:modelValue", event.target.value);
+    update(event) {
+      this.$emit("update", event.target.value);
     }
   }
 }

@@ -14,10 +14,7 @@
               <form-label :error="errors.main_tenant_salutation">Anrede</form-label>
               <form-select 
                 v-model="form.main_tenant_salutation" 
-                :options="[
-                  { label: 'Frau', value: 'Frau' },
-                  { label: 'Herr', value: 'Herr' },
-                ]"
+                :options="salutations"
                 :error="errors.main_tenant_salutation"
                 @blur="validateField('main_tenant_salutation')"
                 @focus="removeError('main_tenant_salutation')">
@@ -77,36 +74,34 @@
           </form-group>
           <form-group :error="errors.main_tenant_marital_status">
             <form-label :error="errors.main_tenant_marital_status">Familienstand</form-label>
-            <form-select v-model="form.main_tenant_marital_status">
-              <option value="ledig">ledig</option>
-              <option value="verheiratet">verheiratet</option>
-              <option value="geschieden">geschieden</option>
-              <option value="eingetragene Partnerschaft">eingetragene Partnerschaft</option>
-              <option value="aufgelöste Partnerschaft">aufgelöste Partnerschaft</option>
-              <option value="verwitwet">verwitwet</option>
+            <form-select
+                v-model="form.main_tenant_marital_status"
+                :options="marital_status"
+                :error="errors.main_tenant_marital_status"
+                @blur="validateField('main_tenant_marital_status')"
+                @focus="removeError('main_tenant_marital_status')">
             </form-select>
           </form-group>
           <form-group :error="errors.main_tenant_nationality">
             <form-label :error="errors.main_tenant_nationality">Nationalität</form-label>
             <form-select v-model="form.main_tenant_nationality"
-              :options="[
-                { label: 'CH', value: 'CH' },
-                { label: 'Andere', value: 'Andere' },
-              ]"
+              :options="nationality"
               :error="errors.main_tenant_nationality"
               @blur="validateField('main_tenant_nationality')"
               @focus="removeError('main_tenant_nationality')">
             </form-select>
           </form-group>
           <form-group :error="errors.main_tenant_home_town">
-            <form-label :error="errors.main_tenant_home_town">Heimatort</form-label>
-            <form-input 
-              type="text" 
-              v-model="form.main_tenant_home_town" 
-              :error="errors.main_tenant_home_town"
-              @blur="validateField('main_tenant_home_town')"
-              @focus="removeError('main_tenant_home_town')">
-            </form-input>
+            <template v-if="form.main_tenant_nationality == 'CH'">
+              <form-label :error="errors.main_tenant_home_town">Heimatort</form-label>
+              <form-input 
+                type="text" 
+                v-model="form.main_tenant_home_town" 
+                :error="errors.main_tenant_home_town"
+                @blur="validateField('main_tenant_home_town')"
+                @focus="removeError('main_tenant_home_town')">
+              </form-input>
+            </template>
           </form-group>
           <form-group :error="errors.main_tenant_private_phone">
             <form-label :error="errors.main_tenant_private_phone">Telefon* (privat)</form-label>
@@ -151,14 +146,7 @@
           <form-group :error="errors.main_tenant_employment_status">
             <form-label :error="errors.main_tenant_employment_status">Erwerbssituation</form-label>
             <form-select v-model="form.main_tenant_employment_status"
-              :options="[
-                { label: 'Student*in', value: 'Student*in' },
-                { label: 'Selbständig', value: 'Selbständig' },
-                { label: 'Arbeitslos', value: 'Arbeitslos' },
-                { label: 'IV-Rente', value: 'IV-Rente' },
-                { label: 'Im Ruhestand (pensioniert)', value: 'Im Ruhestand (pensioniert)' },
-                { label: 'Familienmanager*in', value: 'Familienmanager*in' },
-              ]"
+              :options="employment_status"
               :error="errors.main_tenant_employment_status"
               @blur="validateField('main_tenant_employment_status')"
               @focus="removeError('main_tenant_employment_status')">
@@ -167,10 +155,7 @@
           <form-group :error="errors.main_tenant_debt_enforcement_yn">
             <form-label :error="errors.main_tenant_debt_enforcement_yn">Betreibungen</form-label>
             <form-select v-model="form.main_tenant_debt_enforcement_yn"
-              :options="[
-                { label: 'Ja, ich hatte Betreibungen in den letzten zwei Jahren', value: 'Ja, ich hatte Betreibungen in den letzten zwei Jahren' },
-                { label: 'Nein, ich hatte keine Betreibungen in den letzten zwei Jahren', value: 'Nein, ich hatte keine Betreibungen in den letzten zwei Jahren' },
-              ]"
+              :options="debt_enforcement"
               :error="errors.main_tenant_debt_enforcement_yn"
               @blur="validateField('main_tenant_debt_enforcement_yn')"
               @focus="removeError('main_tenant_debt_enforcement_yn')">
@@ -182,10 +167,7 @@
           <form-group :error="errors.main_tenant_current_rent_tenant_role">
             <form-label :error="errors.main_tenant_current_rent_tenant_role">Aktuelle Wohnsituation</form-label>
             <form-select v-model="form.main_tenant_current_rent_tenant_role"
-              :options="[
-                { label: 'Ich bin Hauptmieter*in', value: 'Ich bin Hauptmieter*in' },
-                { label: 'Ich bin Untermieter*in', value: 'Ich bin Untermieter*in' },
-              ]"
+              :options="tenant_roles"
               :error="errors.main_tenant_current_rent_tenant_role"
               @blur="validateField('main_tenant_current_rent_tenant_role')"
               @focus="removeError('main_tenant_current_rent_tenant_role')">
@@ -194,10 +176,7 @@
           <form-group :error="errors.main_tenant_current_rent_terminator">
             <form-label :error="errors.main_tenant_current_rent_terminator">Wurde Ihr aktuelles Mietverhältnis durch Ihre*n Vermieter*in gekündigt?</form-label>
             <form-select v-model="form.main_tenant_current_rent_terminator"
-              :options="[
-                { label: 'Ja', value: 'Ja' },
-                { label: 'Nein', value: 'Nein' },
-              ]"
+              :options="yes_no"
               :error="errors.main_tenant_current_rent_terminator"
               @blur="validateField('main_tenant_current_rent_terminator')"
               @focus="removeError('main_tenant_current_rent_terminator')">
@@ -226,11 +205,7 @@
           <form-group :error="errors.main_tenant_current_renter_rent_duration">
             <form-label :error="errors.main_tenant_current_renter_rent_duration">Wie lange leben Sie in der aktuellen Wohnung?</form-label>
             <form-select v-model="form.main_tenant_current_renter_rent_duration"
-              :options="[
-                { label: 'Weniger als 1 Jahr', value: 'Weniger als 1 Jahr' },
-                { label: '1 bis 2 Jahre', value: '1 bis 2 Jahre' },
-                { label: 'Mehr als 2 Jahre', value: 'Mehr als 2 Jahre' },
-              ]"
+              :options="rent_duration"
               :error="errors.main_tenant_current_renter_rent_duration"
               @blur="validateField('main_tenant_current_renter_rent_duration')"
               @focus="removeError('main_tenant_current_renter_rent_duration')">
@@ -243,10 +218,7 @@
             <form-label :error="errors.sub_tenant_yn">Werden Sie die Wohnung teilen?</form-label>
             <form-select
               v-model="form.sub_tenant_yn"
-              :options="[
-                { label: 'Ja', value: 'Ja' },
-                { label: 'Nein', value: 'Nein' },
-              ]"
+              :options="yes_no"
               :error="errors.sub_tenant_yn"
               @blur="validateField('sub_tenant_yn')"
               @focus="removeError('sub_tenant_yn')">
@@ -254,22 +226,68 @@
           </form-group>
           <template v-if="form.sub_tenant_yn == 'Ja'">
             <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
-            <form-group>
-              <form-label class="mb-12">Mit wem werden Sie die Wohnung teilen?</form-label>
-              <div class="grid grid-cols-12 gap-15">
-                <form-group>
-                  <form-checkbox id="sub_tenant_1" v-model="form.sub_tenant_type_1">
-                    <template v-slot:label>
-                      Ehepartner*in
-                    </template>
-                  </form-checkbox>
-                </form-group>
-              </div>
-            </form-group>
+              <form-group class="col-span-10">
+                <form-label class="mb-12">Mit wem werden Sie die Wohnung teilen?</form-label>
+                <div class="grid grid-cols-12 gap-15">
+                  <form-group class="col-span-4" v-for="(type, index) in tenant_types" :key="index">
+                    <form-checkbox
+                      :id="`sub_tenant_${index}`" 
+                      v-model="form.sub_tenant_type"
+                      :value="type"
+                      @update="updateCheckboxInput($event, 'sub_tenant_type')">
+                      <template v-slot:label>{{ type }}</template>
+                    </form-checkbox>
+                  </form-group>
+                </div>
+              </form-group>
             </div>
           </template>
         </form-grid>
+        <!-- if form.sub_tenant_type contains 'Kinder' show the message -->
+        <template v-if="form.sub_tenant_type.includes('Kinder')">
+          <div class="text-md">Angaben zum Kind/zu den Kindern folgen weiter unten.</div>
+        </template>
         
+        <template v-if="form.sub_tenant_type.some(item => tenant_types.includes(item)) && !(form.sub_tenant_type.length == 1 && form.sub_tenant_type.includes('Kinder'))">
+          <form-grid>
+            <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
+              <form-group :error="errors.main_tenant_salutation">
+                <form-label :error="errors.main_tenant_salutation">Anrede</form-label>
+                <form-select 
+                  v-model="form.main_tenant_salutation" 
+                  :options="salutations"
+                  :error="errors.main_tenant_salutation"
+                  @blur="validateField('main_tenant_salutation')"
+                  @focus="removeError('main_tenant_salutation')">
+                </form-select>
+              </form-group>
+            </div>
+            <form-group :error="errors.main_tenant_lastname">
+              <form-label :error="errors.main_tenant_lastname">Familienname</form-label>
+              <form-input 
+                type="text" 
+                v-model="form.main_tenant_lastname" 
+                :error="errors.main_tenant_lastname"
+                @blur="validateField('main_tenant_lastname')"
+                @focus="removeError('main_tenant_lastname')">
+              </form-input>
+            </form-group>
+            <form-group :error="errors.main_tenant_firstname">
+              <form-label :error="errors.main_tenant_firstname">Vorname</form-label>
+              <form-input 
+                type="text" 
+                v-model="form.main_tenant_firstname" 
+                :error="errors.main_tenant_firstname"
+                @blur="validateField('main_tenant_firstname')"
+                @focus="removeError('main_tenant_firstname')">
+              </form-input>
+            </form-group>
+          </form-grid>
+        </template>
+
+
+
+
         <!--
         <form-grid>
           <form-group class="col-span-12">
@@ -346,7 +364,7 @@ export default {
         main_tenant_current_renter_phone: null,
         main_tenant_current_renter_rent_duration: 'Weniger als 1 Jahr',
         sub_tenant_yn: 'Nein',
-        sub_tenant_type_1: null,
+        sub_tenant_type: [],
       },
 
       errors: {
@@ -374,12 +392,62 @@ export default {
         sub_tenant_type: null,
       },
 
-      sub_tenant_types: [
+      salutations: [
+        { label: 'Frau', value: 'Frau' },
+        { label: 'Herr', value: 'Herr' },
+      ],
+
+      marital_status: [
+        { label: 'ledig', value: 'ledig' },
+        { label: 'verheiratet', value: 'verheiratet' },
+        { label: 'geschieden', value: 'geschieden' },
+        { label: 'eingetragene Partnerschaft', value: 'eingetragene Partnerschaft' },
+        { label: 'aufgelöste Partnerschaft', value: 'aufgelöste Partnerschaft' },
+        { label: 'verwitwet', value: 'verwitwet' },
+      ],
+
+      employment_status: [
+        { label: 'Angestellt', value: 'Angestellt'},
+        { label: 'Student*in', value: 'Student*in' },
+        { label: 'Arbeitslos', value: 'Arbeitslos' },
+        { label: 'IV', value: 'IV' },
+        { label: 'Im Ruhestand (pensioniert)', value: 'Im Ruhestand (pensioniert)' },
+        { label: 'Familienmanager*in', value: 'Familienmanager*in' },
+        { label: 'IV-Renter*in', value: 'IV-Renter*in' },
+      ],
+
+      nationality: [
+        { label: 'CH', value: 'CH' },
+        { label: 'Andere', value: 'Andere' },
+      ],
+
+      rent_duration: [
+        { label: 'Weniger als 1 Jahr', value: 'Weniger als 1 Jahr' },
+        { label: '1 bis 2 Jahre', value: '1 bis 2 Jahre' },
+        { label: 'Mehr als 2 Jahre', value: 'Mehr als 2 Jahre' },
+      ],
+
+      tenant_types: [
         'Ehepartner*in',
         'Lebenspartner*in mit eingetragener Partnerschaft',
         'Lebenspartner*in',
         'Mitbewohner*in',
         'Kinder'
+      ],
+
+      tenant_roles: [
+        { label: 'Ich bin Hauptmieter*in', value: 'Ich bin Hauptmieter*in' },
+        { label: 'Ich bin Untermieter*in', value: 'Ich bin Untermieter*in' },
+      ],
+
+      yes_no: [
+        { label: 'Ja', value: 'Ja' },
+        { label: 'Nein', value: 'Nein' },
+      ],
+
+      debt_enforcement: [
+        { label: 'Ja, ich hatte Betreibungen in den letzten zwei Jahren', value: 'Ja, ich hatte Betreibungen in den letzten zwei Jahren' },
+        { label: 'Nein, ich hatte keine Betreibungen in den letzten zwei Jahren', value: 'Nein, ich hatte keine Betreibungen in den letzten zwei Jahren' },
       ],
 
       validationErrors: [],
@@ -411,6 +479,18 @@ export default {
         this.isLoading = false;
         this.handleValidationErrors(error.response.data);
       });
+    },
+
+    updateCheckboxInput(event, field) {
+      // check if value is already in array
+      if (this.form[field].includes(event)) {
+        // remove value from array
+        this.form[field] = this.form[field].filter(item => item !== event);
+      }
+      else {
+        // add value to array
+        this.form[field].push(event);
+      }
     },
 
     validateField(field) {
