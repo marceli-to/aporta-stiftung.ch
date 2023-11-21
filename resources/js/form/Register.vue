@@ -683,7 +683,7 @@
             <form-label :error="errors.rent_pref_nobalcony_yn">Wünschen Sie einen Balkon?</form-label>
             <form-select
               v-model="form.rent_pref_nobalcony_yn"
-              :options="yes_no"
+              :options="yes_no_maybe"
               :error="errors.rent_pref_nobalcony_yn"
               @blur="validateField('rent_pref_nobalcony_yn')"
               @focus="removeError('rent_pref_nobalcony_yn')">
@@ -693,7 +693,7 @@
             <form-label :error="errors.rent_pref_noelevator">Wünschen Sie einen Lift im Haus?</form-label>
             <form-select
               v-model="form.rent_pref_noelevator"
-              :options="yes_no"
+              :options="yes_no_maybe"
               :error="errors.rent_pref_noelevator"
               @blur="validateField('rent_pref_noelevator')"
               @focus="removeError('rent_pref_noelevator')">
@@ -723,9 +723,8 @@
         </form-grid>
 
         <h2 class="!mt-35 md:!mt-70">Weitere Angaben</h2>
-        <form-grid>
-
-          <template v-if="form.sub_tenant_yn == 'Ja'">
+        <template v-if="form.sub_tenant_yn == 'Ja'">
+          <form-grid>
             <form-group :error="errors.accomodation_total_persons">
               <form-label :error="errors.accomodation_total_persons">Wie viele Personen werden in Ihrem Haushalt leben?</form-label>
               <form-input 
@@ -746,7 +745,6 @@
                 @focus="removeError('accomodation_adults_qty')">
               </form-input>
             </form-group>
-
             <template v-if="form.sub_tenant_type.some(item => item == 'Kinder')">
               <form-group :error="errors.accomodation_children_qty">
                 <form-label :error="errors.accomodation_children_qty">Anzahl Kinder?</form-label>
@@ -778,8 +776,8 @@
                 </form-textarea>
               </form-group>
             </template>
-          </template>
-        </form-grid>
+          </form-grid>
+        </template>
         <form-grid>
           <form-group :error="errors.accomodation_play_music_yn">
             <form-label :error="errors.accomodation_play_music_yn">Spielen Sie oder ein*e Mitbewohner*in ein Musikinstrument?</form-label>
@@ -831,7 +829,6 @@
             </form-textarea>
           </form-group>
         </form-grid>
-
         <form-grid>
           <form-group>
             <button 
@@ -842,6 +839,7 @@
             </button>
           </form-group>
         </form-grid>
+
       </form>
     </template>
   </div>
@@ -932,13 +930,13 @@ export default {
         rent_pref_district_id: [],
         rent_pref_floor_id: [],
         rent_pref_rooms_qty: [],
-        rent_pref_nobalcony_yn: 'Nein',
-        rent_pref_noelevator: 'Nein',
+        rent_pref_nobalcony_yn: null,
+        rent_pref_noelevator: null,
         rent_pref_max_rent: null,
         rent_pref_min_start_date: null,
-        accomodation_play_music_yn: 'Nein',
+        accomodation_play_music_yn: null,
         accomodation_musical_instruments: null,
-        accomodation_pets_yn: 'Nein',
+        accomodation_pets_yn: null,
         accomodation_pets: null,
         accomodation_remarks: null,
         accomodation_total_persons: null,
@@ -1137,6 +1135,12 @@ export default {
         '4&frac12;',
         '5',
         '5&frac12;',
+      ],
+
+      yes_no_maybe: [
+        { label: 'Ja', value: 'Ja' },
+        { label: 'Nein', value: 'Nein' },
+        { label: 'Nicht zwingend', value: 'Nicht zwingend' },
       ],
 
       validationErrors: [],

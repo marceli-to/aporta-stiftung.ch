@@ -1,11 +1,6 @@
 <template>
-  <div class="border-2 border-red-500 text-red-500 p-15 mb-30 md:mb-50 inline-flex w-auto">
-    <p class="text-base md:text-md xl:text-lg">Es sind Fehler aufgetreten, bitte überprüfen Sie ihre Angaben:</p>
-    <!-- <ul class="list-disc">
-      <li v-for="error in $props.validationErrors" class="ml-24 text-xxs md:text-xs xl:text-sm text-red-500 list-item">
-        {{ error }}
-      </li>
-    </ul> -->
+  <div class="fixed z-[200] top-0 right-0 sm:top-20 sm:right-20 bg-red-500 text-white p-15 mb-30 md:mb-50 flex w-full sm:inline-flex sm:w-auto">
+    <p class="font-bold text-base md:text-md xl:text-lg">Es sind Fehler aufgetreten, bitte überprüfen Sie ihre Angaben!</p>
   </div>
 </template>
 <script>
