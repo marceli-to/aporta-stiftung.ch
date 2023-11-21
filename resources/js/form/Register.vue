@@ -724,6 +724,63 @@
 
         <h2 class="!mt-35 md:!mt-70">Weitere Angaben</h2>
         <form-grid>
+
+          <template v-if="form.sub_tenant_yn == 'Ja'">
+            <form-group :error="errors.accomodation_total_persons">
+              <form-label :error="errors.accomodation_total_persons">Wie viele Personen werden in Ihrem Haushalt leben?</form-label>
+              <form-input 
+                type="text" 
+                v-model="form.accomodation_total_persons" 
+                :error="errors.accomodation_total_persons"
+                @blur="validateField('accomodation_total_persons')"
+                @focus="removeError('accomodation_total_persons')">
+              </form-input>
+            </form-group>
+            <form-group :error="errors.accomodation_adults_qty">
+              <form-label :error="errors.accomodation_adults_qty">Anzahl Erwachsene?</form-label>
+              <form-input 
+                type="text" 
+                v-model="form.accomodation_adults_qty" 
+                :error="errors.accomodation_adults_qty"
+                @blur="validateField('accomodation_adults_qty')"
+                @focus="removeError('accomodation_adults_qty')">
+              </form-input>
+            </form-group>
+
+            <template v-if="form.sub_tenant_type.some(item => item == 'Kinder')">
+              <form-group :error="errors.accomodation_children_qty">
+                <form-label :error="errors.accomodation_children_qty">Anzahl Kinder?</form-label>
+                <form-input 
+                  type="text" 
+                  v-model="form.accomodation_children_qty" 
+                  :error="errors.accomodation_children_qty"
+                  @blur="validateField('accomodation_children_qty')"
+                  @focus="removeError('accomodation_children_qty')">
+                </form-input>
+              </form-group>
+            </template>
+            <template v-if="form.sub_tenant_type.some(item => item == 'Kinder') && form.accomodation_children_qty > 0">
+              <form-group :error="errors.accomodation_children_living_constantly">
+                <form-label :error="errors.accomodation_children_living_constantly">Leben alle Kinder ständig mit Ihnen zusammen?</form-label>
+                <form-select
+                  v-model="form.accomodation_children_living_constantly"
+                  :options="yes_no"
+                  :error="errors.accomodation_children_living_constantly"
+                  @blur="validateField('accomodation_children_living_constantly')"
+                  @focus="removeError('accomodation_children_living_constantly')">
+                </form-select>
+              </form-group>
+              <form-group class="!col-span-12" :error="errors.accomodation_children_age_group">
+                <form-label :error="errors.accomodation_children_age_group">Jahrgang der Kinder (Bitte pro Zeile ein Kind eintragen: «Kind 1» / 2021)</form-label>
+                <form-textarea v-model="form.accomodation_children_age_group"
+                  @blur="validateField('accomodation_children_age_group')"
+                  @focus="removeError('accomodation_children_age_group')">
+                </form-textarea>
+              </form-group>
+            </template>
+          </template>
+        </form-grid>
+        <form-grid>
           <form-group :error="errors.accomodation_play_music_yn">
             <form-label :error="errors.accomodation_play_music_yn">Spielen Sie oder ein*e Mitbewohner*in ein Musikinstrument?</form-label>
             <form-select
@@ -768,13 +825,11 @@
               </form-input>
             </template>
           </form-group>
-
           <form-group class="!col-span-12">
             <form-label :required="false">Bemerkungen</form-label>
             <form-textarea v-model="form.accomodation_remarks">
             </form-textarea>
           </form-group>
-
         </form-grid>
 
         <form-grid>
@@ -886,8 +941,13 @@ export default {
         accomodation_pets_yn: 'Nein',
         accomodation_pets: null,
         accomodation_remarks: null,
-
+        accomodation_total_persons: null,
+        accomodation_adults_qty: null,
+        accomodation_children_qty: null,
+        accomodation_children_living_constantly: null,
+        accomodation_children_age_group: null,
         has_sub_tenant: false,
+        has_children: false,
       },
 
       errors: {
@@ -955,9 +1015,12 @@ export default {
         accomodation_pets_yn: null,
         accomodation_pets: null,
         accomodation_remarks: null,
+        accomodation_total_persons: null,
+        accomodation_adults_qty: null,
+        accomodation_children_qty: null,
+        accomodation_children_living_constantly: null,
+        accomodation_children_age_group: null,
       },
-
-      validateSubTenant: false,
 
       salutations: [
         { label: 'Frau', value: 'Frau' },
@@ -1229,6 +1292,31 @@ export default {
       deep: true,
     },
 
+    'form.sub_tenant_yn': {
+      handler: function (after, before) {
+        if (this.form.sub_tenant_yn == 'Nein') {
+          this.form.accomodation_total_persons = null;
+          this.form.accomodation_adults_qty = null;
+          this.form.accomodation_children_qty = null;
+          this.form.accomodation_children_living_constantly = null;
+          this.form.accomodation_children_age_group = null;
+        }
+      }, 
+      deep: true,
+    },
+    
+    'form.accomodation_children_qty': {
+      handler: function(after, before) {
+        if (this.form.accomodation_children_qty < 1) {
+          this.form.accomodation_children_living_constantly = null;
+          this.form.accomodation_children_age_group = null;
+          this.errors.accomodation_children_living_constantly = null
+          this.errors.accomodation_children_age_group = null;
+        }
+      },
+      deep: true,
+    },
+
     'form.sub_tenant_type': {
       handler: function (after, before) {
         if (this.form.sub_tenant_yn == 'Ja') {
@@ -1240,6 +1328,14 @@ export default {
             }
             else {
               this.form.has_sub_tenant = false;
+            }
+
+            // check if there are 'Kinder' in this.form.sub_tenant_type
+            if (this.form.sub_tenant_type.some(item => item == 'Kinder')) {
+              this.form.has_children = true;
+            }
+            else {
+              this.form.has_children = false;
             }
           }
         }

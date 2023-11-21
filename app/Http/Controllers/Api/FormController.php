@@ -13,14 +13,18 @@ class FormController extends Controller
    */
   public function store(RegisterStoreRequest $request)
   { 
-    // create a slug
+    // Create a slug
     $slug = Str::slug($request->main_tenant_lastname . ' ' . $request->main_tenant_firstname . ' ' . $request->main_tenant_postal_code_city, '-');
 
-    // create an array from the request
+    // Create an array from the request
     $data = $request->all();
 
-    // save data in a json file
-    \Storage::disk('local')->put('registration-' . $slug . '-' . date('d-m-Y-H-i-s') . '.json', json_encode($data));
+    // Save data in a json file in /storage/app/json, create the folder if it does not exist
+    if (!file_exists(storage_path('app/json')))
+    {
+      mkdir(storage_path('app/json'), 0777, true);
+    }
+    \Storage::disk('local')->put('json/registration-' . $slug . '-' . date('d-m-Y-H-i-s') . '.json', json_encode($data));
 
     return response()->json(200);
   }

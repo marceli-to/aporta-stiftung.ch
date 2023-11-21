@@ -90,6 +90,11 @@ class RegisterStoreRequest extends FormRequest
       'accomodation_musical_instruments' => 'required_if:accomodation_play_music_yn,Ja',
       'accomodation_pets_yn' => 'required',
       'accomodation_pets' => 'required_if:accomodation_play_music_yn,Ja',
+      'accomodation_total_persons' => 'required_if:sub_tenant_yn,Ja',
+      'accomodation_adults_qty' => 'required_if:sub_tenant_yn,Ja',
+      'accomodation_children_qty' => 'required_if:has_children,true',
+      'accomodation_children_living_constantly' => 'required_if:has_children,true',
+      'accomodation_children_age_group' => 'required_if:has_children,true',
     ];
   }
 
@@ -171,6 +176,11 @@ class RegisterStoreRequest extends FormRequest
       'accomodation_musical_instruments.required_if' => 'Please select your musical instruments.',
       'accomodation_pets_yn.required' => 'Please select if you have pets.',
       'accomodation_pets.required_if' => 'Please select your pets.',
+      'accomodation_total_persons.required_if' => 'Please enter the total number of persons.',
+      'accomodation_adults_qty.required_if' => 'Please enter the number of adults.',
+      'accomodation_children_qty.required_if' => 'Please enter the number of children.',
+      'accomodation_children_living_constantly.required_if' => 'Please enter the number of children living constantly.',
+      'accomodation_children_age_group.required_if' => 'Please select the age group of your children.',
     ];
   }
 }
