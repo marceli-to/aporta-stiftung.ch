@@ -1,35 +1,16 @@
 <?php
-namespace App\Console\Commands;
-use Illuminate\Console\Command;
+namespace App\Actions;
+use Illuminate\Support\Str;
 
-class CreateXml extends Command
+class CreateXml
 {
-  /**
-   * The name and signature of the console command.
-   *
-   * @var string
-   */
-  protected $signature = 'create:xml';
+  public function execute($json)
+  {
+    // Decode json
+    $json = json_decode($json);
 
-  /**
-   * The console command description.
-   *
-   * @var string
-   */
-  protected $description = 'Creates an xml file.';
-
-  /**
-   * Execute the console command.
-   */
-  public function handle()
-  { 
-    // $filename = 'registration-muller-peter-8400-winterthur-21-11-2023-15-57-36';
-
-    // ask the user for the filename
-    $filename = $this->ask('Please enter the filename without the extension (e.g. registration-muller-peter-8400-winterthur-21-11-2023-15-57-36):');
-
-
-    $json = json_decode(\Storage::disk('local')->get('json/'.$filename.'.json'));
+    // Create xml file name
+    $xml_filename = \Str::slug($json->main_tenant_lastname . ' ' . $json->main_tenant_firstname . ' ' . $json->main_tenant_postal_code_city, '-');
 
     $xml = new \DOMDocument();
     $xml->preserveWhiteSpace = false;
@@ -332,7 +313,6 @@ class CreateXml extends Command
       mkdir(storage_path('app/xml'), 0777, true);
     }
 
-    $xml->save(storage_path('app/xml/'.$filename.'.xml'));
-    $this->info('XML file created successfully.');
+    $xml->save(storage_path('app/xml/bewerbung-'.$xml_filename.'.xml'));
   }
 }

@@ -89,7 +89,7 @@ class RegisterStoreRequest extends FormRequest
       'accomodation_play_music_yn' => 'required',
       'accomodation_musical_instruments' => 'required_if:accomodation_play_music_yn,Ja',
       'accomodation_pets_yn' => 'required',
-      'accomodation_pets' => 'required_if:accomodation_play_music_yn,Ja',
+      'accomodation_pets' => 'required_if:accomodation_pets_yn,Ja',
       'accomodation_total_persons' => 'required_if:sub_tenant_yn,Ja',
       'accomodation_adults_qty' => 'required_if:sub_tenant_yn,Ja',
       'accomodation_children_qty' => 'required_if:has_children,true',
