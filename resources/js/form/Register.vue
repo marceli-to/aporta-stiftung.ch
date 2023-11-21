@@ -5,7 +5,9 @@
       <feedback />
     </template>
     <template v-else>
-      <validation-errors :validationErrors="validationErrors" v-if="validationErrors.length > 0" />
+      <div ref="validationErrors">
+        <validation-errors :validationErrors="validationErrors" v-if="validationErrors.length > 0" />
+      </div>
       <form>
         
         <h2>Personendaten</h2>
@@ -104,8 +106,30 @@
               </form-input>
             </template>
           </form-group>
+          <template v-if="form.main_tenant_nationality == 'Andere'">
+            <form-group :error="errors.main_tenant_residence_permit">
+              <form-label :error="errors.main_tenant_residence_permit">Niederlassungsbewilligung</form-label>
+              <form-select v-model="form.main_tenant_residence_permit"
+                :options="residence_permits"
+                :error="errors.main_tenant_residence_permit"
+                @blur="validateField('main_tenant_residence_permit')"
+                @focus="removeError('main_tenant_residence_permit')">
+              </form-select>
+            </form-group>
+            <form-group :error="errors.main_tenant_swiss_residence_since">
+              <form-label :error="errors.main_tenant_swiss_residence_since">In der Schweiz wohnhaft seit</form-label>
+              <form-input 
+                type="date" 
+                v-model="form.main_tenant_swiss_residence_since" 
+                placeholder="TT.MM.JJJJ"
+                :error="errors.main_tenant_swiss_residence_since"
+                @blur="validateField('main_tenant_swiss_residence_since')"
+                @focus="removeError('main_tenant_swiss_residence_since')">
+              </form-input>
+            </form-group>
+          </template>
           <form-group :error="errors.main_tenant_private_phone">
-            <form-label :error="errors.main_tenant_private_phone">Telefon* (privat)</form-label>
+            <form-label :error="errors.main_tenant_private_phone">Telefon (privat)</form-label>
             <form-input 
               type="text" 
               v-model="form.main_tenant_private_phone" 
@@ -114,14 +138,12 @@
               @focus="removeError('main_tenant_private_phone')">
             </form-input>
           </form-group>
-          <form-group :error="errors.main_tenant_work_phone">
-            <form-label :error="errors.main_tenant_work_phone">Telefon* (geschäftlich)</form-label>
+          <form-group>
+            <form-label :required="false">Telefon (geschäftlich)</form-label>
             <form-input 
               type="text" 
               v-model="form.main_tenant_work_phone" 
-              :error="errors.main_tenant_work_phone"
-              @blur="validateField('main_tenant_work_phone')"
-              @focus="removeError('main_tenant_work_phone')">
+              :error="errors.main_tenant_work_phone">
             </form-input>
           </form-group>
           <form-group :error="errors.main_tenant_email">
@@ -164,7 +186,7 @@
           </form-group>
         </form-grid>
         
-        <h2>Aktuelle Wohnsituation</h2>
+        <h2 class="!mt-35 md:!mt-70">Aktuelle Wohnsituation</h2>
         <form-grid>
           <form-group :error="errors.main_tenant_current_rent_tenant_role">
             <form-label :error="errors.main_tenant_current_rent_tenant_role">Aktuelle Wohnsituation</form-label>
@@ -176,7 +198,7 @@
             </form-select>
           </form-group>
           <form-group :error="errors.main_tenant_current_rent_terminator">
-            <form-label :error="errors.main_tenant_current_rent_terminator">Wurde Ihr aktuelles Mietverhältnis durch Ihre*n Vermieter*in gekündigt?</form-label>
+            <form-label :error="errors.main_tenant_current_rent_terminator">Wurde das aktuelle Mietverhältnis durch den Vermieter*in gekündigt?</form-label>
             <form-select v-model="form.main_tenant_current_rent_terminator"
               :options="yes_no"
               :error="errors.main_tenant_current_rent_terminator"
@@ -236,7 +258,7 @@
           </template>
         </form-grid>
         
-        <h2>Weitere Person</h2>
+        <h2 class="!mt-35 md:!mt-70">Weitere Person</h2>
         <form-grid>
           <form-group :error="errors.sub_tenant_yn">
             <form-label :error="errors.sub_tenant_yn">Werden Sie die Wohnung teilen?</form-label>
@@ -250,10 +272,10 @@
           </form-group>
           <template v-if="form.sub_tenant_yn == 'Ja'">
             <form-grid class="col-span-12 !mb-0">
-              <form-group class="!col-span-12">
-                <form-label class="mb-12">Mit wem werden Sie die Wohnung teilen?</form-label>
+              <form-group class="!col-span-12" :error="errors.sub_tenant_type">
+                <form-label :error="errors.sub_tenant_type" class="mb-12 xl:mb-16">Mit wem werden Sie die Wohnung teilen?</form-label>
                 <div class="grid grid-cols-12 gap-30">
-                  <form-group class="!col-span-4" v-for="(type, index) in tenant_types" :key="index">
+                  <form-group class="!col-span-12 md:!col-span-6 xl:!col-span-4" v-for="(type, index) in tenant_types" :key="index">
                     <form-checkbox
                       :id="`sub_tenant_${index}`" 
                       v-model="form.sub_tenant_type"
@@ -272,7 +294,7 @@
           <div class="text-md my-30">Angaben zum Kind/zu den Kindern folgen weiter unten.</div>
         </template>
 
-        <template v-if="form.sub_tenant_type.some(item => tenant_types.includes(item)) && !(form.sub_tenant_type.length == 1 && form.sub_tenant_type.includes('Kinder'))">
+        <template v-if="form.sub_tenant_type.some(item => item !== 'Kinder')">
           <form-grid>
             <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
               <form-group :error="errors.sub_tenant_salutation">
@@ -341,14 +363,14 @@
               </form-group>
             </template>
             <form-group :error="errors.sub_tenant_birthdate">
-              <form-label :error="errors.main_tenant_birthdate">Geburtsdatum</form-label>
+              <form-label :error="errors.sub_tenant_birthdate">Geburtsdatum</form-label>
               <form-input 
                 type="date" 
-                v-model="form.main_tenant_birthdate" 
+                v-model="form.sub_tenant_birthdate" 
                 placeholder="TT.MM.JJJJ"
-                :error="errors.main_tenant_birthdate"
-                @blur="validateField('main_tenant_birthdate')"
-                @focus="removeError('main_tenant_birthdate')">
+                :error="errors.sub_tenant_birthdate"
+                @blur="validateField('sub_tenant_birthdate')"
+                @focus="removeError('sub_tenant_birthdate')">
               </form-input>
             </form-group>
             <form-group :error="errors.sub_tenant_marital_status">
@@ -362,73 +384,93 @@
               </form-select>
             </form-group>
             <form-group :error="errors.sub_tenant_nationality">
-              <form-label :error="errors.main_tenant_nationality">Nationalität</form-label>
-              <form-select v-model="form.main_tenant_nationality"
+              <form-label :error="errors.sub_tenant_nationality">Nationalität</form-label>
+              <form-select v-model="form.sub_tenant_nationality"
                 :options="nationality"
-                :error="errors.main_tenant_nationality"
-                @blur="validateField('main_tenant_nationality')"
-                @focus="removeError('main_tenant_nationality')">
+                :error="errors.sub_tenant_nationality"
+                @blur="validateField('sub_tenant_nationality')"
+                @focus="removeError('sub_tenant_nationality')">
               </form-select>
             </form-group>
             <form-group :error="errors.sub_tenant_home_town">
-              <template v-if="form.main_tenant_nationality == 'CH'">
-                <form-label :error="errors.main_tenant_home_town">Heimatort</form-label>
+              <template v-if="form.sub_tenant_nationality == 'CH'">
+                <form-label :error="errors.sub_tenant_home_town">Heimatort</form-label>
                 <form-input 
                   type="text" 
-                  v-model="form.main_tenant_home_town" 
-                  :error="errors.main_tenant_home_town"
-                  @blur="validateField('main_tenant_home_town')"
-                  @focus="removeError('main_tenant_home_town')">
+                  v-model="form.sub_tenant_home_town" 
+                  :error="errors.sub_tenant_home_town"
+                  @blur="validateField('sub_tenant_home_town')"
+                  @focus="removeError('sub_tenant_home_town')">
                 </form-input>
               </template>
             </form-group>
-            <form-group :error="errors.sub_tenant_private_phone">
-              <form-label :error="errors.main_tenant_private_phone">Telefon* (privat)</form-label>
+            <template v-if="form.sub_tenant_nationality == 'Andere'">
+            <form-group :error="errors.sub_tenant_residence_permit">
+              <form-label :error="errors.sub_tenant_residence_permit">Niederlassungsbewilligung</form-label>
+              <form-select v-model="form.sub_tenant_residence_permit"
+                :options="residence_permits"
+                :error="errors.sub_tenant_residence_permit"
+                @blur="validateField('sub_tenant_residence_permit')"
+                @focus="removeError('sub_tenant_residence_permit')">
+              </form-select>
+            </form-group>
+            <form-group :error="errors.sub_tenant_swiss_residence_since">
+              <form-label :error="errors.sub_tenant_swiss_residence_since">In der Schweiz wohnhaft seit</form-label>
               <form-input 
-                type="text" 
-                v-model="form.main_tenant_private_phone" 
-                :error="errors.main_tenant_private_phone"
-                @blur="validateField('main_tenant_private_phone')"
-                @focus="removeError('main_tenant_private_phone')">
+                type="date" 
+                v-model="form.sub_tenant_swiss_residence_since" 
+                placeholder="TT.MM.JJJJ"
+                :error="errors.sub_tenant_swiss_residence_since"
+                @blur="validateField('sub_tenant_swiss_residence_since')"
+                @focus="removeError('sub_tenant_swiss_residence_since')">
               </form-input>
             </form-group>
-            <form-group :error="errors.sub_tenant_work_phone">
-              <form-label :error="errors.main_tenant_work_phone">Telefon* (geschäftlich)</form-label>
+          </template>
+            <form-group :error="errors.sub_tenant_private_phone">
+              <form-label :error="errors.sub_tenant_private_phone">Telefon (privat)</form-label>
               <form-input 
                 type="text" 
-                v-model="form.main_tenant_work_phone" 
-                :error="errors.main_tenant_work_phone"
-                @blur="validateField('main_tenant_work_phone')"
-                @focus="removeError('main_tenant_work_phone')">
+                v-model="form.sub_tenant_private_phone" 
+                :error="errors.sub_tenant_private_phone"
+                @blur="validateField('sub_tenant_private_phone')"
+                @focus="removeError('sub_tenant_private_phone')">
+              </form-input>
+            </form-group>
+            <form-group>
+              <form-label :required="false">Telefon (geschäftlich)</form-label>
+              <form-input 
+                type="text" 
+                v-model="form.sub_tenant_work_phone" 
+                :error="errors.sub_tenant_work_phone">
               </form-input>
             </form-group>
             <form-group :error="errors.sub_tenant_email">
-              <form-label :error="errors.main_tenant_email">E-Mail-Adresse</form-label>
+              <form-label :error="errors.sub_tenant_email">E-Mail-Adresse</form-label>
               <form-input 
                 type="email" 
-                v-model="form.main_tenant_email" 
-                :error="errors.main_tenant_email"
-                @blur="validateEmail('main_tenant_email')"
-                @focus="removeError('main_tenant_email')">
+                v-model="form.sub_tenant_email" 
+                :error="errors.sub_tenant_email"
+                @blur="validateEmail('sub_tenant_email')"
+                @focus="removeError('sub_tenant_email')">
               </form-input>
             </form-group>
             <form-group :error="errors.sub_tenant_occupation">
-              <form-label :error="errors.main_tenant_occupation">Beruf</form-label>
+              <form-label :error="errors.sub_tenant_occupation">Beruf</form-label>
               <form-input 
                 type="text" 
-                v-model="form.main_tenant_occupation" 
-                :error="errors.main_tenant_occupation"
-                @blur="validateField('main_tenant_occupation')"
-                @focus="removeError('main_tenant_occupation')">
+                v-model="form.sub_tenant_occupation" 
+                :error="errors.sub_tenant_occupation"
+                @blur="validateField('sub_tenant_occupation')"
+                @focus="removeError('sub_tenant_occupation')">
               </form-input>
             </form-group>
             <form-group :error="errors.sub_tenant_employment_status">
-              <form-label :error="errors.main_tenant_employment_status">Erwerbssituation</form-label>
-              <form-select v-model="form.main_tenant_employment_status"
+              <form-label :error="errors.sub_tenant_employment_status">Erwerbssituation</form-label>
+              <form-select v-model="form.sub_tenant_employment_status"
                 :options="employment_status"
-                :error="errors.main_tenant_employment_status"
-                @blur="validateField('main_tenant_employment_status')"
-                @focus="removeError('main_tenant_employment_status')">
+                :error="errors.sub_tenant_employment_status"
+                @blur="validateField('sub_tenant_employment_status')"
+                @focus="removeError('sub_tenant_employment_status')">
               </form-select>
             </form-group>
             <form-group :error="errors.sub_tenant_debt_enforcement_yn">
@@ -441,7 +483,7 @@
               </form-select>
             </form-group>
           </form-grid>
-          <h2>Aktuelle Wohnsituation der weiteren Person</h2>
+          <h2 class="!mt-35 md:!mt-70">Aktuelle Wohnsituation der weiteren Person</h2>
           <form-grid>
             <form-group :error="errors.sub_tenant_current_rent_tenant_role">
               <form-label :error="errors.sub_tenant_current_rent_tenant_role">Aktuelle Wohnsituation</form-label>
@@ -453,7 +495,7 @@
               </form-select>
             </form-group>
             <form-group :error="errors.sub_tenant_current_rent_terminator">
-              <form-label :error="errors.sub_tenant_current_rent_terminator">Wurde Ihr aktuelles Mietverhältnis durch Ihre*n Vermieter*in gekündigt?</form-label>
+              <form-label :error="errors.sub_tenant_current_rent_terminator">Wurde das aktuelle Mietverhältnis durch den Vermieter*in gekündigt?</form-label>
               <form-select v-model="form.sub_tenant_current_rent_terminator"
                 :options="yes_no"
                 :error="errors.sub_tenant_current_rent_terminator"
@@ -514,12 +556,12 @@
           </form-grid>
         </template>
 
-        <h2>Präferenzen</h2>
+        <h2 class="!mt-35 md:!mt-70">Präferenzen</h2>
         <form-grid class="col-span-12 !mb-0">
-          <form-group class="!col-span-12">
-            <form-label class="mb-12">In welchen Stadtkreisen möchten Sie wohnen?</form-label>
+          <form-group class="!col-span-10 mb-15" :error="errors.rent_pref_district_id">
+            <form-label class="mb-12 xl:mb-16" :error="errors.rent_pref_district_id">In welchen Stadtkreisen möchten Sie wohnen?</form-label>
             <div class="grid grid-cols-12 gap-30">
-              <form-group class="!col-span-3" v-for="(district, index) in districts" :key="index">
+              <form-group class="!col-span-6 md:!col-span-3" v-for="(district, index) in districts" :key="index">
                 <form-checkbox
                   :id="`rent_pref_district_${index}`" 
                   v-model="form.rent_pref_district_id"
@@ -530,28 +572,142 @@
               </form-group>
             </div>
           </form-group>
-        </form-grid>
-        <!--
-        <form-grid>
-          <form-group class="col-span-12">
-            <form-textarea 
-              v-model="form.message" 
-              placeholder="Mitteilung"
-              :error="errors.message"
-              @blur="validateField()"
-              @focus="removeError('message')">
-            </form-textarea>
+          <form-group class="!col-span-10 mb-15" :error="errors.rent_pref_floor_id">
+            <form-label class="mb-12 xl:mb-16" :error="errors.rent_pref_floor_id">In welchem Stockwerk möchten Sie wohnen?</form-label>
+            <div class="grid grid-cols-12 gap-30">
+              <form-group class="!col-span-6 md:!col-span-3" v-for="(floor, index) in floors" :key="index">
+                <form-checkbox
+                  :id="`rent_pref_floor_${index}`" 
+                  v-model="form.rent_pref_floor_id"
+                  :value="floor"
+                  @update="updateCheckboxInput($event, 'rent_pref_floor_id')">
+                  <template v-slot:label>{{ floor }}</template>
+                </form-checkbox>
+              </form-group>
+            </div>
+          </form-group>
+          <form-group class="!col-span-10" :error="errors.rent_pref_rooms_qty">
+            <form-label class="mb-12 xl:mb-16" :error="errors.rent_pref_rooms_qty">Wie viele Zimmer brauchen Sie?</form-label>
+            <div class="grid grid-cols-12 gap-30">
+              <form-group class="!col-span-6 md:!col-span-3" v-for="(room, index) in rooms" :key="index">
+                <form-checkbox
+                  :id="`rent_pref_room_${index}`" 
+                  v-model="form.rent_pref_rooms_qty"
+                  :value="room"
+                  @update="updateCheckboxInput($event, 'rent_pref_rooms_qty')">
+                  <template v-slot:label><span v-html="room"></span></template>
+                </form-checkbox>
+              </form-group>
+            </div>
+          </form-group>
+          <form-group :error="errors.rent_pref_nobalcony_yn">
+            <form-label :error="errors.rent_pref_nobalcony_yn">Wünschen Sie einen Balkon?</form-label>
+            <form-select
+              v-model="form.rent_pref_nobalcony_yn"
+              :options="yes_no"
+              :error="errors.rent_pref_nobalcony_yn"
+              @blur="validateField('rent_pref_nobalcony_yn')"
+              @focus="removeError('rent_pref_nobalcony_yn')">
+            </form-select>
+          </form-group>
+          <form-group :error="errors.rent_pref_noelevator">
+            <form-label :error="errors.rent_pref_noelevator">Wünschen Sie einen Lift im Haus?</form-label>
+            <form-select
+              v-model="form.rent_pref_noelevator"
+              :options="yes_no"
+              :error="errors.rent_pref_noelevator"
+              @blur="validateField('rent_pref_noelevator')"
+              @focus="removeError('rent_pref_noelevator')">
+            </form-select>
+          </form-group>
+          <form-group :error="errors.rent_pref_max_rent">
+            <form-label :error="errors.rent_pref_max_rent">Mietzins (inkl. Nebenkosten) bis max. CHF</form-label>
+            <form-input 
+              type="text" 
+              v-model="form.rent_pref_max_rent" 
+              :error="errors.rent_pref_max_rent"
+              @blur="validateField('rent_pref_max_rent')"
+              @focus="removeError('rent_pref_max_rent')">
+            </form-input>
+          </form-group>
+          <form-group :error="errors.rent_pref_min_start_date">
+            <form-label :error="errors.rent_pref_min_start_date">Bezugstermin frühestens</form-label>
+            <form-input 
+              type="date" 
+              v-model="form.rent_pref_min_start_date" 
+              placeholder="TT.MM.JJJJ"
+              :error="errors.rent_pref_min_start_date"
+              @blur="validateField('rent_pref_min_start_date')"
+              @focus="removeError('rent_pref_min_start_date')">
+            </form-input>
           </form-group>
         </form-grid>
-        <form-group>
-          <button 
-            :class="[isValid && !isLoading ? 'bg-ocean text-white hover:bg-black transition-colors' : 'opacity-50 pointer-events-none select-none', 'bg-ocean font-black text-white uppercase py-15 px-20 leading-none inline-flex items-center w-auto text-left']"
+
+        <h2 class="!mt-35 md:!mt-70">Weitere Angaben</h2>
+        <form-grid>
+          <form-group :error="errors.accomodation_play_music_yn">
+            <form-label :error="errors.accomodation_play_music_yn">Spielen Sie oder ein*e Mitbewohner*in ein Musikinstrument?</form-label>
+            <form-select
+              v-model="form.accomodation_play_music_yn"
+              :options="yes_no"
+              :error="errors.accomodation_play_music_yn"
+              @blur="validateField('accomodation_play_music_yn')"
+              @focus="removeError('accomodation_play_music_yn')">
+            </form-select>
+          </form-group>
+          <form-group :error="errors.accomodation_musical_instruments">
+            <template v-if="form.accomodation_play_music_yn == 'Ja'">
+              <form-label :error="errors.accomodation_musical_instruments">Welches Musikinstrument</form-label>
+              <form-input 
+                type="text" 
+                v-model="form.accomodation_musical_instruments" 
+                :error="errors.accomodation_musical_instruments"
+                @blur="validateField('accomodation_musical_instruments')"
+                @focus="removeError('accomodation_musical_instruments')">
+              </form-input>
+            </template>
+          </form-group>
+          <form-group :error="errors.accomodation_pets_yn">
+            <form-label :error="errors.accomodation_pets_yn">Halten Sie Haustiere?</form-label>
+            <form-select
+              v-model="form.accomodation_pets_yn"
+              :options="yes_no"
+              :error="errors.accomodation_pets_yn"
+              @blur="validateField('accomodation_pets_yn')"
+              @focus="removeError('accomodation_pets_yn')">
+            </form-select>
+          </form-group>
+          <form-group :error="errors.accomodation_pets">
+            <template v-if="form.accomodation_pets_yn == 'Ja'">
+              <form-label :error="errors.accomodation_pets">Welche Haustiere halten Sie? (Hundehaltung ist verboten)</form-label>
+              <form-input 
+                type="text" 
+                v-model="form.accomodation_pets" 
+                :error="errors.accomodation_pets"
+                @blur="validateField('accomodation_pets')"
+                @focus="removeError('accomodation_pets')">
+              </form-input>
+            </template>
+          </form-group>
+
+          <form-group class="!col-span-12">
+            <form-label :required="false">Bemerkungen</form-label>
+            <form-textarea v-model="form.accomodation_remarks">
+            </form-textarea>
+          </form-group>
+
+        </form-grid>
+
+        <form-grid>
+          <form-group>
+            <button 
+            :class="[!isLoading ? 'bg-black text-white hover:bg-aqua transition-colors' : 'opacity-50 pointer-events-none select-none', 'font-bold text-lg text-white py-15 px-20 leading-none inline-flex items-center w-auto text-left']"
             type="button"
             @click.prevent="submit()">
-            Absenden
-          </button>
-        </form-group>
-        -->
+            Senden
+            </button>
+          </form-group>
+        </form-grid>
       </form>
     </template>
   </div>
@@ -593,7 +749,9 @@ export default {
         main_tenant_postal_code_city: null,
         main_tenant_birthdate: null,
         main_tenant_marital_status: 'ledig',
-        main_tenant_nationality: 'CH',
+        main_tenant_nationality: null,
+        main_tenant_residence_permit: null,
+        main_tenant_swiss_residence_since: null,
         main_tenant_home_town: null,
         main_tenant_email: null,
         main_tenant_private_phone: null,
@@ -617,7 +775,9 @@ export default {
         sub_tenant_postal_code_city: null,
         sub_tenant_birthdate: null,
         sub_tenant_marital_status: 'ledig',
-        sub_tenant_nationality: 'CH',
+        sub_tenant_nationality: null,
+        sub_tenant_residence_permit: null,
+        sub_tenant_swiss_residence_since: null,
         sub_tenant_home_town: null,
         sub_tenant_private_phone: null,
         sub_tenant_work_phone: null,
@@ -633,6 +793,19 @@ export default {
         sub_tenant_current_renter_previous_renter: null,
         sub_tenant_current_rent_terminator_reason: null,
         rent_pref_district_id: [],
+        rent_pref_floor_id: [],
+        rent_pref_rooms_qty: [],
+        rent_pref_nobalcony_yn: 'Nein',
+        rent_pref_noelevator: 'Nein',
+        rent_pref_max_rent: null,
+        rent_pref_min_start_date: null,
+        accomodation_play_music_yn: 'Nein',
+        accomodation_musical_instruments: null,
+        accomodation_pets_yn: 'Nein',
+        accomodation_pets: null,
+        accomodation_remarks: null,
+
+        has_sub_tenant: false,
       },
 
       errors: {
@@ -644,6 +817,8 @@ export default {
         main_tenant_birthdate: null,
         main_tenant_marital_status: null,
         main_tenant_nationality: null,
+        main_tenant_residence_permit: null,
+        main_tenant_swiss_residence_since: null,
         main_tenant_home_town: null,
         main_tenant_email: null,
         main_tenant_private_phone: null,
@@ -667,6 +842,8 @@ export default {
         sub_tenant_birthdate: null,
         sub_tenant_marital_status: null,
         sub_tenant_nationality: null,
+        sub_tenant_residence_permit: null,
+        sub_tenant_swiss_residence_since: null,
         sub_tenant_home_town: null,
         sub_tenant_private_phone: null,
         sub_tenant_work_phone: null,
@@ -681,7 +858,21 @@ export default {
         sub_tenant_current_renter_rent_duration: null,
         sub_tenant_current_renter_previous_renter: null,
         sub_tenant_current_rent_terminator_reason: null,
+        rent_pref_district_id: null,
+        rent_pref_floor_id: null,
+        rent_pref_rooms_qty: null,
+        rent_pref_nobalcony_yn: null,
+        rent_pref_noelevator: null,
+        rent_pref_max_rent: null,
+        rent_pref_min_start_date: null,
+        accomodation_play_music_yn: null,
+        accomodation_musical_instruments: null,
+        accomodation_pets_yn: null,
+        accomodation_pets: null,
+        accomodation_remarks: null,
       },
+
+      validateSubTenant: false,
 
       salutations: [
         { label: 'Frau', value: 'Frau' },
@@ -708,8 +899,20 @@ export default {
       ],
 
       nationality: [
+        { label: null, value: null},
         { label: 'CH', value: 'CH' },
         { label: 'Andere', value: 'Andere' },
+      ],
+
+      residence_permits: [
+        { label: 'B', value: 'B'},
+        { label: 'C', value: 'C'},
+        { label: 'Ci', value: 'Ci'},
+        { label: 'G', value: 'G'},
+        { label: 'L', value: 'L'},
+        { label: 'F', value: 'F'},
+        { label: 'N', value: 'N'},
+        { label: 'S', value: 'S'},
       ],
 
       rent_duration: [
@@ -748,6 +951,27 @@ export default {
        'Kreis 7',
        'Kreis 8',
        'Kreis 10',
+      ],
+
+      floors: [
+        'Hochparterre',
+        '1. Stock',
+        '2. Stock',
+        '3. Stock',
+        '4. Stock',
+        '5. Stock',
+        '6. Stock',
+      ],
+
+      rooms: [
+        '2',
+        '2&frac12;',
+        '3',
+        '3&frac12;',
+        '4',
+        '4&frac12;',
+        '5',
+        '5&frac12;',
       ],
 
       validationErrors: [],
@@ -791,6 +1015,8 @@ export default {
         // add value to array
         this.form[field].push(event);
       }
+
+      this.errors[field] = false;
     },
 
     validateField(field) {
@@ -829,6 +1055,15 @@ export default {
         );
         this.errors[key] = true;
       }
+
+      // scroll to ref="validationErrors"
+      this.$nextTick(() => {
+        this.$refs.validationErrors.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      });
+
     },
 
     removeError(field) {
@@ -844,26 +1079,17 @@ export default {
   watch: {
     form: {
       handler(newValue, oldValue) {
-        console.log(this.form);
       },
       deep: true
-    }
+    },
+    sub_tenant_type: {
+      handler(newValue, oldValue) {
+        console.log(this.form.sub_tenant_type);
+      },
+      deep: true
+    },
+
   },
 
-  computed: {
-    // isValid() { 
-    //   if (
-    //     this.form.firstname &&
-    //     this.form.name &&
-    //     this.form.address &&
-    //     this.form.main_tenant_postal_code_city &&
-    //     this.form.phone
-    //   )
-    //   {
-    //     return true;
-    //   }
-    //   return false;
-    // },
-  },
 }
 </script>
