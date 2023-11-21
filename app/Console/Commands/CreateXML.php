@@ -23,7 +23,12 @@ class CreateXml extends Command
    */
   public function handle()
   { 
-    $filename = 'registration-muller-peter-8400-winterthur-21-11-2023-15-57-36';
+    // $filename = 'registration-muller-peter-8400-winterthur-21-11-2023-15-57-36';
+
+    // ask the user for the filename
+    $filename = $this->ask('Please enter the filename without the extension (e.g. registration-muller-peter-8400-winterthur-21-11-2023-15-57-36):');
+
+
     $json = json_decode(\Storage::disk('local')->get('json/'.$filename.'.json'));
 
     $xml = new \DOMDocument();
