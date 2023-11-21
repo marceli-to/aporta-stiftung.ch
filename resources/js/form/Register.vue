@@ -184,6 +184,45 @@
               @focus="removeError('main_tenant_debt_enforcement_yn')">
             </form-select>
           </form-group>
+          <template v-if="form.main_tenant_employment_status == 'Angestellt'">
+            <div class="!col-span-12 !mt-15 md:!mt-30">
+              <h2>Aktueller Arbeitgeber</h2>
+              <div class="sm:grid sm:grid-cols-12 gap-30 mb-30">
+                <form-group :error="errors.main_tenant_current_employer_name">
+                  <form-label :error="errors.main_tenant_current_employer_name">Aktuelle*r Arbeitgeber*in</form-label>
+                  <form-input 
+                    type="text" 
+                    v-model="form.main_tenant_current_employer_name" 
+                    :error="errors.main_tenant_current_employer_name"
+                    @blur="validateField('main_tenant_current_employer_name')"
+                    @focus="removeError('main_tenant_current_employer_name')">
+                  </form-input>
+                </form-group>
+              </div>
+              <div class="sm:grid sm:grid-cols-12 gap-30">
+                <form-group :error="errors.main_tenant_workload">
+                  <form-label :error="errors.main_tenant_workload">Arbeitspensum (in Prozent)</form-label>
+                  <form-input 
+                    type="text" 
+                    v-model="form.main_tenant_workload" 
+                    :error="errors.main_tenant_workload"
+                    @blur="validateField('main_tenant_workload')"
+                    @focus="removeError('main_tenant_workload')">
+                  </form-input>
+                </form-group>
+                <form-group :error="errors.main_tenant_annual_income">
+                  <form-label :error="errors.main_tenant_annual_income">Jahreseinkommen (in CHF)</form-label>
+                  <form-select v-model="form.main_tenant_annual_income"
+                    :options="annual_incomes"
+                    :error="errors.main_tenant_annual_income"
+                    @blur="validateField('main_tenant_annual_income')"
+                    @focus="removeError('main_tenant_annual_income')">
+                  </form-select>
+                </form-group>
+              </div>
+            </div>
+          
+          </template>
         </form-grid>
         
         <h2 class="!mt-35 md:!mt-70">Aktuelle Wohnsituation</h2>
@@ -482,6 +521,46 @@
                 @focus="removeError('main_tenant_debt_enforcement_yn')">
               </form-select>
             </form-group>
+
+            <template v-if="form.sub_tenant_employment_status == 'Angestellt'">
+              <div class="!col-span-12 !mt-15 md:!mt-30">
+                <h2>Aktueller Arbeitgeber der weiteren Person</h2>
+                <div class="sm:grid sm:grid-cols-12 gap-30 mb-30">
+                  <form-group :error="errors.sub_tenant_current_employer_name">
+                    <form-label :error="errors.sub_tenant_current_employer_name">Aktuelle*r Arbeitgeber*in</form-label>
+                    <form-input 
+                      type="text" 
+                      v-model="form.sub_tenant_current_employer_name" 
+                      :error="errors.sub_tenant_current_employer_name"
+                      @blur="validateField('sub_tenant_current_employer_name')"
+                      @focus="removeError('sub_tenant_current_employer_name')">
+                    </form-input>
+                  </form-group>
+                </div>
+                <div class="sm:grid sm:grid-cols-12 gap-30">
+                  <form-group :error="errors.sub_tenant_workload">
+                    <form-label :error="errors.sub_tenant_workload">Arbeitspensum (in Prozent)</form-label>
+                    <form-input 
+                      type="text" 
+                      v-model="form.sub_tenant_workload" 
+                      :error="errors.sub_tenant_workload"
+                      @blur="validateField('sub_tenant_workload')"
+                      @focus="removeError('sub_tenant_workload')">
+                    </form-input>
+                  </form-group>
+                  <form-group :error="errors.sub_tenant_annual_income">
+                    <form-label :error="errors.sub_tenant_annual_income">Jahreseinkommen (in CHF)</form-label>
+                    <form-select v-model="form.sub_tenant_annual_income"
+                      :options="annual_incomes"
+                      :error="errors.sub_tenant_annual_income"
+                      @blur="validateField('sub_tenant_annual_income')"
+                      @focus="removeError('sub_tenant_annual_income')">
+                    </form-select>
+                  </form-group>
+                </div>
+              </div>
+            </template>
+
           </form-grid>
           <h2 class="!mt-35 md:!mt-70">Aktuelle Wohnsituation der weiteren Person</h2>
           <form-grid>
@@ -757,7 +836,10 @@ export default {
         main_tenant_private_phone: null,
         main_tenant_work_phone: null,
         main_tenant_occupation: null,
-        main_tenant_employment_status: 'Angestellt',
+        main_tenant_employment_status: null,
+        main_tenant_current_employer_name: null,
+        main_tenant_workload: null,
+        main_tenant_annual_income: null,
         main_tenant_debt_enforcement_yn: 'Nein, ich hatte keine Betreibungen in den letzten zwei Jahren',
         main_tenant_current_rent_tenant_role: 'Ich bin Hauptmieter*in',
         main_tenant_current_rent_terminator: 'Nein',
@@ -783,7 +865,7 @@ export default {
         sub_tenant_work_phone: null,
         sub_tenant_email: null,
         sub_tenant_occupation: null,
-        sub_tenant_employment_status: 'Angestellt',
+        sub_tenant_employment_status: null,
         sub_tenant_debt_enforcement_yn: 'Nein, ich hatte keine Betreibungen in den letzten zwei Jahren',
         sub_tenant_current_rent_tenant_role: 'Ich bin Hauptmieter*in',
         sub_tenant_current_rent_terminator: 'Nein',
@@ -825,6 +907,9 @@ export default {
         main_tenant_work_phone: null,
         main_tenant_occupation: null,
         main_tenant_employment_status: null,
+        main_tenant_current_employer_name: null,
+        main_tenant_workload: null,
+        main_tenant_annual_income: null,
         main_tenant_debt_enforcement_yn: null,
         main_tenant_current_rent_tenant_role: null,
         main_tenant_current_rent_terminator: null,
@@ -889,6 +974,7 @@ export default {
       ],
 
       employment_status: [
+        { label: null, value: null},
         { label: 'Angestellt', value: 'Angestellt'},
         { label: 'Student*in', value: 'Student*in' },
         { label: 'Arbeitslos', value: 'Arbeitslos' },
@@ -913,6 +999,22 @@ export default {
         { label: 'F', value: 'F'},
         { label: 'N', value: 'N'},
         { label: 'S', value: 'S'},
+      ],
+
+      annual_incomes: [
+        { label: null, value: null},
+        { label: "Weniger als 20'000", value: "Weniger als 20'000" },
+        { label: "20'000-30'000", value: "20'000-30'000" },
+        { label: "30'000-40'000", value: "30'000-40'000" },
+        { label: "40'000-50'000", value: "40'000-50'000" },
+        { label: "50'000-60'000", value: "50'000-60'000" },
+        { label: "60'000-70'000", value: "60'000-70'000" },
+        { label: "70'000-80'000", value: "70'000-80'000" },
+        { label: "80'000-90'000", value: "80'000-90'000" },
+        { label: "90'000-100'000", value: "90'000-100'000" },
+        { label: "100'000-120'000", value: "100'000-120'000" },
+        { label: "120'000-140'000", value: "120'000-140'000" },
+        { label: "Mehr als 140'000", value: "Mehr als 140'000" }
       ],
 
       rent_duration: [
@@ -1077,16 +1179,140 @@ export default {
   },
 
   watch: {
-    form: {
-      handler(newValue, oldValue) {
+    'form.main_tenant_employment_status': {
+      handler: function (after, before) {
+        if (this.form.main_tenant_employment_status != 'Angestellt') {
+          this.form.main_tenant_current_employer_name = null;
+          this.form.main_tenant_workload = null;
+          this.form.main_tenant_annual_income = null;
+          this.errors.main_tenant_current_employer_name = null;
+          this.errors.main_tenant_workload = null;
+          this.errors.main_tenant_annual_income = null;
+        }
+      },
+      deep: true,
+    },
+
+    'form.main_tenant_nationality': {
+      handler: function(after, before) {
+        if (this.form.main_tenant_nationality == 'CH') {
+          this.form.main_tenant_residence_permit = null;
+          this.form.main_tenant_swiss_residence_since = null;
+          this.errors.main_tenant_residence_permit = null;
+          this.errors.main_tenant_swiss_residence_since = null;
+        }
+        else if (this.form.main_tenant_nationality == 'Andere') {
+          this.form.main_tenant_home_town = null;
+          this.errors.main_tenant_home_town = null;
+        }
       },
       deep: true
     },
-    sub_tenant_type: {
-      handler(newValue, oldValue) {
-        console.log(this.form.sub_tenant_type);
+
+    'form.main_tenant_current_rent_terminator': {
+      handler: function(after, before) {
+        if (this.form.main_tenant_current_rent_terminator == 'Nein') {
+          this.form.main_tenant_current_rent_terminator_reason = null;
+          this.errors.main_tenant_current_rent_terminator_reason = null;
+        }
+      },
+      deep: true,
+    },  
+
+    'form.main_tenant_current_renter_rent_duration': {
+      handler: function(after, before) {
+        if (this.form.main_tenant_current_renter_rent_duration != 'Weniger als 1 Jahr') {
+          this.form.main_tenant_current_renter_previous_renter = null;
+          this.errors.main_tenant_current_renter_previous_renter = null;
+        }
+      },
+      deep: true,
+    },
+
+    'form.sub_tenant_type': {
+      handler: function (after, before) {
+        if (this.form.sub_tenant_yn == 'Ja') {
+          // if this.form.sub_tenant_type has at least 1 item other than 'Kinder', set this.form.has_sub_tenant to true
+          if (this.form.sub_tenant_type.length >= 1) {
+            // check if there is at least 1 item other than 'Kinder'
+            if (this.form.sub_tenant_type.filter(item => item !== 'Kinder').length >= 1) {
+              this.form.has_sub_tenant = true;
+            }
+            else {
+              this.form.has_sub_tenant = false;
+            }
+          }
+        }
       },
       deep: true
+    },
+
+    'form.sub_tenant_employment_status': {
+      handler: function (after, before) {
+        if (this.form.sub_tenant_employment_status != 'Angestellt') {
+          this.form.sub_tenant_current_employer_name = null;
+          this.form.sub_tenant_workload = null;
+          this.form.sub_tenant_annual_income = null;
+          this.errors.sub_tenant_current_employer_name = null;
+          this.errors.sub_tenant_workload = null;
+          this.errors.sub_tenant_annual_income = null;
+        }
+      },
+      deep: true,
+    },
+
+    'form.sub_tenant_nationality': {
+      handler: function(after, before) {
+        if (this.form.sub_tenant_nationality == 'CH') {
+          this.form.sub_tenant_residence_permit = null;
+          this.form.sub_tenant_swiss_residence_since = null;
+          this.errors.sub_tenant_residence_permit = null;
+          this.errors.sub_tenant_swiss_residence_since = null;
+        }
+        else if (this.form.sub_tenant_nationality == 'Andere') {
+          this.form.sub_tenant_home_town = null;
+          this.errors.sub_tenant_home_town = null;
+        }
+      },
+      deep: true
+    },
+
+    'form.sub_tenant_current_rent_terminator': {
+      handler: function(after, before) {
+        if (this.form.sub_tenant_current_rent_terminator == 'Nein') {
+          this.form.sub_tenant_current_rent_terminator_reason = null;
+          this.errors.sub_tenant_current_rent_terminator_reason = null;
+        }
+      },
+      deep: true,
+    },  
+
+    'form.sub_tenant_current_renter_rent_duration': {
+      handler: function(after, before) {
+        if (this.form.sub_tenant_current_renter_rent_duration != 'Weniger als 1 Jahr') {
+          this.form.sub_tenant_current_renter_previous_renter = null;
+          this.errors.sub_tenant_current_renter_previous_renter = null;
+        }
+      },
+      deep: true,
+    },
+
+    'form.accomodation_play_music_yn': {
+      handler: function(after, before) {
+        if (this.form.accomodation_play_music_yn == 'Nein') {
+          this.form.accomodation_musical_instruments = null;
+          this.errors.accomodation_musical_instruments = null;
+        }
+      }
+    },
+
+    'form.accomodation_pets_yn': {
+      handler: function(after, before) {
+        if (this.form.accomodation_pets_yn == 'Nein') {
+          this.form.accomodation_pets = null;
+          this.errors.accomodation_pets = null;
+        }
+      }
     },
 
   },
