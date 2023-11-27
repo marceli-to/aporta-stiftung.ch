@@ -23,8 +23,6 @@ class FormController extends Controller
     {
       if ($v['password'] == $password && $v['used'] == false)
       {
-        $key[$k]['used'] = true;
-        \Storage::disk('local')->put('key.json', json_encode($key));
         return response()->json(['token' => $v['token']]);
       }
     }
@@ -71,6 +69,8 @@ class FormController extends Controller
     {
       if ($v['token'] == $token)
       {
+        $key[$k]['used'] = true;
+        \Storage::disk('local')->put('key.json', json_encode($key));
         return true;
       }
     }
