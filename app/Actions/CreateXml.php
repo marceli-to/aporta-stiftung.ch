@@ -40,24 +40,15 @@ class CreateXml
     {
       $mainTenant = $xml->createElement('MAIN_TENANT');
       $interestRequest->appendChild($mainTenant);
-  
-      $salutation = $xml->createElement('SALUTATION', $json->main_tenant_salutation);
-      $mainTenant->appendChild($salutation);
-  
-      $lastName = $xml->createElement('LAST_NAME', $json->main_tenant_lastname);
-      $mainTenant->appendChild($lastName);
-  
-      $firstName = $xml->createElement('FIRST_NAME', $json->main_tenant_firstname);
-      $mainTenant->appendChild($firstName);
+      $mainTenant->appendChild($xml->createElement('SALUTATION', $json->main_tenant_salutation));
+      $mainTenant->appendChild($xml->createElement('LAST_NAME', $json->main_tenant_lastname));
+      $mainTenant->appendChild($xml->createElement('FIRST_NAME', $json->main_tenant_firstname));
   
       $address = $xml->createElement('ADDRESS');
       $mainTenant->appendChild($address);
   
-      $street = $xml->createElement('STREET', $json->main_tenant_street_number);
-      $address->appendChild($street);
-  
-      $postalCodeCity = $xml->createElement('POSTAL_CODE_CITY', $json->main_tenant_postal_code_city);
-      $address->appendChild($postalCodeCity);
+      $address->appendChild($xml->createElement('STREET', $json->main_tenant_street_number));
+      $address->appendChild($xml->createElement('POSTAL_CODE_CITY', $json->main_tenant_postal_code_city));
   
       $birthdate = $xml->createElement('BIRTHDATE', $json->main_tenant_birthdate);
       $mainTenant->appendChild($birthdate);
@@ -275,37 +266,16 @@ class CreateXml
     // ACCOMMODATION
     $accommodation = $xml->createElement('ACCOMMODATION');
     $interestRequest->appendChild($accommodation);
-
-    $totalPersons = $xml->createElement('TOTAL_PERSONS', $json->accomodation_total_persons);
-    $accommodation->appendChild($totalPersons);
-
-    $adultsQty = $xml->createElement('ADULTS_QTY', $json->accomodation_adults_qty);
-    $accommodation->appendChild($adultsQty);
-
-    $childrenQty = $xml->createElement('CHILDREN_QTY', $json->accomodation_children_qty);
-    $accommodation->appendChild($childrenQty);
-
-    $childrenLivingConstantlyQty = $xml->createElement('CHILDREN_LIVING_CONSTANTLY_QTY', $json->accomodation_children_living_constantly);
-    $accommodation->appendChild($childrenLivingConstantlyQty);
-
-    // remove newlines, replace with a comma and an empty space
-    $childrenAgeGroup = $xml->createElement('CHILDREN_AGE_GROUP', str_replace("\n", ', ', $json->accomodation_children_age_group));
-    $accommodation->appendChild($childrenAgeGroup);
-
-    $playMusicYn = $xml->createElement('PLAY_MUSIC_YN', $json->accomodation_play_music_yn);
-    $accommodation->appendChild($playMusicYn);
-
-    $musicalInstruments = $xml->createElement('MUSICAL_INSTRUMENTS', $json->accomodation_musical_instruments);
-    $accommodation->appendChild($musicalInstruments);
-
-    $petsYn = $xml->createElement('PETS_YN', $json->accomodation_pets_yn);
-    $accommodation->appendChild($petsYn);
-
-    $pets = $xml->createElement('PETS', $json->accomodation_pets);
-    $accommodation->appendChild($pets);
-
-    $remarks = $xml->createElement('REMARKS', $json->accomodation_remarks);
-    $accommodation->appendChild($remarks);
+    $accommodation->appendChild($xml->createElement('TOTAL_PERSONS', $json->accomodation_total_persons));
+    $accommodation->appendChild($xml->createElement('ADULTS_QTY', $json->accomodation_adults_qty));
+    $accommodation->appendChild($xml->createElement('CHILDREN_QTY', $json->accomodation_children_qty));
+    $accommodation->appendChild($xml->createElement('CHILDREN_LIVING_CONSTANTLY_QTY', $json->accomodation_children_living_constantly));
+    $accommodation->appendChild($xml->createElement('CHILDREN_AGE_GROUP', str_replace("\n", ', ', $json->accomodation_children_age_group)));
+    $accommodation->appendChild($xml->createElement('PLAY_MUSIC_YN', $json->accomodation_play_music_yn));
+    $accommodation->appendChild($xml->createElement('MUSICAL_INSTRUMENTS', $json->accomodation_musical_instruments));
+    $accommodation->appendChild($xml->createElement('PETS_YN', $json->accomodation_pets_yn));
+    $accommodation->appendChild($xml->createElement('PETS', $json->accomodation_pets));
+    $accommodation->appendChild($xml->createElement('REMARKS', $json->accomodation_remarks));
 
     // save the file to /storage/app/xml, create the folder if it does not exist
     if (!file_exists(storage_path('app/xml')))

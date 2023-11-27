@@ -14,4 +14,5 @@ use App\Http\Controllers\Api\FormController;
 |
 */
 
+Route::post('/form/register/authenticate', [FormController::class, 'authenticate']);
 Route::post('/form/register', [FormController::class, 'store']);

@@ -24,6 +24,7 @@ class RegisterStoreRequest extends FormRequest
   public function rules()
   {
     return [
+      'token' => 'required',
       'main_tenant_salutation' => 'required',
       'main_tenant_lastname' => 'required',
       'main_tenant_firstname' => 'required',
@@ -107,6 +108,7 @@ class RegisterStoreRequest extends FormRequest
   public function messages()
   {
     return [
+      'token.required' => 'Please enter a token.',
       'main_tenant_salutation.required' => 'Please select a salutation.',
       'main_tenant_lastname.required' => 'Please enter a last name.',
       'main_tenant_firstname.required' => 'Please enter a first name.',

@@ -1,0 +1,25 @@
+<div x-data="{
+    show: true,
+    init() {
+      const alertAcceptData = localStorage.getItem('alert-accept');
+      if (alertAcceptData) {
+        const { accepted, timestamp } = JSON.parse(alertAcceptData);
+        const twoHoursAgo = Date.now() - (2 * 60 * 60 * 1000);
+        this.show = !accepted || timestamp < twoHoursAgo;
+      }
+    }
+  }">
+  <div x-cloak x-show="show" class="flex justify-center items-center fixed w-full h-full left-0 top-0 z-[500] bg-aqua bg-opacity-80">
+    <div class="bg-sky border border-white text-md md:text-lg w-full sm:w-[420px] lg:w-[600px] hyphens-auto left-0 bottom-0 p-30">
+      <h2>Wohnungsbewerbungen</h2>
+      <p>Wir akzeptieren zur Zeit keine Bewerbungen. Wir werden an dieser Stelle informieren, sobald wir wieder neue Bewerbungen entgegennehmen können. Vielen Dank für Ihr Verständnis.</p>
+      <div class="mt-24">
+        <button
+          @click="localStorage.setItem('alert-accept', JSON.stringify({ accepted: true, timestamp: Date.now() })); show = false"
+          class="bg-black hover:bg-aqua transition-all font-bold text-white leading-none py-8 px-16">
+          Schliessen
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

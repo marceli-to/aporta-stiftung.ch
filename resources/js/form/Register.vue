@@ -1,6 +1,8 @@
 <template>
 <section class="content w-full py-48 !pt-0">
   <div class="max-w-page mx-auto px-15 md:px-45 xl:px-60">
+
+  <template v-if="isAuthenticated">
     <template v-if="isSent">
       <feedback />
     </template>
@@ -842,6 +844,35 @@
 
       </form>
     </template>
+  </template>
+  <template v-else>
+    <template v-if="hasAuthenticationError">
+      <authentication-error :message="'Das eingegebene Passwort ist ungültig!'" />
+    </template>
+    <h2>Bitte geben Sie das Passwort ein, um das Formular auszufüllen.</h2>
+    <form>
+      <form-grid>
+        <form-group class="!col-span-12" :error="errors.password">
+          <form-input 
+            type="password" 
+            v-model="auth.password" 
+            :error="errors.password"
+            @blur="validateField('password')"
+            @focus="hasAuthenticationError = false; errors.password = null;">
+          </form-input>
+        </form-group>
+        <form-group>
+          <button 
+          :class="[!isLoading ? 'bg-black text-white hover:bg-aqua transition-colors' : 'opacity-50 pointer-events-none select-none', 'font-bold text-lg text-white py-15 px-20 leading-none inline-flex items-center w-auto text-left']"
+          type="button"
+          @click.prevent="authenticate()">
+          Anmelden
+          </button>
+        </form-group>
+      </form-grid>
+    </form>
+  </template>
+  
   </div>
 </section>
 </template>
@@ -855,6 +886,7 @@ import FormSelect from '@/form/components/form/Select.vue';
 import FormCheckbox from '@/form/components/form/Checkbox.vue';
 import FormTextarea from '@/form/components/form/Textarea.vue';
 import ValidationErrors from '@/form/components/form/ValidationErrors.vue';
+import AuthenticationError from '@/form/components/form/AuthenticationError.vue';
 import Feedback from '@/form/components/form/Feedback.vue';
 
 export default {
@@ -868,12 +900,19 @@ export default {
     FormTextarea,
     FormCheckbox,
     ValidationErrors,
+    AuthenticationError,
     Feedback,
   },
 
   data() {
     return {
+
+      auth: {
+        password: null,
+      },
+
       form: {
+        token: null,
         main_tenant_salutation: 'Frau',
         main_tenant_lastname: null,
         main_tenant_firstname: null,
@@ -949,6 +988,7 @@ export default {
       },
 
       errors: {
+        password: null,
         main_tenant_salutation: null,
         main_tenant_lastname: null,
         main_tenant_firstname: null,
@@ -1146,15 +1186,40 @@ export default {
       validationErrors: [],
 
       routes: {
+        authenticate: '/api/form/register/authenticate',
         store: '/api/form/register'
       },
 
       isSent: false,
       isLoading: false,
+      isAuthenticated: false,
+      hasAuthenticationError: false,
     }
   },
 
   methods: {
+
+    authenticate() {
+      this.isLoading = true;
+      this.validationErrors = [];
+      NProgress.start();
+      this.axios.post(this.routes.authenticate, this.auth).then(response => {
+        NProgress.done();
+        this.auth.password = null;
+        this.form.token = response.data.token;
+        console.log(this.form.token);
+        this.hasAuthenticationError = false;
+        this.isAuthenticated = true;
+        this.isLoading = false;
+      })
+      .catch(error => {
+        NProgress.done();
+        this.errors.password = true;
+        this.isAuthenticated = false;
+        this.isLoading = false;
+        this.hasAuthenticationError = true;
+      });
+    },
 
     submit() {
       this.isSent = false;
