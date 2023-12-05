@@ -65,6 +65,11 @@
         const caption = wrapper.querySelector('figcaption');
         caption.innerText = title;
 
+        // replace alt
+        const alt = source.getAttribute('title');
+        stage.setAttribute('alt', alt);
+        stage.setAttribute('title', alt);
+
         // remove active class from all other sources
         wrapper.querySelectorAll(selectors.images.source).forEach((source) => {
           source.classList.remove('is-active');
