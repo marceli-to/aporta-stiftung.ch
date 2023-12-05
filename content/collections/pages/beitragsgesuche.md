@@ -4,7 +4,7 @@ blueprint: page
 title: Beitragsgesuche
 template: templates/content/default
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700216957
+updated_at: 1701804745
 page_elements:
   -
     id: lozxse8j
@@ -138,7 +138,7 @@ page_elements:
           values:
             type: link_external
             text: 'Das Formular für Beitragsgesuche finden Sie hier'
-            url: 'https://gesuche.aporta-stiftung.ch/'
+            url: 'https://gesuche.aporta-stiftung.ch/formular'
             target: _blank
     type: editor
     enabled: true
