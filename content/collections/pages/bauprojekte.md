@@ -4,7 +4,7 @@ blueprint: page
 title: Bauprojekte
 template: templates/content/default
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1699998373
+updated_at: 1702047053
 page_elements:
   -
     id: loyk5aa2
@@ -53,6 +53,7 @@ page_elements:
         type: set
         attrs:
           id: loyk68lq
+          enabled: false
           values:
             type: link_external
             text: www.eglistrasse.ch
@@ -65,10 +66,6 @@ page_elements:
           values:
             type: image
             image: images/aporta-stiftung_ersatzneubau-eglistrasse.jpg
-      -
-        type: paragraph
-        attrs:
-          class: null
     type: editor
     enabled: true
 hero_image:

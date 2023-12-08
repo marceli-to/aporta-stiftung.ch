@@ -14,5 +14,5 @@ images:
   - images/liegenschaften/aporta-stiftung-8004_eb_02_web.jpg
   - images/liegenschaften/aporta-stiftung-8004_eb_10_web.jpg
 updated_by: 3f4934a7-72ef-446c-bf12-5336d13e6898
-updated_at: 1700167974
+updated_at: 1702047017
 ---
