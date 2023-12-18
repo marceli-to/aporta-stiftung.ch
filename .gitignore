@@ -18,5 +18,14 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
 public/robots.txt
 public/.htaccess
+
+public/assets
+content
+resources/users
+resources/forms
+users
+
+INSTALL.txt
