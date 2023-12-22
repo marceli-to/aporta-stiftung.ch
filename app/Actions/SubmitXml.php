@@ -15,6 +15,12 @@ class SubmitXml
       return strpos($file, '.xml') !== false;
     });
 
+    // If there are no xml files, return
+    if (count($xmls) == 0)
+    {
+      return;
+    }
+
     // Get the first file from the array
     $xml = array_shift($xmls);
 
