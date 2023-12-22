@@ -18,6 +18,10 @@ class SubmitXml
     // If there are no xml files, return
     if (count($xmls) == 0)
     {
+      \Mail::raw('There are no applications for submit.', function($message) {
+        $message->subject('No Applications to submit');
+        $message->to('m@marceli.to');
+      });
       return;
     }
 
