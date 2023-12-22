@@ -37,9 +37,17 @@ class SubmitXml
     if ($http_code == 200)
     {
       \Storage::move($xml, 'xml/processed/' . basename($xml));
+      \Mail::raw('The application has been submitted successfully.', function($message) {
+        $message->subject('Application submitted');
+        $message->to('m@marceli.to');
+      });
     }
     {
       \Storage::move($xml, 'xml/failed/' . basename($xml));
+      \Mail::raw('The application has been submitted unsuccessfully.', function($message) {
+        $message->subject('Application submission failed');
+        $message->to('m@marceli.to');
+      });
       \Log::error($response->body());
     }
   }

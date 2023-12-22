@@ -11,11 +11,6 @@ class SubmitApplication extends Command
 
   public function handle()
   {
-    // Send an email to m@marceli.to
-    \Mail::raw('The application has been submitted.', function($message) {
-      $message->subject('Application submitted');
-      $message->to('m@marceli.to');
-    });
-    //(new SubmitXml())->execute();
+    (new SubmitXml())->execute();
   }
 }
