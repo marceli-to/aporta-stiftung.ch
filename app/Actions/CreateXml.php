@@ -25,8 +25,7 @@ class CreateXml
     $envelope->appendChild($body);
 
     // create guid
-    $uuid = \Str::uuid()->toString();
-    $guid = $xml->createElement('_GUID', str_replace('-', '', $uuid));
+    $guid = $xml->createElement('_GUID', 'd230611c14e74a8db5ad03ec98199550');
     $guid->setAttribute('xmlns', 'urn:ID_Interest_Request');
     $guid->setAttribute('xsd:type', 'xsd:string');
     $body->appendChild($guid);
