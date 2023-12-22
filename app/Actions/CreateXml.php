@@ -10,7 +10,7 @@ class CreateXml
     $json = json_decode($json);
 
     // Create xml file name
-    $xml_filename = \Str::slug($json->main_tenant_lastname . ' ' . $json->main_tenant_firstname . ' ' . $json->main_tenant_postal_code_city, '-');
+    $xml_filename = \Str::slug($json->main_tenant_lastname . ' ' . $json->main_tenant_firstname . ' ' . $json->main_tenant_postal_code_city, '-') . '-' . time();
 
     $xml = new \DOMDocument();
     $xml->preserveWhiteSpace = false;
