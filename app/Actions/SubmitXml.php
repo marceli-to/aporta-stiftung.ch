@@ -48,6 +48,7 @@ class SubmitXml
         $message->to('m@marceli.to');
       });
     }
+    else
     {
       \Storage::move($xml, 'xml/failed/' . basename($xml));
       \Mail::raw('The application has been submitted unsuccessfully.', function($message) {
