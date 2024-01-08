@@ -69,8 +69,7 @@ class SubmitXml
 
       \Mail::raw($mailtext, function($message) {
         $message->subject('Neue Wohnungsbewerbung von der À Porta-Website');
-        // Prod: wohnung@aporta-stiftung.ch
-        $message->to('m@marceli.to');
+        $message->to('wohnung@aporta-stiftung.ch');
       });
     }
     else
