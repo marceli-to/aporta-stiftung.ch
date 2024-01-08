@@ -56,7 +56,7 @@ class CreateXml
       $mainTenant->appendChild($maritalStatus);
   
       $nationality = $xml->createElement('NATIONALITY', $json->main_tenant_nationality);
-      $mainTenant->appendChild($maritalStatus);
+      $mainTenant->appendChild($nationality);
   
       $homeTown = $xml->createElement('HOME_TOWN', $json->main_tenant_home_town);
       $mainTenant->appendChild($homeTown);

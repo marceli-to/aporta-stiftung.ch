@@ -23,6 +23,8 @@ section.content p:last-of-type {
   @apply !mb-0;
 }
 
+.lightbox strong,
+.lightbox b,
 section.content strong,
 section.content b {
   @apply font-bold;
