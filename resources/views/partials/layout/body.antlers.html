@@ -3,6 +3,9 @@
   {{ if application_alert:active }}
     {{ partial:partials/components/alert }}
   {{ /if }}
+  {{ if news_alert:active }}
+    {{ partial:partials/components/news }}
+  {{ /if }}
   {{ vite src="resources/js/app.js" }}
 </body>
 <!-- made with ❤ by marceli.to -->
