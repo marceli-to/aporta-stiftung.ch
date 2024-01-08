@@ -43,19 +43,61 @@ class SubmitXml
     if ($http_code == 200)
     {
       \Storage::move($xml, 'xml/processed/' . basename($xml));
+
+      // Send info mail to the admin
       \Mail::raw('The application has been submitted successfully.', function($message) {
         $message->subject('Application submitted');
+        $message->to('m@marceli.to');
+      });
+
+      // Send info mail to website owner
+      $xml_user_data = [
+        'date' => date('d.m.Y', time()),
+        'last_name' => $this->getXmlValue($xml_data, 'LAST_NAME'),
+        'first_name' => $this->getXmlValue($xml_data, 'FIRST_NAME'),
+        'email' => $this->getXmlValue($xml_data, 'EMAIL'),
+      ];
+
+      // Mailtext template
+      $mailtext = "Bestätigung\n\nAuf der Website der À Porta-Stiftung wurde am %date% eine neue Wohnungsbewerbung von %first_name% %last_name% (%email%) ausgefüllt.\n\nBitte bearbeiten Sie die Wohnungsbewerbung so bald wie möglich.\n\nDanke!";
+
+      // Replace the placeholders with the data from the xml
+      foreach ($xml_user_data as $key => $value)
+      {
+        $mailtext = str_replace("%$key%", $value, $mailtext);
+      }
+
+      \Mail::raw($mailtext, function($message) {
+        $message->subject('Neue Wohnungsbewerbung von der À Porta-Website');
+        // Prod: wohnung@aporta-stiftung.ch
         $message->to('m@marceli.to');
       });
     }
     else
     {
       \Storage::move($xml, 'xml/failed/' . basename($xml));
+
+      // Send error mail to the admin
       \Mail::raw('The application has been submitted unsuccessfully.', function($message) {
         $message->subject('Application submission failed');
         $message->to('m@marceli.to');
       });
       \Log::error($response->body());
     }
+  }
+
+  public function getXmlValue($xml_data, $tag)
+  {
+    $start_tag = "<$tag>";
+    $end_tag = "</$tag>";
+    $start_pos = strpos($xml_data, $start_tag);
+    $end_pos = strpos($xml_data, $end_tag);
+    if ($start_pos === false || $end_pos === false)
+    {
+      return null;
+    }
+    $start_pos += strlen($start_tag);
+    $value = substr($xml_data, $start_pos, $end_pos - $start_pos);
+    return $value;
   }
 }
