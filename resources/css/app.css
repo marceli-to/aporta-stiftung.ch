@@ -15,7 +15,6 @@ section.content h2:not(:first-child) {
   @apply mt-25 md:mt-50
 }
 
-.lightbox p,
 section.content p {
   @apply mb-25;
 }
@@ -23,6 +22,10 @@ section.content p {
 .lightbox p:last-of-type,
 section.content p:last-of-type {
   @apply !mb-0;
+}
+
+.lightbox p:not(:last-of-type) {
+  @apply mb-15 md:mb-25;
 }
 
 .lightbox strong,
