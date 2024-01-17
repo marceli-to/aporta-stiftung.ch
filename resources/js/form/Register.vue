@@ -205,7 +205,7 @@
                 <form-group :error="errors.main_tenant_workload">
                   <form-label :error="errors.main_tenant_workload">Arbeitspensum (in Prozent)</form-label>
                   <form-input 
-                    type="text" 
+                    type="number" 
                     v-model="form.main_tenant_workload" 
                     :error="errors.main_tenant_workload"
                     @blur="validateField('main_tenant_workload')"
@@ -543,7 +543,7 @@
                   <form-group :error="errors.sub_tenant_workload">
                     <form-label :error="errors.sub_tenant_workload">Arbeitspensum (in Prozent)</form-label>
                     <form-input 
-                      type="text" 
+                      type="number" 
                       v-model="form.sub_tenant_workload" 
                       :error="errors.sub_tenant_workload"
                       @blur="validateField('sub_tenant_workload')"
