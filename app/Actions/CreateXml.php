@@ -133,6 +133,9 @@ class CreateXml
       $subTenant = $xml->createElement('SUB_TENANT');
       $interestRequest->appendChild($subTenant);
 
+      $relationship = $xml->createElement('RELATIONSHIP', implode(', ', $json->sub_tenant_type));
+      $subTenant->appendChild($relationship);
+
       $salutation = $xml->createElement('SALUTATION', $json->sub_tenant_salutation);
       $subTenant->appendChild($salutation);
 
@@ -232,8 +235,7 @@ class CreateXml
       $previousRenter = $xml->createElement('PREVIOUS_RENTER', $json->sub_tenant_current_renter_previous_renter);
       $currentRent->appendChild($previousRenter);
 
-      $relationship = $xml->createElement('RELATIONSHIP');
-      $subTenant->appendChild($relationship);
+
     }
 
     // RENT_PREFERENCES
@@ -256,6 +258,12 @@ class CreateXml
     $noElevatorYn = $xml->createElement('NO_ELEVATOR_YN', $json->rent_pref_noelevator);
     $rentPreferences->appendChild($noElevatorYn);
 
+    // format $json->rent_pref_max_rent to integer (i.e. 2000.00 to 2000), remove ' and .00
+    $json->rent_pref_max_rent = str_replace('\'', '', $json->rent_pref_max_rent);
+    $json->rent_pref_max_rent = str_replace('.00', '', $json->rent_pref_max_rent);
+    $json->rent_pref_max_rent = str_replace(',', '', $json->rent_pref_max_rent);
+    $json->rent_pref_max_rent = str_replace(' ', '', $json->rent_pref_max_rent);
+    $json->rent_pref_max_rent = (int) $json->rent_pref_max_rent;
     $maxRent = $xml->createElement('MAX_RENT', $json->rent_pref_max_rent);
     $rentPreferences->appendChild($maxRent);
 

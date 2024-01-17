@@ -186,7 +186,7 @@
               @focus="removeError('main_tenant_debt_enforcement_yn')">
             </form-select>
           </form-group>
-          <template v-if="form.main_tenant_employment_status == 'Angestellt'">
+          <template v-if="form.main_tenant_employment_status == 1">
             <div class="!col-span-12 !mt-15 md:!mt-30">
               <h2>Aktueller Arbeitgeber</h2>
               <div class="sm:grid sm:grid-cols-12 gap-30 mb-30">
@@ -241,13 +241,13 @@
           <form-group :error="errors.main_tenant_current_rent_terminator">
             <form-label :error="errors.main_tenant_current_rent_terminator">Wurde das aktuelle Mietverhältnis durch den Vermieter*in gekündigt?</form-label>
             <form-select v-model="form.main_tenant_current_rent_terminator"
-              :options="yes_no"
+              :options="yes_no_terminator"
               :error="errors.main_tenant_current_rent_terminator"
               @blur="validateField('main_tenant_current_rent_terminator')"
               @focus="removeError('main_tenant_current_rent_terminator')">
             </form-select>
           </form-group>
-          <template v-if="form.main_tenant_current_rent_terminator == 'Ja'">
+          <template v-if="form.main_tenant_current_rent_terminator == 1">
             <form-group class="!col-span-12" :error="errors.main_tenant_current_rent_terminator_reason">
               <form-label :error="errors.main_tenant_current_rent_terminator_reason">Geben Sie bitte den Grund an, weshalb Ihnen Ihr*e Vermieter*in gekündigt hat:</form-label>
               <form-textarea :error="errors.main_tenant_current_rent_terminator_reason" v-model="form.main_tenant_current_rent_terminator_reason"
@@ -285,7 +285,7 @@
               @focus="removeError('main_tenant_current_renter_rent_duration')">
             </form-select>
           </form-group>
-          <template v-if="form.main_tenant_current_renter_rent_duration == 'Weniger als 1 Jahr'">
+          <template v-if="form.main_tenant_current_renter_rent_duration == 1">
             <form-group class="!col-span-12" :error="errors.main_tenant_current_renter_previous_renter">
               <form-label :error="errors.main_tenant_current_renter_previous_renter">Geben Sie bitte Name und Telefonnummer des/der früheren Vermieters/Vermieterin an.</form-label>
               <form-input 
@@ -311,7 +311,7 @@
               @focus="removeError('sub_tenant_yn')">
             </form-select>
           </form-group>
-          <template v-if="form.sub_tenant_yn == 'Ja'">
+          <template v-if="form.sub_tenant_yn == 1">
             <form-grid class="col-span-12 !mb-0">
               <form-group class="!col-span-12" :error="errors.sub_tenant_type">
                 <form-label :error="errors.sub_tenant_type" class="mb-12 xl:mb-16">Mit wem werden Sie die Wohnung teilen?</form-label>
@@ -381,7 +381,7 @@
                 </form-select>
               </form-group>
             </div>
-            <template v-if="form.sub_tenant_same_adress == 'Nein'">
+            <template v-if="form.sub_tenant_same_adress == 0">
               <form-group :error="errors.sub_tenant_street">
                 <form-label :error="errors.sub_tenant_street">Strasse und Hausnummer</form-label>
                 <form-input 
@@ -524,7 +524,7 @@
               </form-select>
             </form-group>
 
-            <template v-if="form.sub_tenant_employment_status == 'Angestellt'">
+            <template v-if="form.sub_tenant_employment_status == 1">
               <div class="!col-span-12 !mt-15 md:!mt-30">
                 <h2>Aktueller Arbeitgeber der weiteren Person</h2>
                 <div class="sm:grid sm:grid-cols-12 gap-30 mb-30">
@@ -578,13 +578,13 @@
             <form-group :error="errors.sub_tenant_current_rent_terminator">
               <form-label :error="errors.sub_tenant_current_rent_terminator">Wurde das aktuelle Mietverhältnis durch den Vermieter*in gekündigt?</form-label>
               <form-select v-model="form.sub_tenant_current_rent_terminator"
-                :options="yes_no"
+                :options="yes_no_terminator"
                 :error="errors.sub_tenant_current_rent_terminator"
                 @blur="validateField('sub_tenant_current_rent_terminator')"
                 @focus="removeError('sub_tenant_current_rent_terminator')">
               </form-select>
             </form-group>
-            <template v-if="form.sub_tenant_current_rent_terminator == 'Ja'">
+            <template v-if="form.sub_tenant_current_rent_terminator == 1">
               <form-group class="!col-span-12" :error="errors.sub_tenant_current_rent_terminator_reason">
                 <form-label :error="errors.sub_tenant_current_rent_terminator_reason">Geben Sie bitte den Grund an, weshalb Ihnen Ihr*e Vermieter*in gekündigt hat:</form-label>
                 <form-textarea :error="errors.sub_tenant_current_rent_terminator_reason" v-model="form.sub_tenant_current_rent_terminator_reason"
@@ -622,7 +622,7 @@
                 @focus="removeError('sub_tenant_current_renter_rent_duration')">
               </form-select>
             </form-group>
-            <template v-if="form.sub_tenant_current_renter_rent_duration == 'Weniger als 1 Jahr'">
+            <template v-if="form.sub_tenant_current_renter_rent_duration == 1">
               <form-group class="!col-span-12" :error="errors.sub_tenant_current_renter_previous_renter">
                 <form-label :error="errors.sub_tenant_current_renter_previous_renter">Geben Sie bitte Name und Telefonnummer des/der früheren Vermieters/Vermieterin an.</form-label>
                 <form-input 
@@ -646,9 +646,9 @@
                 <form-checkbox
                   :id="`rent_pref_district_${index}`" 
                   v-model="form.rent_pref_district_id"
-                  :value="district"
+                  :value="district.value"
                   @update="updateCheckboxInput($event, 'rent_pref_district_id')">
-                  <template v-slot:label>{{ district }}</template>
+                  <template v-slot:label>{{ district.label }}</template>
                 </form-checkbox>
               </form-group>
             </div>
@@ -660,9 +660,9 @@
                 <form-checkbox
                   :id="`rent_pref_floor_${index}`" 
                   v-model="form.rent_pref_floor_id"
-                  :value="floor"
+                  :value="floor.value"
                   @update="updateCheckboxInput($event, 'rent_pref_floor_id')">
-                  <template v-slot:label>{{ floor }}</template>
+                  <template v-slot:label>{{ floor.label }}</template>
                 </form-checkbox>
               </form-group>
             </div>
@@ -725,7 +725,7 @@
         </form-grid>
 
         <h2 class="!mt-35 md:!mt-70">Weitere Angaben</h2>
-        <template v-if="form.sub_tenant_yn == 'Ja'">
+        <template v-if="form.sub_tenant_yn == 1">
           <form-grid>
             <form-group :error="errors.accomodation_total_persons">
               <form-label :error="errors.accomodation_total_persons">Wie viele Personen werden in Ihrem Haushalt leben?</form-label>
@@ -792,7 +792,7 @@
             </form-select>
           </form-group>
           <form-group :error="errors.accomodation_musical_instruments">
-            <template v-if="form.accomodation_play_music_yn == 'Ja'">
+            <template v-if="form.accomodation_play_music_yn == 1">
               <form-label :error="errors.accomodation_musical_instruments">Welches Musikinstrument</form-label>
               <form-input 
                 type="text" 
@@ -814,7 +814,7 @@
             </form-select>
           </form-group>
           <form-group :error="errors.accomodation_pets">
-            <template v-if="form.accomodation_pets_yn == 'Ja'">
+            <template v-if="form.accomodation_pets_yn == 1">
               <form-label :error="errors.accomodation_pets">Welche Haustiere halten Sie? (Hundehaltung ist verboten)</form-label>
               <form-input 
                 type="text" 
@@ -919,7 +919,7 @@ export default {
         main_tenant_street_number: null,
         main_tenant_postal_code_city: null,
         main_tenant_birthdate: null,
-        main_tenant_marital_status: 'ledig',
+        main_tenant_marital_status: 1,
         main_tenant_nationality: null,
         main_tenant_residence_permit: null,
         main_tenant_swiss_residence_since: null,
@@ -932,15 +932,15 @@ export default {
         main_tenant_current_employer_name: null,
         main_tenant_workload: null,
         main_tenant_annual_income: null,
-        main_tenant_debt_enforcement_yn: 'Nein, ich hatte keine Betreibungen in den letzten zwei Jahren',
-        main_tenant_current_rent_tenant_role: 'Ich bin Hauptmieter*in',
-        main_tenant_current_rent_terminator: 'Nein',
+        main_tenant_debt_enforcement_yn: 0,
+        main_tenant_current_rent_tenant_role: 1,
+        main_tenant_current_rent_terminator: 2,
         main_tenant_current_rent_terminator_reason: null,
         main_tenant_current_renter_name: null,
         main_tenant_current_renter_phone: null,
-        main_tenant_current_renter_rent_duration: 'Mehr als 2 Jahre',
+        main_tenant_current_renter_rent_duration: 3,
         main_tenant_current_renter_previous_renter: null,
-        sub_tenant_yn: 'Nein',
+        sub_tenant_yn: 0,
         sub_tenant_type: [],
         sub_tenant_salutation: 'Frau',
         sub_tenant_lastname: null,
@@ -958,24 +958,24 @@ export default {
         sub_tenant_email: null,
         sub_tenant_occupation: null,
         sub_tenant_employment_status: null,
-        sub_tenant_debt_enforcement_yn: 'Nein, ich hatte keine Betreibungen in den letzten zwei Jahren',
-        sub_tenant_current_rent_tenant_role: 'Ich bin Hauptmieter*in',
-        sub_tenant_current_rent_terminator: 'Nein',
+        sub_tenant_debt_enforcement_yn: 0,
+        sub_tenant_current_rent_tenant_role: 2,
+        sub_tenant_current_rent_terminator: 2,
         sub_tenant_current_renter_name: null,
         sub_tenant_current_renter_phone: null,
-        sub_tenant_current_renter_rent_duration: 'Mehr als 2 Jahre',
+        sub_tenant_current_renter_rent_duration: 3,
         sub_tenant_current_renter_previous_renter: null,
         sub_tenant_current_rent_terminator_reason: null,
         rent_pref_district_id: [],
         rent_pref_floor_id: [],
         rent_pref_rooms_qty: [],
-        rent_pref_nobalcony_yn: null,
-        rent_pref_noelevator: null,
+        rent_pref_nobalcony_yn: 0,
+        rent_pref_noelevator: 0,
         rent_pref_max_rent: null,
         rent_pref_min_start_date: null,
-        accomodation_play_music_yn: null,
+        accomodation_play_music_yn: 0,
         accomodation_musical_instruments: null,
-        accomodation_pets_yn: null,
+        accomodation_pets_yn: 0,
         accomodation_pets: null,
         accomodation_remarks: null,
         accomodation_total_persons: null,
@@ -1066,23 +1066,22 @@ export default {
       ],
 
       marital_status: [
-        { label: 'ledig', value: 'ledig' },
-        { label: 'verheiratet', value: 'verheiratet' },
-        { label: 'geschieden', value: 'geschieden' },
-        { label: 'eingetragene Partnerschaft', value: 'eingetragene Partnerschaft' },
-        { label: 'aufgelöste Partnerschaft', value: 'aufgelöste Partnerschaft' },
-        { label: 'verwitwet', value: 'verwitwet' },
+        { label: 'ledig', value: '1' },
+        { label: 'verheiratet', value: '2' },
+        { label: 'geschieden', value: '3' },
+        { label: 'eingetragene Partnerschaft', value: '6' },
+        { label: 'aufgelöste Partnerschaft', value: '5' },
+        { label: 'verwitwet', value: '4' },
       ],
 
       employment_status: [
         { label: null, value: null},
-        { label: 'Angestellt', value: 'Angestellt'},
-        { label: 'Student*in', value: 'Student*in' },
-        { label: 'Arbeitslos', value: 'Arbeitslos' },
-        { label: 'IV', value: 'IV' },
-        { label: 'Im Ruhestand (pensioniert)', value: 'Im Ruhestand (pensioniert)' },
-        { label: 'Familienmanager*in', value: 'Familienmanager*in' },
-        { label: 'IV-Renter*in', value: 'IV-Renter*in' },
+        { label: 'Angestellt', value: 1},
+        { label: 'Student*in', value: 2 },
+        { label: 'Selbständig', value: 3 },
+        { label: 'Arbeitslos', value: 4 },
+        { label: 'Im Ruhestand (pensioniert)', value: 5 },
+        { label: 'Familienmanager*in', value: 6 },
       ],
 
       nationality: [
@@ -1104,24 +1103,24 @@ export default {
 
       annual_incomes: [
         { label: null, value: null},
-        { label: "Weniger als 20'000", value: "Weniger als 20'000" },
-        { label: "20'000-30'000", value: "20'000-30'000" },
-        { label: "30'000-40'000", value: "30'000-40'000" },
-        { label: "40'000-50'000", value: "40'000-50'000" },
-        { label: "50'000-60'000", value: "50'000-60'000" },
-        { label: "60'000-70'000", value: "60'000-70'000" },
-        { label: "70'000-80'000", value: "70'000-80'000" },
-        { label: "80'000-90'000", value: "80'000-90'000" },
-        { label: "90'000-100'000", value: "90'000-100'000" },
-        { label: "100'000-120'000", value: "100'000-120'000" },
-        { label: "120'000-140'000", value: "120'000-140'000" },
-        { label: "Mehr als 140'000", value: "Mehr als 140'000" }
+        { label: "Weniger als 20'000", value: 1 },
+        { label: "20'000-30'000", value: 2 },
+        { label: "30'000-40'000", value: 3 },
+        { label: "40'000-50'000", value: 4 },
+        { label: "50'000-60'000", value: 5 },
+        { label: "60'000-70'000", value: 6 },
+        { label: "70'000-80'000", value: 7 },
+        { label: "80'000-90'000", value: 8 },
+        { label: "90'000-100'000", value: 9 },
+        { label: "100'000-120'000", value: 10 },
+        { label: "120'000-140'000", value: 11 },
+        { label: "Mehr als 140'000", value: 12 }
       ],
 
       rent_duration: [
-        { label: 'Weniger als 1 Jahr', value: 'Weniger als 1 Jahr' },
-        { label: '1 bis 2 Jahre', value: '1 bis 2 Jahre' },
-        { label: 'Mehr als 2 Jahre', value: 'Mehr als 2 Jahre' },
+        { label: 'Weniger als 1 Jahr', value: 1 },
+        { label: '1 bis 2 Jahre', value: 2 },
+        { label: 'Mehr als 2 Jahre', value: 3 },
       ],
 
       tenant_types: [
@@ -1133,37 +1132,32 @@ export default {
       ],
 
       tenant_roles: [
-        { label: 'Ich bin Hauptmieter*in', value: 'Ich bin Hauptmieter*in' },
-        { label: 'Ich bin Untermieter*in', value: 'Ich bin Untermieter*in' },
-      ],
-
-      yes_no: [
-        { label: 'Ja', value: 'Ja' },
-        { label: 'Nein', value: 'Nein' },
+        { label: 'Ich bin Hauptmieter*in', value: 1 },
+        { label: 'Ich bin Untermieter*in', value: 2 },
       ],
 
       debt_enforcement: [
-        { label: 'Ja, ich hatte Betreibungen in den letzten zwei Jahren', value: 'Ja, ich hatte Betreibungen in den letzten zwei Jahren' },
-        { label: 'Nein, ich hatte keine Betreibungen in den letzten zwei Jahren', value: 'Nein, ich hatte keine Betreibungen in den letzten zwei Jahren' },
+        { label: 'Ja, ich hatte Betreibungen in den letzten zwei Jahren', value: 1 },
+        { label: 'Nein, ich hatte keine Betreibungen in den letzten zwei Jahren', value: 0 },
       ],
 
       districts: [
-       'Kreis 4',
-       'Kreis 5',
-       'Kreis 6',
-       'Kreis 7',
-       'Kreis 8',
-       'Kreis 10',
+        { label: 'Kreis 4', value: 4},
+        { label: 'Kreis 5', value: 5},
+        { label: 'Kreis 6', value: 6},
+        { label: 'Kreis 7', value: 7},
+        { label: 'Kreis 8', value: 8},
+        { label: 'Kreis 10', value: 10}
       ],
 
       floors: [
-        'Hochparterre',
-        '1. Stock',
-        '2. Stock',
-        '3. Stock',
-        '4. Stock',
-        '5. Stock',
-        '6. Stock',
+        { label: 'Hochparterre', value: 0},
+        { label: '1. Stock', value: 1},
+        { label: '2. Stock', value: 2},
+        { label: '3. Stock', value: 3},
+        { label: '4. Stock', value: 4},
+        { label: '5. Stock', value: 5},
+        { label: '6. Stock', value: 6},
       ],
 
       rooms: [
@@ -1177,10 +1171,20 @@ export default {
         '5&frac12;',
       ],
 
+      yes_no_terminator: [
+        { label: 'Ja', value: 1 },
+        { label: 'Nein', value: 2 },
+      ],
+
+      yes_no: [
+        { label: 'Ja', value: 1 },
+        { label: 'Nein', value: 0 },
+      ],
+
       yes_no_maybe: [
-        { label: 'Ja', value: 'Ja' },
-        { label: 'Nein', value: 'Nein' },
-        { label: 'Nicht zwingend', value: 'Nicht zwingend' },
+        { label: 'Ja', value: 1 },
+        { label: 'Nein', value: 0 },
+        // { label: 'Nicht zwingend', value: 'Nicht zwingend' },
       ],
 
       validationErrors: [],
@@ -1207,7 +1211,6 @@ export default {
         NProgress.done();
         this.auth.password = null;
         this.form.token = response.data.token;
-        console.log(this.form.token);
         this.hasAuthenticationError = false;
         this.isAuthenticated = true;
         this.isLoading = false;
@@ -1313,7 +1316,7 @@ export default {
   watch: {
     'form.main_tenant_employment_status': {
       handler: function (after, before) {
-        if (this.form.main_tenant_employment_status != 'Angestellt') {
+        if (this.form.main_tenant_employment_status != 1) {
           this.form.main_tenant_current_employer_name = null;
           this.form.main_tenant_workload = null;
           this.form.main_tenant_annual_income = null;
@@ -1343,7 +1346,7 @@ export default {
 
     'form.main_tenant_current_rent_terminator': {
       handler: function(after, before) {
-        if (this.form.main_tenant_current_rent_terminator == 'Nein') {
+        if (this.form.main_tenant_current_rent_terminator == 2) {
           this.form.main_tenant_current_rent_terminator_reason = null;
           this.errors.main_tenant_current_rent_terminator_reason = null;
         }
@@ -1353,7 +1356,7 @@ export default {
 
     'form.main_tenant_current_renter_rent_duration': {
       handler: function(after, before) {
-        if (this.form.main_tenant_current_renter_rent_duration != 'Weniger als 1 Jahr') {
+        if (this.form.main_tenant_current_renter_rent_duration != 1) {
           this.form.main_tenant_current_renter_previous_renter = null;
           this.errors.main_tenant_current_renter_previous_renter = null;
         }
@@ -1363,7 +1366,7 @@ export default {
 
     'form.sub_tenant_yn': {
       handler: function (after, before) {
-        if (this.form.sub_tenant_yn == 'Nein') {
+        if (this.form.sub_tenant_yn == 0) {
           this.form.accomodation_total_persons = null;
           this.form.accomodation_adults_qty = null;
           this.form.accomodation_children_qty = null;
@@ -1388,7 +1391,7 @@ export default {
 
     'form.sub_tenant_type': {
       handler: function (after, before) {
-        if (this.form.sub_tenant_yn == 'Ja') {
+        if (this.form.sub_tenant_yn == 1) {
           // if this.form.sub_tenant_type has at least 1 item other than 'Kinder', set this.form.has_sub_tenant to true
           if (this.form.sub_tenant_type.length >= 1) {
             // check if there is at least 1 item other than 'Kinder'
@@ -1414,7 +1417,7 @@ export default {
 
     'form.sub_tenant_employment_status': {
       handler: function (after, before) {
-        if (this.form.sub_tenant_employment_status != 'Angestellt') {
+        if (this.form.sub_tenant_employment_status != 1) {
           this.form.sub_tenant_current_employer_name = null;
           this.form.sub_tenant_workload = null;
           this.form.sub_tenant_annual_income = null;
@@ -1444,7 +1447,7 @@ export default {
 
     'form.sub_tenant_current_rent_terminator': {
       handler: function(after, before) {
-        if (this.form.sub_tenant_current_rent_terminator == 'Nein') {
+        if (this.form.sub_tenant_current_rent_terminator == 2) {
           this.form.sub_tenant_current_rent_terminator_reason = null;
           this.errors.sub_tenant_current_rent_terminator_reason = null;
         }
@@ -1454,7 +1457,7 @@ export default {
 
     'form.sub_tenant_current_renter_rent_duration': {
       handler: function(after, before) {
-        if (this.form.sub_tenant_current_renter_rent_duration != 'Weniger als 1 Jahr') {
+        if (this.form.sub_tenant_current_renter_rent_duration != 1) {
           this.form.sub_tenant_current_renter_previous_renter = null;
           this.errors.sub_tenant_current_renter_previous_renter = null;
         }
@@ -1464,7 +1467,7 @@ export default {
 
     'form.accomodation_play_music_yn': {
       handler: function(after, before) {
-        if (this.form.accomodation_play_music_yn == 'Nein') {
+        if (this.form.accomodation_play_music_yn == 0) {
           this.form.accomodation_musical_instruments = null;
           this.errors.accomodation_musical_instruments = null;
         }
@@ -1473,7 +1476,7 @@ export default {
 
     'form.accomodation_pets_yn': {
       handler: function(after, before) {
-        if (this.form.accomodation_pets_yn == 'Nein') {
+        if (this.form.accomodation_pets_yn == 0) {
           this.form.accomodation_pets = null;
           this.errors.accomodation_pets = null;
         }
