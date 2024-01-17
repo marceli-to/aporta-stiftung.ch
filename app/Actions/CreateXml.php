@@ -90,7 +90,9 @@ class CreateXml
   
       $name = $xml->createElement('NAME', $json->main_tenant_current_employer_name);
       $currentEmployer->appendChild($name);
-  
+      
+      // remove % from $json->main_tenant_workload
+      $json->main_tenant_workload = str_replace('%', '', $json->main_tenant_workload);
       $workload = $xml->createElement('WORKLOAD', $json->main_tenant_workload);
       $mainTenant->appendChild($workload);
   
@@ -199,6 +201,8 @@ class CreateXml
       $name = $xml->createElement('NAME', $json->sub_tenant_current_employer_name);
       $currentEmployer->appendChild($name);
 
+      // remove % from $json->sub_tenant_workload
+      $json->sub_tenant_workload = str_replace('%', '', $json->sub_tenant_workload);
       $workload = $xml->createElement('WORKLOAD', $json->sub_tenant_workload);
       $subTenant->appendChild($workload);
 
@@ -242,14 +246,14 @@ class CreateXml
     $rentPreferences = $xml->createElement('RENT_PREFERENCES');
     $interestRequest->appendChild($rentPreferences);
 
-    $districtId = $xml->createElement('DISTRICT_ID', implode(', ', $json->rent_pref_district_id));
+    $districtId = $xml->createElement('DISTRICT_ID', implode(',', $json->rent_pref_district_id));
     $rentPreferences->appendChild($districtId);
 
-    $floorId = $xml->createElement('FLOOR_ID', implode(', ', $json->rent_pref_floor_id));
+    $floorId = $xml->createElement('FLOOR_ID', implode(',', $json->rent_pref_floor_id));
     $rentPreferences->appendChild($floorId);
 
     $json->rent_pref_rooms_qty = str_replace('&frac12;', '.5', $json->rent_pref_rooms_qty);
-    $roomsQty = $xml->createElement('ROOMS_QTY', implode(', ', $json->rent_pref_rooms_qty));
+    $roomsQty = $xml->createElement('ROOMS_QTY', implode(',', $json->rent_pref_rooms_qty));
     $rentPreferences->appendChild($roomsQty);
 
     $noBalconyYn = $xml->createElement('NO_BALCONY_YN', $json->rent_pref_nobalcony_yn);
