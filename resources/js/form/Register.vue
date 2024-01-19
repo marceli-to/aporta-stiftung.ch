@@ -320,9 +320,9 @@
                     <form-checkbox
                       :id="`sub_tenant_${index}`" 
                       v-model="form.sub_tenant_type"
-                      :value="type"
+                      :value="type.value"
                       @update="updateCheckboxInput($event, 'sub_tenant_type')">
-                      <template v-slot:label>{{ type }}</template>
+                      <template v-slot:label>{{ type.label }}</template>
                     </form-checkbox>
                   </form-group>
                 </div>
@@ -331,11 +331,11 @@
           </template>
         </form-grid>
         
-        <template v-if="form.sub_tenant_type.includes('Kinder')">
+        <template v-if="form.sub_tenant_type.includes('5')">
           <div class="text-md my-30">Angaben zum Kind/zu den Kindern folgen weiter unten.</div>
         </template>
 
-        <template v-if="form.sub_tenant_type.some(item => item !== 'Kinder')">
+        <template v-if="form.sub_tenant_type.some(item => item.value !== '5')">
           <form-grid>
             <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
               <form-group :error="errors.sub_tenant_salutation">
@@ -415,13 +415,13 @@
               </form-input>
             </form-group>
             <form-group :error="errors.sub_tenant_marital_status">
-              <form-label :error="errors.main_tenant_marital_status">Familienstand</form-label>
+              <form-label :error="errors.sub_tenant_marital_status">Familienstand</form-label>
               <form-select
-                  v-model="form.main_tenant_marital_status"
+                  v-model="form.sub_tenant_marital_status"
                   :options="marital_status"
-                  :error="errors.main_tenant_marital_status"
-                  @blur="validateField('main_tenant_marital_status')"
-                  @focus="removeError('main_tenant_marital_status')">
+                  :error="errors.sub_tenant_marital_status"
+                  @blur="validateField('sub_tenant_marital_status')"
+                  @focus="removeError('sub_tenant_marital_status')">
               </form-select>
             </form-group>
             <form-group :error="errors.sub_tenant_nationality">
@@ -747,7 +747,7 @@
                 @focus="removeError('accomodation_adults_qty')">
               </form-input>
             </form-group>
-            <template v-if="form.sub_tenant_type.some(item => item == 'Kinder')">
+            <template v-if="form.sub_tenant_type.includes('5')">
               <form-group :error="errors.accomodation_children_qty">
                 <form-label :error="errors.accomodation_children_qty">Anzahl Kinder?</form-label>
                 <form-input 
@@ -759,7 +759,7 @@
                 </form-input>
               </form-group>
             </template>
-            <template v-if="form.sub_tenant_type.some(item => item == 'Kinder') && form.accomodation_children_qty > 0">
+            <template v-if="form.sub_tenant_type.includes('5') && form.accomodation_children_qty > 0">
               <form-group :error="errors.accomodation_children_living_constantly">
                 <form-label :error="errors.accomodation_children_living_constantly">Leben alle Kinder ständig mit Ihnen zusammen?</form-label>
                 <form-select
@@ -948,7 +948,7 @@ export default {
         sub_tenant_street: null,
         sub_tenant_postal_code_city: null,
         sub_tenant_birthdate: null,
-        sub_tenant_marital_status: 'ledig',
+        sub_tenant_marital_status: 1,
         sub_tenant_nationality: null,
         sub_tenant_residence_permit: null,
         sub_tenant_swiss_residence_since: null,
@@ -1124,11 +1124,11 @@ export default {
       ],
 
       tenant_types: [
-        'Ehepartner*in',
-        'Lebenspartner*in mit eingetragener Partnerschaft',
-        'Lebenspartner*in',
-        'Mitbewohner*in',
-        'Kinder'
+        { label: 'Ehepartner*in', value: 1 },
+        { label: 'Lebenspartner*in mit eingetragener Partnerschaft', value: 2 },
+        { label: 'Lebenspartner*in', value: 3 },
+        { label: 'Mitbewohner*in', value: 4 },
+        { label: 'Kinder', value: 5 },
       ],
 
       tenant_roles: [
@@ -1395,7 +1395,7 @@ export default {
           // if this.form.sub_tenant_type has at least 1 item other than 'Kinder', set this.form.has_sub_tenant to true
           if (this.form.sub_tenant_type.length >= 1) {
             // check if there is at least 1 item other than 'Kinder'
-            if (this.form.sub_tenant_type.filter(item => item !== 'Kinder').length >= 1) {
+            if (this.form.sub_tenant_type.filter(item => item.value !== '5').length >= 1) {
               this.form.has_sub_tenant = true;
             }
             else {
@@ -1403,7 +1403,7 @@ export default {
             }
 
             // check if there are 'Kinder' in this.form.sub_tenant_type
-            if (this.form.sub_tenant_type.some(item => item == 'Kinder')) {
+            if (this.form.sub_tenant_type.includes('5')) {
               this.form.has_children = true;
             }
             else {

@@ -130,12 +130,33 @@ class CreateXml
       $currentRent->appendChild($previousRenter);
     }
 
+    $subTenantYN = $xml->createElement('SUB_TENANT_YN', $json->sub_tenant_yn);
+    $interestRequest->appendChild($subTenantYN);
+
     if ($json->has_sub_tenant)
     {
+      $subTenantType = $xml->createElement('SUB_TENANT_TYPE', implode(',', $json->sub_tenant_type));
+      $interestRequest->appendChild($subTenantType);
+
       $subTenant = $xml->createElement('SUB_TENANT');
       $interestRequest->appendChild($subTenant);
 
-      $relationship = $xml->createElement('RELATIONSHIP', implode(', ', $json->sub_tenant_type));
+      $subTenantTypes = [
+        1 => 'Ehepartner*in',
+        2 => 'Lebenspartner*in mit eingetragener Partnerschaft',
+        3 => 'Lebenspartner*in',
+        4 => 'Mitbewohner*in',
+        5 => 'Kinder',
+      ];
+      
+      // convert sub_tenant_type to string (i.e. 1,2,3 to Ehepartner*in, Lebenspartner*in mit eingetragener Partnerschaft, Lebenspartner*in)
+      $relationshipType = '';
+      foreach ($json->sub_tenant_type as $type)
+      {
+        $relationshipType .= $subTenantTypes[$type] . ', ';
+      }
+
+      $relationship = $xml->createElement('RELATIONSHIP', $relationshipType);
       $subTenant->appendChild($relationship);
 
       $salutation = $xml->createElement('SALUTATION', $json->sub_tenant_salutation);

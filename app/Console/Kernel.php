@@ -10,7 +10,11 @@ class Kernel extends ConsoleKernel
    */
   protected function schedule(Schedule $schedule): void
   {
-    $schedule->command('submit:application')->everyMinute();
+    // only run this command if the application is in production
+    if (app()->environment('production'))
+    {
+      $schedule->command('submit:application')->everyMinute();
+    }
   }
 
   /**
