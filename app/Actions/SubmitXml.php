@@ -35,7 +35,7 @@ class SubmitXml
     ])
     ->withBody($xml_data, 'text/xml')
     ->post($url);
- 
+
     // Get http_code from the response
     $http_code = $response->status();
 
@@ -97,6 +97,6 @@ class SubmitXml
     }
     $start_pos += strlen($start_tag);
     $value = substr($xml_data, $start_pos, $end_pos - $start_pos);
-    return $value;
+    return html_entity_decode($value, ENT_QUOTES, 'UTF-8');
   }
 }
