@@ -9,6 +9,23 @@ class CreateXml
     // Decode json
     $json = json_decode($json);
 
+    // Loop over the json and replace special characters (like &, <, >, ", ') with their respective html entities
+    foreach ($json as $key => $value)
+    {
+      // if value is an array, loop over it and replace special characters
+      if (is_array($value))
+      {
+        foreach ($value as $k => $v)
+        {
+          $json->$key[$k] = htmlspecialchars($v);
+        }
+      }
+      // if value is not an array, replace special characters
+      else {
+        $json->$key = htmlspecialchars($value);
+      }
+    }
+
     // Create xml file name
     $xml_filename = \Str::slug($json->main_tenant_lastname . ' ' . $json->main_tenant_firstname . ' ' . $json->main_tenant_postal_code_city, '-') . '-' . time();
 
@@ -259,8 +276,6 @@ class CreateXml
 
       $previousRenter = $xml->createElement('PREVIOUS_RENTER', $json->sub_tenant_current_renter_previous_renter);
       $currentRent->appendChild($previousRenter);
-
-
     }
 
     // RENT_PREFERENCES
@@ -273,7 +288,7 @@ class CreateXml
     $floorId = $xml->createElement('FLOOR_ID', implode(',', $json->rent_pref_floor_id));
     $rentPreferences->appendChild($floorId);
 
-    $json->rent_pref_rooms_qty = str_replace('&frac12;', '.5', $json->rent_pref_rooms_qty);
+    $json->rent_pref_rooms_qty = str_replace('&amp;frac12;', '.5', $json->rent_pref_rooms_qty);
     $roomsQty = $xml->createElement('ROOMS_QTY', implode(',', $json->rent_pref_rooms_qty));
     $rentPreferences->appendChild($roomsQty);
 
@@ -294,6 +309,9 @@ class CreateXml
 
     $minStartDate = $xml->createElement('MIN_START_DATE', $json->rent_pref_min_start_date);
     $rentPreferences->appendChild($minStartDate);
+
+    $maxStartDate = $xml->createElement('MAX_START_DATE', '');
+    $rentPreferences->appendChild($maxStartDate);
 
     // ACCOMMODATION
     $accommodation = $xml->createElement('ACCOMMODATION');

@@ -28,17 +28,17 @@ class SubmitXml
     $xml_data = \Storage::get($xml);
 
     // Send it to the external server
-    $url = 'http://46.14.13.206:443/ID_INTEREST_REQUEST_WEB/awws/ID_Interest_Request.awws';
+    $url = env('XML_SUBMIT_URL');
     $response = Http::withHeaders([
       'Content-Type' => 'text/xml; charset=utf-8',
       'SOAPAction' => 'urn:ID_Interest_Request/SendRequest',
     ])
     ->withBody($xml_data, 'text/xml')
     ->post($url);
-
+ 
     // Get http_code from the response
     $http_code = $response->status();
-    
+
     // If the response is 200, move the file to /storage/app/xml/processed
     if ($http_code == 200)
     {
