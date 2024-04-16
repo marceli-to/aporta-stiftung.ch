@@ -157,11 +157,11 @@ return [
 
     'defaults' => [
 
-        // 'heading_1' => [
-        //     'class' => 'heading-1',
-        //     'cp_css' => null,
-        //     'cp_badge' => false,
-        // ],
+        'heading_1' => [
+            'class' => '',
+            'cp_css' => 'font-weight: 400',
+            'cp_badge' => true,
+        ],
         // 'heading_2' => [
         //     'class' => 'heading-2',
         //     'cp_css' => null,
