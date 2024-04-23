@@ -19,7 +19,7 @@ export default {
     },
     
     modelValue: {
-      type: [String, Number],
+      type: [String, Number, Array],
       default: "",
     },
 

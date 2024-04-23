@@ -27,7 +27,7 @@ class CreateXml
     }
 
     // Create xml file name
-    $xml_filename = \Str::slug($json->main_tenant_lastname . ' ' . $json->main_tenant_firstname . ' ' . $json->main_tenant_postal_code_city, '-') . '-' . time();
+    $xml_filename = \Str::slug($json->main_tenant_lastname . ' ' . $json->main_tenant_firstname . ' ' . $request->main_tenant_postal_code . ' ' . $request->main_tenant_city, '-') . '-' . time();
 
     $xml = new \DOMDocument();
     $xml->preserveWhiteSpace = false;
@@ -64,7 +64,9 @@ class CreateXml
       $mainTenant->appendChild($address);
   
       $address->appendChild($xml->createElement('STREET', $json->main_tenant_street_number));
-      $address->appendChild($xml->createElement('POSTAL_CODE_CITY', $json->main_tenant_postal_code_city));
+
+      $main_tenant_postal_code_city = $json->main_tenant_postal_code . ' ' . $json->main_tenant_city;
+      $address->appendChild($xml->createElement('POSTAL_CODE_CITY', $main_tenant_postal_code_city));
   
       $birthdate = $xml->createElement('BIRTHDATE', $json->main_tenant_birthdate);
       $mainTenant->appendChild($birthdate);
@@ -133,8 +135,9 @@ class CreateXml
   
       $currentRenter = $xml->createElement('CURRENT_RENTER');
       $currentRent->appendChild($currentRenter);
-  
-      $name = $xml->createElement('NAME', $json->main_tenant_current_renter_name);
+      
+      $main_tenant_current_renter = $json->main_tenant_current_renter . ', ' . $json->main_tenant_current_renter_contact_person;
+      $name = $xml->createElement('NAME', $main_tenant_current_renter);
       $currentRenter->appendChild($name);
   
       $phone = $xml->createElement('PHONE', $json->main_tenant_current_renter_phone);
@@ -194,7 +197,8 @@ class CreateXml
       $street = $xml->createElement('STREET', $json->sub_tenant_street);
       $address->appendChild($street);
 
-      $postalCodeCity = $xml->createElement('POSTAL_CODE_CITY', $json->sub_tenant_postal_code_city);
+      $sub_tenant_postal_code_city = $json->sub_tenant_postal_code . ' ' . $json->sub_tenant_city;
+      $postalCodeCity = $xml->createElement('POSTAL_CODE_CITY', $sub_tenant_postal_code_city);
       $address->appendChild($postalCodeCity);
 
       $birthdate = $xml->createElement('BIRTHDATE', $json->sub_tenant_birthdate);
@@ -265,7 +269,8 @@ class CreateXml
       $currentRenter = $xml->createElement('CURRENT_RENTER');
       $currentRent->appendChild($currentRenter);
 
-      $name = $xml->createElement('NAME', $json->sub_tenant_current_renter_name);
+      $sub_tenant_current_renter_name = $json->sub_tenant_current_renter . ', ' . $json->sub_tenant_current_renter_contact_person;
+      $name = $xml->createElement('NAME', $sub_tenant_current_renter_name);
       $currentRenter->appendChild($name);
 
       $phone = $xml->createElement('PHONE', $json->sub_tenant_current_renter_phone);

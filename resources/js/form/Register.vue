@@ -1,7 +1,6 @@
 <template>
 <section class="content w-full py-48 !pt-0">
   <div class="max-w-page mx-auto px-15 md:px-45 xl:px-60">
-
   <template v-if="isAuthenticated">
     <template v-if="isSent">
       <feedback />
@@ -46,24 +45,36 @@
               @focus="removeError('main_tenant_firstname')">
             </form-input>
           </form-group>
-          <form-group :error="errors.main_tenant_street_number">
-            <form-label :error="errors.main_tenant_street_number">Strasse und Hausnummer</form-label>
+          <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
+            <form-group :error="errors.main_tenant_street_number">
+              <form-label :error="errors.main_tenant_street_number">Strasse und Hausnummer</form-label>
+              <form-input 
+                type="text" 
+                v-model="form.main_tenant_street_number" 
+                :error="errors.main_tenant_street_number"
+                @blur="validateField('main_tenant_street_number')"
+                @focus="removeError('main_tenant_street_number')">
+              </form-input>
+            </form-group>
+          </div>
+          <form-group :error="errors.main_tenant_postal_code">
+            <form-label :error="errors.main_tenant_postal_code">PLZ</form-label>
             <form-input 
               type="text" 
-              v-model="form.main_tenant_street_number" 
-              :error="errors.main_tenant_street_number"
-              @blur="validateField('main_tenant_street_number')"
-              @focus="removeError('main_tenant_street_number')">
+              v-model="form.main_tenant_postal_code" 
+              :error="errors.main_tenant_postal_code"
+              @blur="validateField('main_tenant_postal_code')"
+              @focus="removeError('main_tenant_postal_code')">
             </form-input>
           </form-group>
-          <form-group :error="errors.main_tenant_postal_code_city">
-            <form-label :error="errors.main_tenant_postal_code_city">PLZ und Ort</form-label>
+          <form-group :error="errors.main_tenant_city">
+            <form-label :error="errors.main_tenant_city">Ort</form-label>
             <form-input 
               type="text" 
-              v-model="form.main_tenant_postal_code_city" 
-              :error="errors.main_tenant_postal_code_city"
-              @blur="validateField('main_tenant_postal_code_city')"
-              @focus="removeError('main_tenant_postal_code_city')">
+              v-model="form.main_tenant_city" 
+              :error="errors.main_tenant_city"
+              @blur="validateField('main_tenant_city')"
+              @focus="removeError('main_tenant_city')">
             </form-input>
           </form-group>
           <form-group :error="errors.main_tenant_birthdate">
@@ -108,7 +119,7 @@
               </form-input>
             </template>
           </form-group>
-          <template v-if="form.main_tenant_nationality == 'Andere'">
+          <template v-if="form.main_tenant_nationality != 'CH'">
             <form-group :error="errors.main_tenant_residence_permit">
               <form-label :error="errors.main_tenant_residence_permit">Niederlassungsbewilligung</form-label>
               <form-select v-model="form.main_tenant_residence_permit"
@@ -257,13 +268,23 @@
             </form-group>
           </template>
           <form-group :error="errors.main_tenant_current_renter_name">
-            <form-label :error="errors.main_tenant_current_renter_name">Aktuelle*r Vermieter*in*</form-label>
+            <form-label :error="errors.main_tenant_current_renter_name">Aktuelle*r Vermieter*in</form-label>
             <form-input 
               type="text" 
               v-model="form.main_tenant_current_renter_name" 
               :error="errors.main_tenant_current_renter_name"
               @blur="validateField('main_tenant_current_renter_name')"
               @focus="removeError('main_tenant_current_renter_name')">
+            </form-input>
+          </form-group>
+          <form-group :error="errors.main_tenant_current_renter_contact_person">
+            <form-label :error="errors.main_tenant_current_renter_contact_person">Vermieter*in Kontaktperson</form-label>
+            <form-input 
+              type="text" 
+              v-model="form.main_tenant_current_renter_contact_person" 
+              :error="errors.main_tenant_current_renter_contact_person"
+              @blur="validateField('main_tenant_current_renter_contact_person')"
+              @focus="removeError('main_tenant_current_renter_contact_person')">
             </form-input>
           </form-group>
           <form-group :error="errors.main_tenant_current_renter_phone">
@@ -331,11 +352,11 @@
           </template>
         </form-grid>
         
-        <template v-if="form.sub_tenant_type.includes('5')">
+        <template v-if="form.sub_tenant_type.includes('5') && form.sub_tenant_type.length > 1">
           <div class="text-md my-30">Angaben zum Kind/zu den Kindern folgen weiter unten.</div>
         </template>
 
-        <template v-if="form.sub_tenant_type.some(item => item.value !== '5')">
+        <template v-if="form.sub_tenant_type.includes('1') || form.sub_tenant_type.includes('2') || form.sub_tenant_type.includes('3') || form.sub_tenant_type.includes('4')">
           <form-grid>
             <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
               <form-group :error="errors.sub_tenant_salutation">
@@ -382,24 +403,36 @@
               </form-group>
             </div>
             <template v-if="form.sub_tenant_same_adress == 0">
-              <form-group :error="errors.sub_tenant_street">
-                <form-label :error="errors.sub_tenant_street">Strasse und Hausnummer</form-label>
+              <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
+                <form-group :error="errors.sub_tenant_street">
+                  <form-label :error="errors.sub_tenant_street">Strasse und Hausnummer</form-label>
+                  <form-input 
+                    type="text" 
+                    v-model="form.sub_tenant_street" 
+                    :error="errors.sub_tenant_street"
+                    @blur="validateField('sub_tenant_street')"
+                    @focus="removeError('sub_tenant_street')">
+                  </form-input>
+                </form-group>
+              </div>
+              <form-group :error="errors.sub_tenant_postal_code">
+                <form-label :error="errors.sub_tenant_postal_code">PLZ</form-label>
                 <form-input 
                   type="text" 
-                  v-model="form.sub_tenant_street" 
-                  :error="errors.sub_tenant_street"
-                  @blur="validateField('sub_tenant_street')"
-                  @focus="removeError('sub_tenant_street')">
+                  v-model="form.sub_tenant_postal_code" 
+                  :error="errors.sub_tenant_postal_code"
+                  @blur="validateField('sub_tenant_postal_code')"
+                  @focus="removeError('sub_tenant_postal_code')">
                 </form-input>
               </form-group>
-              <form-group :error="errors.sub_tenant_postal_code_city">
-                <form-label :error="errors.sub_tenant_postal_code_city">PLZ und Ort</form-label>
+              <form-group :error="errors.sub_tenant_city">
+                <form-label :error="errors.sub_tenant_city">Ort</form-label>
                 <form-input 
                   type="text" 
-                  v-model="form.sub_tenant_postal_code_city" 
-                  :error="errors.sub_tenant_postal_code_city"
-                  @blur="validateField('sub_tenant_postal_code_city')"
-                  @focus="removeError('sub_tenant_postal_code_city')">
+                  v-model="form.sub_tenant_city" 
+                  :error="errors.sub_tenant_city"
+                  @blur="validateField('sub_tenant_city')"
+                  @focus="removeError('sub_tenant_city')">
                 </form-input>
               </form-group>
             </template>
@@ -445,7 +478,7 @@
                 </form-input>
               </template>
             </form-group>
-            <template v-if="form.sub_tenant_nationality == 'Andere'">
+            <template v-if="form.sub_tenant_nationality != 'CH'">
             <form-group :error="errors.sub_tenant_residence_permit">
               <form-label :error="errors.sub_tenant_residence_permit">Niederlassungsbewilligung</form-label>
               <form-select v-model="form.sub_tenant_residence_permit"
@@ -594,13 +627,23 @@
               </form-group>
             </template>
             <form-group :error="errors.sub_tenant_current_renter_name">
-              <form-label :error="errors.sub_tenant_current_renter_name">Aktuelle*r Vermieter*in*</form-label>
+              <form-label :error="errors.sub_tenant_current_renter_name">Aktuelle*r Vermieter*in</form-label>
               <form-input 
                 type="text" 
                 v-model="form.sub_tenant_current_renter_name" 
                 :error="errors.sub_tenant_current_renter_name"
                 @blur="validateField('sub_tenant_current_renter_name')"
                 @focus="removeError('sub_tenant_current_renter_name')">
+              </form-input>
+            </form-group>
+            <form-group :error="errors.sub_tenant_current_renter_contact_person">
+              <form-label :error="errors.sub_tenant_current_renter_contact_person">Vermieter*in Kontaktperson</form-label>
+              <form-input 
+                type="text" 
+                v-model="form.sub_tenant_current_renter_contact_person" 
+                :error="errors.sub_tenant_current_renter_contact_person"
+                @blur="validateField('sub_tenant_current_renter_contact_person')"
+                @focus="removeError('sub_tenant_current_renter_contact_person')">
               </form-input>
             </form-group>
             <form-group :error="errors.sub_tenant_current_renter_phone">
@@ -633,6 +676,79 @@
                   @focus="removeError('sub_tenant_current_renter_previous_renter')">
                 </form-input>
               </form-group>
+            </template>
+          </form-grid>
+        </template>
+        
+        <!-- form.sub_tenant_yn equals 1 && form.sub_tenant_types is not empty -->
+        <template v-if="form.sub_tenant_yn == 1 && form.sub_tenant_type.includes('5')">
+          <h2 class="!mt-35 md:!mt-70">Aufteilung Erwachsene/Kinder</h2>
+          <form-grid>
+            <form-group :error="errors.accomodation_total_persons">
+              <form-label :error="errors.accomodation_total_persons">Wie viele Personen werden in Ihrem Haushalt leben?</form-label>
+              <form-input 
+                type="number" 
+                v-model="form.accomodation_total_persons" 
+                :error="errors.accomodation_total_persons"
+                @blur="validateField('accomodation_total_persons')"
+                @focus="removeError('accomodation_total_persons')">
+              </form-input>
+            </form-group>
+            <form-group :error="errors.accomodation_adults_qty">
+              <form-label :error="errors.accomodation_adults_qty">Anzahl Erwachsene?</form-label>
+              <form-input 
+                type="number" 
+                v-model="form.accomodation_adults_qty" 
+                :error="errors.accomodation_adults_qty"
+                @blur="validateField('accomodation_adults_qty')"
+                @focus="removeError('accomodation_adults_qty')">
+              </form-input>
+            </form-group>
+            <template v-if="form.sub_tenant_type.includes('5')">
+              <form-group :error="errors.accomodation_children_qty">
+                <form-label :error="errors.accomodation_children_qty">Anzahl Kinder?</form-label>
+                <form-input 
+                  type="number" 
+                  v-model="form.accomodation_children_qty" 
+                  :error="errors.accomodation_children_qty"
+                  @blur="validateField('accomodation_children_qty')"
+                  @focus="removeError('accomodation_children_qty')">
+                </form-input>
+              </form-group>
+            </template>
+            <template v-if="form.sub_tenant_type.includes('5') && form.accomodation_children_qty > 0">
+              <form-group :error="errors.accomodation_children_living_constantly">
+                <form-label :error="errors.accomodation_children_living_constantly">Leben alle Kinder ständig mit Ihnen zusammen?</form-label>
+                <form-select
+                  v-model="form.accomodation_children_living_constantly"
+                  :options="yes_no"
+                  :error="errors.accomodation_children_living_constantly"
+                  @blur="validateField('accomodation_children_living_constantly')"
+                  @focus="removeError('accomodation_children_living_constantly')">
+                </form-select>
+              </form-group>
+
+              <!-- for each form.accomodation_children_qty create a from-group/input -->
+              <form-group v-for="(index, child) in parseInt(form.accomodation_children_qty)" :error="errors.accomodation_children_age_group">
+                <form-label :error="errors.accomodation_children_age_group">Jahrgang Kind {{ index }}</form-label>
+                <form-input 
+                  type="text"
+                  v-model="form.children_year_of_birth[index]"
+                  @change="updateChildAgeGroup($event, index)"
+                  @focus="removeError('accomodation_children_age_group')">
+                </form-input>
+
+              </form-group>
+
+              <!-- <form-group class="!col-span-12" :error="errors.accomodation_children_age_group">
+                <form-label :error="errors.accomodation_children_age_group">Jahrgang der Kinder (Bitte pro Zeile ein Kind eintragen: «Kind 1» / 2021)</form-label>
+                <form-textarea v-model="form.accomodation_children_age_group"
+                  @blur="validateField('accomodation_children_age_group')"
+                  @focus="removeError('accomodation_children_age_group')">
+                </form-textarea>
+              </form-group> -->
+
+
             </template>
           </form-grid>
         </template>
@@ -725,61 +841,6 @@
         </form-grid>
 
         <h2 class="!mt-35 md:!mt-70">Weitere Angaben</h2>
-        <template v-if="form.sub_tenant_yn == 1">
-          <form-grid>
-            <form-group :error="errors.accomodation_total_persons">
-              <form-label :error="errors.accomodation_total_persons">Wie viele Personen werden in Ihrem Haushalt leben?</form-label>
-              <form-input 
-                type="text" 
-                v-model="form.accomodation_total_persons" 
-                :error="errors.accomodation_total_persons"
-                @blur="validateField('accomodation_total_persons')"
-                @focus="removeError('accomodation_total_persons')">
-              </form-input>
-            </form-group>
-            <form-group :error="errors.accomodation_adults_qty">
-              <form-label :error="errors.accomodation_adults_qty">Anzahl Erwachsene?</form-label>
-              <form-input 
-                type="text" 
-                v-model="form.accomodation_adults_qty" 
-                :error="errors.accomodation_adults_qty"
-                @blur="validateField('accomodation_adults_qty')"
-                @focus="removeError('accomodation_adults_qty')">
-              </form-input>
-            </form-group>
-            <template v-if="form.sub_tenant_type.includes('5')">
-              <form-group :error="errors.accomodation_children_qty">
-                <form-label :error="errors.accomodation_children_qty">Anzahl Kinder?</form-label>
-                <form-input 
-                  type="text" 
-                  v-model="form.accomodation_children_qty" 
-                  :error="errors.accomodation_children_qty"
-                  @blur="validateField('accomodation_children_qty')"
-                  @focus="removeError('accomodation_children_qty')">
-                </form-input>
-              </form-group>
-            </template>
-            <template v-if="form.sub_tenant_type.includes('5') && form.accomodation_children_qty > 0">
-              <form-group :error="errors.accomodation_children_living_constantly">
-                <form-label :error="errors.accomodation_children_living_constantly">Leben alle Kinder ständig mit Ihnen zusammen?</form-label>
-                <form-select
-                  v-model="form.accomodation_children_living_constantly"
-                  :options="yes_no"
-                  :error="errors.accomodation_children_living_constantly"
-                  @blur="validateField('accomodation_children_living_constantly')"
-                  @focus="removeError('accomodation_children_living_constantly')">
-                </form-select>
-              </form-group>
-              <form-group class="!col-span-12" :error="errors.accomodation_children_age_group">
-                <form-label :error="errors.accomodation_children_age_group">Jahrgang der Kinder (Bitte pro Zeile ein Kind eintragen: «Kind 1» / 2021)</form-label>
-                <form-textarea v-model="form.accomodation_children_age_group"
-                  @blur="validateField('accomodation_children_age_group')"
-                  @focus="removeError('accomodation_children_age_group')">
-                </form-textarea>
-              </form-group>
-            </template>
-          </form-grid>
-        </template>
         <form-grid>
           <form-group :error="errors.accomodation_play_music_yn">
             <form-label :error="errors.accomodation_play_music_yn">Spielen Sie oder ein*e Mitbewohner*in ein Musikinstrument?</form-label>
@@ -832,6 +893,9 @@
           </form-group>
         </form-grid>
         <form-grid>
+          <div class="col-span-full border-2 border-aqua bg-sky p-10 lg:p-20">
+            Bitte beachten Sie, dass Ihre Anmeldung nach 6 Monaten bei uns automatisch gelöscht wird. Sollten Sie dann immer noch eine Wohnung suchen, bitten wir Sie um eine E-Mail an wohnung@aporta-stiftung.ch, um Ihr Profil zu erneuern.
+          </div>
           <form-group>
             <button 
             :class="[!isLoading ? 'bg-black text-white hover:bg-aqua transition-colors' : 'opacity-50 pointer-events-none select-none', 'font-bold text-lg text-white py-15 px-20 leading-none inline-flex items-center w-auto text-left']"
@@ -872,7 +936,6 @@
       </form-grid>
     </form>
   </template>
-  
   </div>
 </section>
 </template>
@@ -917,7 +980,8 @@ export default {
         main_tenant_lastname: null,
         main_tenant_firstname: null,
         main_tenant_street_number: null,
-        main_tenant_postal_code_city: null,
+        main_tenant_postal_code: null,
+        main_tenant_city: null,
         main_tenant_birthdate: null,
         main_tenant_marital_status: 1,
         main_tenant_nationality: null,
@@ -937,6 +1001,7 @@ export default {
         main_tenant_current_rent_terminator: 2,
         main_tenant_current_rent_terminator_reason: null,
         main_tenant_current_renter_name: null,
+        main_tenant_current_renter_contact_person: null,
         main_tenant_current_renter_phone: null,
         main_tenant_current_renter_rent_duration: 3,
         main_tenant_current_renter_previous_renter: null,
@@ -946,7 +1011,8 @@ export default {
         sub_tenant_lastname: null,
         sub_tenant_same_adress: 'Ja',
         sub_tenant_street: null,
-        sub_tenant_postal_code_city: null,
+        sub_tenant_postal_code: null,
+        sub_tenant_city: null,
         sub_tenant_birthdate: null,
         sub_tenant_marital_status: 1,
         sub_tenant_nationality: null,
@@ -962,6 +1028,7 @@ export default {
         sub_tenant_current_rent_tenant_role: 2,
         sub_tenant_current_rent_terminator: 2,
         sub_tenant_current_renter_name: null,
+        sub_tenant_current_renter_contact_person: null,
         sub_tenant_current_renter_phone: null,
         sub_tenant_current_renter_rent_duration: 3,
         sub_tenant_current_renter_previous_renter: null,
@@ -985,6 +1052,7 @@ export default {
         accomodation_children_age_group: null,
         has_sub_tenant: false,
         has_children: false,
+        children_year_of_birth: [],
       },
 
       errors: {
@@ -993,7 +1061,8 @@ export default {
         main_tenant_lastname: null,
         main_tenant_firstname: null,
         main_tenant_street_number: null,
-        main_tenant_postal_code_city: null,
+        main_tenant_postal_code: null,
+        main_tenant_city: null,
         main_tenant_birthdate: null,
         main_tenant_marital_status: null,
         main_tenant_nationality: null,
@@ -1013,6 +1082,7 @@ export default {
         main_tenant_current_rent_terminator: null,
         main_tenant_current_rent_terminator_reason: null,
         main_tenant_current_renter_name: null,
+        main_tenant_current_renter_contact_person: null,
         main_tenant_current_renter_phone: null,
         main_tenant_current_renter_rent_duration: null,
         main_tenant_current_renter_previous_renter: null,
@@ -1037,6 +1107,7 @@ export default {
         sub_tenant_current_rent_tenant_role: null,
         sub_tenant_current_rent_terminator: null,
         sub_tenant_current_renter_name: null,
+        sub_tenant_current_renter_contact_person: null,
         sub_tenant_current_renter_phone: null,
         sub_tenant_current_renter_rent_duration: null,
         sub_tenant_current_renter_previous_renter: null,
@@ -1063,6 +1134,7 @@ export default {
       salutations: [
         { label: 'Frau', value: 'Frau' },
         { label: 'Herr', value: 'Herr' },
+        { label: 'Andere', value: 'Andere' },
       ],
 
       marital_status: [
@@ -1085,9 +1157,254 @@ export default {
       ],
 
       nationality: [
-        { label: null, value: null},
-        { label: 'CH', value: 'CH' },
-        { label: 'Andere', value: 'Andere' },
+        { label: null, value: null },
+        { label: 'Schweiz', value: 'CH' },
+        { label: 'Deutschland', value: 'Deutschland' },
+        { label: 'Österreich', value: 'Österreich' },
+        { label: 'Liechtenstein', value: 'Liechtenstein' },
+        { label: 'Afghanistan', value: 'Afghanistan' },
+        { label: 'Ägypten', value: 'Ägypten' },
+        { label: 'Åland', value: 'Åland' },
+        { label: 'Albanien', value: 'Albanien' },
+        { label: 'Algerien', value: 'Algerien' },
+        { label: 'Amerikanisch-Samoa', value: 'Amerikanisch-Samoa' },
+        { label: 'Amerikanische Jungferninseln', value: 'Amerikanische Jungferninseln' },
+        { label: 'Andorra', value: 'Andorra' },
+        { label: 'Angola', value: 'Angola' },
+        { label: 'Anguilla', value: 'Anguilla' },
+        { label: 'Antigua und Barbuda', value: 'Antigua und Barbuda' },
+        { label: 'Äquatorialguinea', value: 'Äquatorialguinea' },
+        { label: 'Argentinien', value: 'Argentinien' },
+        { label: 'Armenien', value: 'Armenien' },
+        { label: 'Aruba', value: 'Aruba' },
+        { label: 'Aserbaidschan', value: 'Aserbaidschan' },
+        { label: 'Äthiopien', value: 'Äthiopien' },
+        { label: 'Australien', value: 'Australien' },
+        { label: 'Bahamas', value: 'Bahamas' },
+        { label: 'Bahrain', value: 'Bahrain' },
+        { label: 'Bangladesch', value: 'Bangladesch' },
+        { label: 'Barbados', value: 'Barbados' },
+        { label: 'Belarus', value: 'Belarus' },
+        { label: 'Belgien', value: 'Belgien' },
+        { label: 'Belize', value: 'Belize' },
+        { label: 'Benin', value: 'Benin' },
+        { label: 'Bermuda', value: 'Bermuda' },
+        { label: 'Bhutan', value: 'Bhutan' },
+        { label: 'Bolivien', value: 'Bolivien' },
+        { label: 'Bonaire, Saba, Sint Eustatius', value: 'Bonaire, Saba, Sint Eustatius' },
+        { label: 'Bosnien und Herzegowina', value: 'Bosnien und Herzegowina' },
+        { label: 'Botswana', value: 'Botswana' },
+        { label: 'Bouvetinsel', value: 'Bouvetinsel' },
+        { label: 'Brasilien', value: 'Brasilien' },
+        { label: 'Britische Jungferninseln', value: 'Britische Jungferninseln' },
+        { label: 'Britisches Territorium im Indischen Ozean', value: 'Britisches Territorium im Indischen Ozean' },
+        { label: 'Brunei', value: 'Brunei' },
+        { label: 'Bulgarien', value: 'Bulgarien' },
+        { label: 'Burkina Faso', value: 'Burkina Faso' },
+        { label: 'Burundi', value: 'Burundi' },
+        { label: 'Chile', value: 'Chile' },
+        { label: 'Volksrepublik China', value: 'Volksrepublik China' },
+        { label: 'Cookinseln', value: 'Cookinseln' },
+        { label: 'Costa Rica', value: 'Costa Rica' },
+        { label: 'Curaçao', value: 'Curaçao' },
+        { label: 'Dänemark', value: 'Dänemark' },
+        { label: 'Dominica', value: 'Dominica' },
+        { label: 'Dominikanische Republik', value: 'Dominikanische Republik' },
+        { label: 'Dschibuti', value: 'Dschibuti' },
+        { label: 'Ecuador', value: 'Ecuador' },
+        { label: 'Elfenbeinküste', value: 'Elfenbeinküste' },
+        { label: 'El Salvador', value: 'El Salvador' },
+        { label: 'Eritrea', value: 'Eritrea' },
+        { label: 'Estland', value: 'Estland' },
+        { label: 'Eswatini', value: 'Eswatini' },
+        { label: 'Falklandinseln', value: 'Falklandinseln' },
+        { label: 'Färöer', value: 'Färöer' },
+        { label: 'Fidschi', value: 'Fidschi' },
+        { label: 'Finnland', value: 'Finnland' },
+        { label: 'Frankreich', value: 'Frankreich' },
+        { label: 'Französisch-Guayana', value: 'Französisch-Guayana' },
+        { label: 'Französisch-Polynesien', value: 'Französisch-Polynesien' },
+        { label: 'Französische Süd- und Antarktisgebiete', value: 'Französische Süd- und Antarktisgebiete' },
+        { label: 'Gabun', value: 'Gabun' },
+        { label: 'Gambia', value: 'Gambia' },
+        { label: 'Georgien', value: 'Georgien' },
+        { label: 'Ghana', value: 'Ghana' },
+        { label: 'Gibraltar', value: 'Gibraltar' },
+        { label: 'Grenada', value: 'Grenada' },
+        { label: 'Griechenland', value: 'Griechenland' },
+        { label: 'Grönland', value: 'Grönland' },
+        { label: 'Guadeloupe', value: 'Guadeloupe' },
+        { label: 'Guam', value: 'Guam' },
+        { label: 'Guatemala', value: 'Guatemala' },
+        { label: 'Guernsey (Kanalinsel)', value: 'Guernsey (Kanalinsel)' },
+        { label: 'Guinea', value: 'Guinea' },
+        { label: 'Guinea-Bissau', value: 'Guinea-Bissau' },
+        { label: 'Guyana', value: 'Guyana' },
+        { label: 'Haiti', value: 'Haiti' },
+        { label: 'Heard und McDonaldinseln', value: 'Heard und McDonaldinseln' },
+        { label: 'Honduras', value: 'Honduras' },
+        { label: 'Hongkong', value: 'Hongkong' },
+        { label: 'Indien', value: 'Indien' },
+        { label: 'Indonesien', value: 'Indonesien' },
+        { label: 'Insel Man', value: 'Insel Man' },
+        { label: 'Irak', value: 'Irak' },
+        { label: 'Iran', value: 'Iran' },
+        { label: 'Irland', value: 'Irland' },
+        { label: 'Island', value: 'Island' },
+        { label: 'Israel', value: 'Israel' },
+        { label: 'Italien', value: 'Italien' },
+        { label: 'Jamaika', value: 'Jamaika' },
+        { label: 'Japan', value: 'Japan' },
+        { label: 'Jemen', value: 'Jemen' },
+        { label: 'Jersey (Kanalinsel)', value: 'Jersey (Kanalinsel)' },
+        { label: 'Jordanien', value: 'Jordanien' },
+        { label: 'Kaimaninseln', value: 'Kaimaninseln' },
+        { label: 'Kambodscha', value: 'Kambodscha' },
+        { label: 'Kamerun', value: 'Kamerun' },
+        { label: 'Kanada', value: 'Kanada' },
+        { label: 'Kap Verde', value: 'Kap Verde' },
+        { label: 'Kasachstan', value: 'Kasachstan' },
+        { label: 'Katar', value: 'Katar' },
+        { label: 'Kenia', value: 'Kenia' },
+        { label: 'Kirgisistan', value: 'Kirgisistan' },
+        { label: 'Kiribati', value: 'Kiribati' },
+        { label: 'Kokosinseln', value: 'Kokosinseln' },
+        { label: 'Kolumbien', value: 'Kolumbien' },
+        { label: 'Komoren', value: 'Komoren' },
+        { label: 'Kongo, Demokratische Republik', value: 'Kongo, Demokratische Republik' },
+        { label: 'Kongo, Republik', value: 'Kongo, Republik' },
+        { label: 'Korea, Nord', value: 'Korea, Nord' },
+        { label: 'Korea, Süd', value: 'Korea, Süd' },
+        { label: 'Kroatien', value: 'Kroatien' },
+        { label: 'Kuba', value: 'Kuba' },
+        { label: 'Kuwait', value: 'Kuwait' },
+        { label: 'Laos', value: 'Laos' },
+        { label: 'Lesotho', value: 'Lesotho' },
+        { label: 'Lettland', value: 'Lettland' },
+        { label: 'Libanon', value: 'Libanon' },
+        { label: 'Liberia', value: 'Liberia' },
+        { label: 'Libyen', value: 'Libyen' },
+        { label: 'Litauen', value: 'Litauen' },
+        { label: 'Luxemburg', value: 'Luxemburg' },
+        { label: 'Macau', value: 'Macau' },
+        { label: 'Madagaskar', value: 'Madagaskar' },
+        { label: 'Malawi', value: 'Malawi' },
+        { label: 'Malaysia', value: 'Malaysia' },
+        { label: 'Malediven', value: 'Malediven' },
+        { label: 'Mali', value: 'Mali' },
+        { label: 'Malta', value: 'Malta' },
+        { label: 'Marokko', value: 'Marokko' },
+        { label: 'Marshallinseln', value: 'Marshallinseln' },
+        { label: 'Martinique', value: 'Martinique' },
+        { label: 'Mauretanien', value: 'Mauretanien' },
+        { label: 'Mauritius', value: 'Mauritius' },
+        { label: 'Mayotte', value: 'Mayotte' },
+        { label: 'Mexiko', value: 'Mexiko' },
+        { label: 'Mikronesien', value: 'Mikronesien' },
+        { label: 'Moldau', value: 'Moldau' },
+        { label: 'Monaco', value: 'Monaco' },
+        { label: 'Mongolei', value: 'Mongolei' },
+        { label: 'Montenegro', value: 'Montenegro' },
+        { label: 'Montserrat', value: 'Montserrat' },
+        { label: 'Mosambik', value: 'Mosambik' },
+        { label: 'Myanmar', value: 'Myanmar' },
+        { label: 'Namibia', value: 'Namibia' },
+        { label: 'Nauru', value: 'Nauru' },
+        { label: 'Nepal', value: 'Nepal' },
+        { label: 'Neukaledonien', value: 'Neukaledonien' },
+        { label: 'Neuseeland', value: 'Neuseeland' },
+        { label: 'Nicaragua', value: 'Nicaragua' },
+        { label: 'Niederlande', value: 'Niederlande' },
+        { label: 'Niger', value: 'Niger' },
+        { label: 'Nigeria', value: 'Nigeria' },
+        { label: 'Niue', value: 'Niue' },
+        { label: 'Nördliche Marianen', value: 'Nördliche Marianen' },
+        { label: 'Nordmazedonien', value: 'Nordmazedonien' },
+        { label: 'Norfolkinsel', value: 'Norfolkinsel' },
+        { label: 'Norwegen', value: 'Norwegen' },
+        { label: 'Oman', value: 'Oman' },
+        { label: 'Osttimor', value: 'Osttimor' },
+        { label: 'Pakistan', value: 'Pakistan' },
+        { label: 'Palästina', value: 'Palästina' },
+        { label: 'Palau', value: 'Palau' },
+        { label: 'Panama', value: 'Panama' },
+        { label: 'Papua-Neuguinea', value: 'Papua-Neuguinea' },
+        { label: 'Paraguay', value: 'Paraguay' },
+        { label: 'Peru', value: 'Peru' },
+        { label: 'Philippinen', value: 'Philippinen' },
+        { label: 'Pitcairninseln', value: 'Pitcairninseln' },
+        { label: 'Polen', value: 'Polen' },
+        { label: 'Portugal', value: 'Portugal' },
+        { label: 'Puerto Rico', value: 'Puerto Rico' },
+        { label: 'Réunion', value: 'Réunion' },
+        { label: 'Ruanda', value: 'Ruanda' },
+        { label: 'Rumänien', value: 'Rumänien' },
+        { label: 'Russland', value: 'Russland' },
+        { label: 'Salomonen', value: 'Salomonen' },
+        { label: 'Saint-Barthélemy', value: 'Saint-Barthélemy' },
+        { label: 'Saint-Martin (französischer Teil)', value: 'Saint-Martin (französischer Teil)' },
+        { label: 'Sambia', value: 'Sambia' },
+        { label: 'Samoa', value: 'Samoa' },
+        { label: 'San Marino', value: 'San Marino' },
+        { label: 'São Tomé und Príncipe', value: 'São Tomé und Príncipe' },
+        { label: 'Saudi-Arabien', value: 'Saudi-Arabien' },
+        { label: 'Schweden', value: 'Schweden' },
+        { label: 'Senegal', value: 'Senegal' },
+        { label: 'Serbien', value: 'Serbien' },
+        { label: 'Seychellen', value: 'Seychellen' },
+        { label: 'Sierra Leone', value: 'Sierra Leone' },
+        { label: 'Simbabwe', value: 'Simbabwe' },
+        { label: 'Singapur', value: 'Singapur' },
+        { label: 'Sint Maarten', value: 'Sint Maarten' },
+        { label: 'Slowakei', value: 'Slowakei' },
+        { label: 'Slowenien', value: 'Slowenien' },
+        { label: 'Somalia', value: 'Somalia' },
+        { label: 'Spanien', value: 'Spanien' },
+        { label: 'Sri Lanka', value: 'Sri Lanka' },
+        { label: 'St. Helena, Ascension und Tristan da Cunha', value: 'St. Helena, Ascension und Tristan da Cunha' },
+        { label: 'St. Kitts und Nevis', value: 'St. Kitts und Nevis' },
+        { label: 'St. Lucia', value: 'St. Lucia' },
+        { label: 'Saint-Pierre und Miquelon', value: 'Saint-Pierre und Miquelon' },
+        { label: 'St. Vincent und die Grenadinen', value: 'St. Vincent und die Grenadinen' },
+        { label: 'Südafrika', value: 'Südafrika' },
+        { label: 'Sudan', value: 'Sudan' },
+        { label: 'Südgeorgien und die Südlichen Sandwichinseln', value: 'Südgeorgien und die Südlichen Sandwichinseln' },
+        { label: 'Südsudan', value: 'Südsudan' },
+        { label: 'Suriname', value: 'Suriname' },
+        { label: 'Spitzbergen und Jan Mayen', value: 'Spitzbergen und Jan Mayen' },
+        { label: 'Syrien', value: 'Syrien' },
+        { label: 'Tadschikistan', value: 'Tadschikistan' },
+        { label: 'Tansania', value: 'Tansania' },
+        { label: 'Thailand', value: 'Thailand' },
+        { label: 'Togo', value: 'Togo' },
+        { label: 'Tokelau', value: 'Tokelau' },
+        { label: 'Tonga', value: 'Tonga' },
+        { label: 'Trinidad und Tobago', value: 'Trinidad und Tobago' },
+        { label: 'Tschad', value: 'Tschad' },
+        { label: 'Tschechien', value: 'Tschechien' },
+        { label: 'Tunesien', value: 'Tunesien' },
+        { label: 'Türkei', value: 'Türkei' },
+        { label: 'Turkmenistan', value: 'Turkmenistan' },
+        { label: 'Turks- und Caicosinseln', value: 'Turks- und Caicosinseln' },
+        { label: 'Tuvalu', value: 'Tuvalu' },
+        { label: 'Uganda', value: 'Uganda' },
+        { label: 'Ukraine', value: 'Ukraine' },
+        { label: 'Ungarn', value: 'Ungarn' },
+        { label: 'United States Minor Outlying Islands', value: 'United States Minor Outlying Islands' },
+        { label: 'Uruguay', value: 'Uruguay' },
+        { label: 'Usbekistan', value: 'Usbekistan' },
+        { label: 'Vanuatu', value: 'Vanuatu' },
+        { label: 'Vatikanstadt', value: 'Vatikanstadt' },
+        { label: 'Venezuela', value: 'Venezuela' },
+        { label: 'Vereinigte Arabische Emirate', value: 'Vereinigte Arabische Emirate' },
+        { label: 'Vereinigte Staaten', value: 'Vereinigte Staaten' },
+        { label: 'Vereinigtes Königreich', value: 'Vereinigtes Königreich' },
+        { label: 'Vietnam', value: 'Vietnam' },
+        { label: 'Wallis und Futuna', value: 'Wallis und Futuna' },
+        { label: 'Weihnachtsinsel', value: 'Weihnachtsinsel' },
+        { label: 'Westsahara', value: 'Westsahara' },
+        { label: 'Zentralafrikanische Republik', value: 'Zentralafrikanische Republik' },
+        { label: 'Zypern', value: 'Zypern' },
       ],
 
       residence_permits: [
@@ -1137,8 +1454,8 @@ export default {
       ],
 
       debt_enforcement: [
-        { label: 'Ja, ich hatte Betreibungen in den letzten zwei Jahren', value: 1 },
-        { label: 'Nein, ich hatte keine Betreibungen in den letzten zwei Jahren', value: 0 },
+        { label: 'Ja, ich hatte Betreibungen in den letzten fünf Jahren', value: 1 },
+        { label: 'Nein, ich hatte keine Betreibungen in den letzten fünf Jahren', value: 0 },
       ],
 
       districts: [
@@ -1307,6 +1624,19 @@ export default {
       this.errors[field] = null;
     },
 
+    updateChildAgeGroup(event, index) {
+
+      // add the event.target.value to form.accomodation_children_age_group. append 'Kind {index}: {event.target.value'
+      if (this.form.accomodation_children_age_group === null) {
+        this.form.accomodation_children_age_group = `Kind ${index}: ${event.target.value}\n`;
+      }
+      else {
+        this.form.accomodation_children_age_group += `Kind ${index}: ${event.target.value}\n`;
+      }
+
+      this.form.children_year_of_birth[this.form.children_year_of_birth.length+1] = event.target.value;
+    },
+
     reset() {
       this.form = {};
       this.errors = {};
@@ -1385,6 +1715,8 @@ export default {
           this.errors.accomodation_children_living_constantly = null
           this.errors.accomodation_children_age_group = null;
         }
+        // reset form.children_year_of_birth
+        this.form.children_year_of_birth = [];
       },
       deep: true,
     },
@@ -1482,7 +1814,6 @@ export default {
         }
       }
     },
-
   },
 
 }

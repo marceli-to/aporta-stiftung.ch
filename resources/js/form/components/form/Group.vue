@@ -1,5 +1,5 @@
 <template>
-  <div :class="[error ? '' : '', 'col-span-6 relative']">
+  <div :class="[error ? '' : '', 'col-span-6 relative ' + $props.cls]">
     <slot />
   </div>
 </template>
@@ -11,6 +11,11 @@ export default {
       type: Boolean,
       default: null
     },
+
+    cls: {
+      type: String,
+      default: ''
+    }
   }
 }
 </script>
