@@ -189,7 +189,7 @@
             </form-select>
           </form-group>
           <form-group :error="errors.main_tenant_debt_enforcement_yn">
-            <form-label :error="errors.main_tenant_debt_enforcement_yn">Betreibungen</form-label>
+            <form-label :error="errors.main_tenant_debt_enforcement_yn">Betreibungen/Verlustscheine</form-label>
             <form-select v-model="form.main_tenant_debt_enforcement_yn"
               :options="debt_enforcement"
               :error="errors.main_tenant_debt_enforcement_yn"
@@ -352,8 +352,80 @@
           </template>
         </form-grid>
         
-        <template v-if="form.sub_tenant_type.includes('5') && form.sub_tenant_type.length > 1">
+        <!-- <template v-if="form.sub_tenant_type.includes('5') && form.sub_tenant_type.length > 1">
           <div class="text-md my-30">Angaben zum Kind/zu den Kindern folgen weiter unten.</div>
+        </template> -->
+
+        <template v-if="form.sub_tenant_yn == 1 && form.sub_tenant_type.includes('5')">
+          <h2 class="!mt-35 md:!mt-70">Aufteilung Erwachsene/Kinder</h2>
+          <form-grid>
+            <form-group :error="errors.accomodation_total_persons">
+              <form-label :error="errors.accomodation_total_persons">Wie viele Personen werden in Ihrem Haushalt leben?</form-label>
+              <form-input 
+                type="number" 
+                v-model="form.accomodation_total_persons" 
+                :error="errors.accomodation_total_persons"
+                @blur="validateField('accomodation_total_persons')"
+                @focus="removeError('accomodation_total_persons')">
+              </form-input>
+            </form-group>
+            <form-group :error="errors.accomodation_adults_qty">
+              <form-label :error="errors.accomodation_adults_qty">Anzahl Erwachsene?</form-label>
+              <form-input 
+                type="number" 
+                v-model="form.accomodation_adults_qty" 
+                :error="errors.accomodation_adults_qty"
+                @blur="validateField('accomodation_adults_qty')"
+                @focus="removeError('accomodation_adults_qty')">
+              </form-input>
+            </form-group>
+            <template v-if="form.sub_tenant_type.includes('5')">
+              <form-group :error="errors.accomodation_children_qty">
+                <form-label :error="errors.accomodation_children_qty">Anzahl Kinder?</form-label>
+                <form-input 
+                  type="number" 
+                  v-model="form.accomodation_children_qty" 
+                  :error="errors.accomodation_children_qty"
+                  @blur="validateField('accomodation_children_qty')"
+                  @focus="removeError('accomodation_children_qty')">
+                </form-input>
+              </form-group>
+            </template>
+            <template v-if="form.sub_tenant_type.includes('5') && form.accomodation_children_qty > 0">
+              <form-group :error="errors.accomodation_children_living_constantly">
+                <form-label :error="errors.accomodation_children_living_constantly">Leben alle Kinder ständig mit Ihnen zusammen?</form-label>
+                <form-select
+                  v-model="form.accomodation_children_living_constantly"
+                  :options="yes_no"
+                  :error="errors.accomodation_children_living_constantly"
+                  @blur="validateField('accomodation_children_living_constantly')"
+                  @focus="removeError('accomodation_children_living_constantly')">
+                </form-select>
+              </form-group>
+
+              <!-- for each form.accomodation_children_qty create a from-group/input -->
+              <form-group v-for="(index, child) in parseInt(form.accomodation_children_qty)" :error="errors.accomodation_children_age_group">
+                <form-label :error="errors.accomodation_children_age_group">Jahrgang Kind {{ index }}</form-label>
+                <form-input 
+                  type="text"
+                  v-model="form.children_year_of_birth[index]"
+                  @change="updateChildAgeGroup($event, index)"
+                  @focus="removeError('accomodation_children_age_group')">
+                </form-input>
+
+              </form-group>
+
+              <!-- <form-group class="!col-span-12" :error="errors.accomodation_children_age_group">
+                <form-label :error="errors.accomodation_children_age_group">Jahrgang der Kinder (Bitte pro Zeile ein Kind eintragen: «Kind 1» / 2021)</form-label>
+                <form-textarea v-model="form.accomodation_children_age_group"
+                  @blur="validateField('accomodation_children_age_group')"
+                  @focus="removeError('accomodation_children_age_group')">
+                </form-textarea>
+              </form-group> -->
+
+
+            </template>
+          </form-grid>
         </template>
 
         <template v-if="form.sub_tenant_type.includes('1') || form.sub_tenant_type.includes('2') || form.sub_tenant_type.includes('3') || form.sub_tenant_type.includes('4')">
@@ -548,7 +620,7 @@
               </form-select>
             </form-group>
             <form-group :error="errors.sub_tenant_debt_enforcement_yn">
-              <form-label :error="errors.main_tenant_debt_enforcement_yn">Betreibungen</form-label>
+              <form-label :error="errors.main_tenant_debt_enforcement_yn">Betreibungen/Verlustscheine</form-label>
               <form-select v-model="form.main_tenant_debt_enforcement_yn"
                 :options="debt_enforcement"
                 :error="errors.main_tenant_debt_enforcement_yn"
@@ -680,79 +752,6 @@
           </form-grid>
         </template>
         
-        <!-- form.sub_tenant_yn equals 1 && form.sub_tenant_types is not empty -->
-        <template v-if="form.sub_tenant_yn == 1 && form.sub_tenant_type.includes('5')">
-          <h2 class="!mt-35 md:!mt-70">Aufteilung Erwachsene/Kinder</h2>
-          <form-grid>
-            <form-group :error="errors.accomodation_total_persons">
-              <form-label :error="errors.accomodation_total_persons">Wie viele Personen werden in Ihrem Haushalt leben?</form-label>
-              <form-input 
-                type="number" 
-                v-model="form.accomodation_total_persons" 
-                :error="errors.accomodation_total_persons"
-                @blur="validateField('accomodation_total_persons')"
-                @focus="removeError('accomodation_total_persons')">
-              </form-input>
-            </form-group>
-            <form-group :error="errors.accomodation_adults_qty">
-              <form-label :error="errors.accomodation_adults_qty">Anzahl Erwachsene?</form-label>
-              <form-input 
-                type="number" 
-                v-model="form.accomodation_adults_qty" 
-                :error="errors.accomodation_adults_qty"
-                @blur="validateField('accomodation_adults_qty')"
-                @focus="removeError('accomodation_adults_qty')">
-              </form-input>
-            </form-group>
-            <template v-if="form.sub_tenant_type.includes('5')">
-              <form-group :error="errors.accomodation_children_qty">
-                <form-label :error="errors.accomodation_children_qty">Anzahl Kinder?</form-label>
-                <form-input 
-                  type="number" 
-                  v-model="form.accomodation_children_qty" 
-                  :error="errors.accomodation_children_qty"
-                  @blur="validateField('accomodation_children_qty')"
-                  @focus="removeError('accomodation_children_qty')">
-                </form-input>
-              </form-group>
-            </template>
-            <template v-if="form.sub_tenant_type.includes('5') && form.accomodation_children_qty > 0">
-              <form-group :error="errors.accomodation_children_living_constantly">
-                <form-label :error="errors.accomodation_children_living_constantly">Leben alle Kinder ständig mit Ihnen zusammen?</form-label>
-                <form-select
-                  v-model="form.accomodation_children_living_constantly"
-                  :options="yes_no"
-                  :error="errors.accomodation_children_living_constantly"
-                  @blur="validateField('accomodation_children_living_constantly')"
-                  @focus="removeError('accomodation_children_living_constantly')">
-                </form-select>
-              </form-group>
-
-              <!-- for each form.accomodation_children_qty create a from-group/input -->
-              <form-group v-for="(index, child) in parseInt(form.accomodation_children_qty)" :error="errors.accomodation_children_age_group">
-                <form-label :error="errors.accomodation_children_age_group">Jahrgang Kind {{ index }}</form-label>
-                <form-input 
-                  type="text"
-                  v-model="form.children_year_of_birth[index]"
-                  @change="updateChildAgeGroup($event, index)"
-                  @focus="removeError('accomodation_children_age_group')">
-                </form-input>
-
-              </form-group>
-
-              <!-- <form-group class="!col-span-12" :error="errors.accomodation_children_age_group">
-                <form-label :error="errors.accomodation_children_age_group">Jahrgang der Kinder (Bitte pro Zeile ein Kind eintragen: «Kind 1» / 2021)</form-label>
-                <form-textarea v-model="form.accomodation_children_age_group"
-                  @blur="validateField('accomodation_children_age_group')"
-                  @focus="removeError('accomodation_children_age_group')">
-                </form-textarea>
-              </form-group> -->
-
-
-            </template>
-          </form-grid>
-        </template>
-
         <h2 class="!mt-35 md:!mt-70">Präferenzen</h2>
         <form-grid class="col-span-12 !mb-0">
           <form-group class="!col-span-10 mb-15" :error="errors.rent_pref_district_id">
@@ -1454,8 +1453,8 @@ export default {
       ],
 
       debt_enforcement: [
-        { label: 'Ja, ich hatte Betreibungen in den letzten fünf Jahren', value: 1 },
-        { label: 'Nein, ich hatte keine Betreibungen in den letzten fünf Jahren', value: 0 },
+        { label: 'Ja, ich hatte Betreibungen/Verlustscheine', value: 1 },
+        { label: 'Nein, ich hatte keine Betreibungen/Verlustscheine', value: 0 },
       ],
 
       districts: [
@@ -1545,6 +1544,7 @@ export default {
       this.isSent = false;
       this.isLoading = true;
       this.validationErrors = [];
+      console.log(this.form.children_year_of_birth);
       NProgress.start();
       this.axios.post(this.routes.store, this.form).then(response => {
         NProgress.done();
@@ -1626,7 +1626,7 @@ export default {
 
     updateChildAgeGroup(event, index) {
 
-      // add the event.target.value to form.accomodation_children_age_group. append 'Kind {index}: {event.target.value'
+      // add the event.target.value to form.accomodation_children_age_group. append 'Kind {index}: event.target.value'
       if (this.form.accomodation_children_age_group === null) {
         this.form.accomodation_children_age_group = `Kind ${index}: ${event.target.value}\n`;
       }
@@ -1634,7 +1634,7 @@ export default {
         this.form.accomodation_children_age_group += `Kind ${index}: ${event.target.value}\n`;
       }
 
-      this.form.children_year_of_birth[this.form.children_year_of_birth.length+1] = event.target.value;
+      this.form.children_year_of_birth[index] = event.target.value;
     },
 
     reset() {
