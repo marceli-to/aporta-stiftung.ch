@@ -45,18 +45,23 @@
               @focus="removeError('main_tenant_firstname')">
             </form-input>
           </form-group>
-          <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
-            <form-group :error="errors.main_tenant_street_number">
-              <form-label :error="errors.main_tenant_street_number">Strasse und Hausnummer</form-label>
-              <form-input 
-                type="text" 
-                v-model="form.main_tenant_street_number" 
-                :error="errors.main_tenant_street_number"
-                @blur="validateField('main_tenant_street_number')"
-                @focus="removeError('main_tenant_street_number')">
-              </form-input>
-            </form-group>
-          </div>
+          <form-group :error="errors.main_tenant_street">
+            <form-label :error="errors.main_tenant_street">Strasse</form-label>
+            <form-input 
+              type="text" 
+              v-model="form.main_tenant_street" 
+              :error="errors.main_tenant_street"
+              @blur="validateField('main_tenant_street')"
+              @focus="removeError('main_tenant_street')">
+            </form-input>
+          </form-group>
+          <form-group :error="errors.main_tenant_street_number">
+            <form-label :required="false">Hausnummer</form-label>
+            <form-input 
+              type="text" 
+              v-model="form.main_tenant_street_number">
+            </form-input>
+          </form-group>
           <form-group :error="errors.main_tenant_postal_code">
             <form-label :error="errors.main_tenant_postal_code">PLZ</form-label>
             <form-input 
@@ -142,7 +147,7 @@
             </form-group>
           </template>
           <form-group :error="errors.main_tenant_private_phone">
-            <form-label :error="errors.main_tenant_private_phone">Telefon (privat)</form-label>
+            <form-label :error="errors.main_tenant_private_phone">Mobiltelefon</form-label>
             <form-input 
               type="text" 
               v-model="form.main_tenant_private_phone" 
@@ -152,7 +157,7 @@
             </form-input>
           </form-group>
           <form-group>
-            <form-label :required="false">Telefon (geschäftlich)</form-label>
+            <form-label :required="false">Telefon</form-label>
             <form-input 
               type="text" 
               v-model="form.main_tenant_work_phone" 
@@ -475,18 +480,23 @@
               </form-group>
             </div>
             <template v-if="form.sub_tenant_same_adress == 0">
-              <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
-                <form-group :error="errors.sub_tenant_street">
-                  <form-label :error="errors.sub_tenant_street">Strasse und Hausnummer</form-label>
-                  <form-input 
-                    type="text" 
-                    v-model="form.sub_tenant_street" 
-                    :error="errors.sub_tenant_street"
-                    @blur="validateField('sub_tenant_street')"
-                    @focus="removeError('sub_tenant_street')">
-                  </form-input>
-                </form-group>
-              </div>
+              <form-group :error="errors.sub_tenant_street">
+                <form-label :error="errors.sub_tenant_street">Strasse</form-label>
+                <form-input 
+                  type="text" 
+                  v-model="form.sub_tenant_street" 
+                  :error="errors.sub_tenant_street"
+                  @blur="validateField('sub_tenant_street')"
+                  @focus="removeError('sub_tenant_street')">
+                </form-input>
+              </form-group>
+              <form-group :error="errors.sub_tenant_street_number">
+                <form-label :required="false">Hausnummer</form-label>
+                <form-input 
+                  type="text" 
+                  v-model="form.sub_tenant_street_number">
+                </form-input>
+              </form-group>
               <form-group :error="errors.sub_tenant_postal_code">
                 <form-label :error="errors.sub_tenant_postal_code">PLZ</form-label>
                 <form-input 
@@ -573,7 +583,7 @@
             </form-group>
           </template>
             <form-group :error="errors.sub_tenant_private_phone">
-              <form-label :error="errors.sub_tenant_private_phone">Telefon (privat)</form-label>
+              <form-label :error="errors.sub_tenant_private_phone">Mobiltelefon</form-label>
               <form-input 
                 type="text" 
                 v-model="form.sub_tenant_private_phone" 
@@ -583,7 +593,7 @@
               </form-input>
             </form-group>
             <form-group>
-              <form-label :required="false">Telefon (geschäftlich)</form-label>
+              <form-label :required="false">Telefon</form-label>
               <form-input 
                 type="text" 
                 v-model="form.sub_tenant_work_phone" 
@@ -978,6 +988,7 @@ export default {
         main_tenant_salutation: 'Frau',
         main_tenant_lastname: null,
         main_tenant_firstname: null,
+        main_tenant_street: null,
         main_tenant_street_number: null,
         main_tenant_postal_code: null,
         main_tenant_city: null,
@@ -1010,6 +1021,7 @@ export default {
         sub_tenant_lastname: null,
         sub_tenant_same_adress: 'Ja',
         sub_tenant_street: null,
+        sub_tenant_street_number: null,
         sub_tenant_postal_code: null,
         sub_tenant_city: null,
         sub_tenant_birthdate: null,
@@ -1059,6 +1071,7 @@ export default {
         main_tenant_salutation: null,
         main_tenant_lastname: null,
         main_tenant_firstname: null,
+        main_tenant_street: null,
         main_tenant_street_number: null,
         main_tenant_postal_code: null,
         main_tenant_city: null,
@@ -1090,6 +1103,7 @@ export default {
         sub_tenant_salutation: null,
         sub_tenant_same_adress: null,
         sub_tenant_street: null,
+        sub_tenant_street_number: null,
         sub_tenant_postal_code_city: null,
         sub_tenant_birthdate: null,
         sub_tenant_marital_status: null,

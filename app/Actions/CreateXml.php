@@ -62,8 +62,13 @@ class CreateXml
   
       $address = $xml->createElement('ADDRESS');
       $mainTenant->appendChild($address);
-  
-      $address->appendChild($xml->createElement('STREET', $json->main_tenant_street_number));
+
+      $street = $json->main_tenant_street;
+      if ($json->main_tenant_street_number)
+      {
+        $street .= ' ' . $json->main_tenant_street_number;
+      }
+      $address->appendChild($xml->createElement('STREET', $street));
 
       $main_tenant_postal_code_city = $json->main_tenant_postal_code . ' ' . $json->main_tenant_city;
       $address->appendChild($xml->createElement('POSTAL_CODE_CITY', $main_tenant_postal_code_city));
@@ -194,8 +199,12 @@ class CreateXml
       $address = $xml->createElement('ADDRESS');
       $subTenant->appendChild($address);
 
-      $street = $xml->createElement('STREET', $json->sub_tenant_street);
-      $address->appendChild($street);
+      $street = $json->sub_tenant_street;
+      if ($json->sub_tenant_street_number)
+      {
+        $street .= ' ' . $json->sub_tenant_street_number;
+      }
+      $address->appendChild($xml->createElement('STREET', $street));
 
       $sub_tenant_postal_code_city = $json->sub_tenant_postal_code . ' ' . $json->sub_tenant_city;
       $postalCodeCity = $xml->createElement('POSTAL_CODE_CITY', $sub_tenant_postal_code_city);
