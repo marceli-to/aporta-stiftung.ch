@@ -27,7 +27,7 @@ class CreateXml
     }
 
     // Create xml file name
-    $xml_filename = \Str::slug($json->main_tenant_lastname . ' ' . $json->main_tenant_firstname . ' ' . $request->main_tenant_postal_code . ' ' . $request->main_tenant_city, '-') . '-' . time();
+    $xml_filename = \Str::slug($json->main_tenant_lastname . ' ' . $json->main_tenant_firstname . ' ' . $json->main_tenant_postal_code . ' ' . $json->main_tenant_city, '-') . '-' . time();
 
     $xml = new \DOMDocument();
     $xml->preserveWhiteSpace = false;
@@ -141,7 +141,7 @@ class CreateXml
       $currentRenter = $xml->createElement('CURRENT_RENTER');
       $currentRent->appendChild($currentRenter);
       
-      $main_tenant_current_renter = $json->main_tenant_current_renter . ', ' . $json->main_tenant_current_renter_contact_person;
+      $main_tenant_current_renter = $json->main_tenant_current_renter_name . ', ' . $json->main_tenant_current_renter_contact_person;
       $name = $xml->createElement('NAME', $main_tenant_current_renter);
       $currentRenter->appendChild($name);
   

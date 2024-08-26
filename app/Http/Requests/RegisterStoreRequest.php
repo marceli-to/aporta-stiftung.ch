@@ -68,7 +68,7 @@ class RegisterStoreRequest extends FormRequest
       'sub_tenant_residence_permit' => 'required_if:sub_tenant_nationality,Andere',
       'sub_tenant_swiss_residence_since' => 'required_if:sub_tenant_nationality,Andere',
       'sub_tenant_home_town' => 'required_if:sub_tenant_nationality,CH',
-      'sub_tenant_private_phone' => 'required_if:has_sub_tenant,true|string|min:10',
+      'sub_tenant_private_phone' => 'required_if:has_sub_tenant,true',
       'sub_tenant_email' => 'required_if:has_sub_tenant,true',
       'sub_tenant_occupation' => 'required_if:has_sub_tenant,true',
       'sub_tenant_employment_status' => 'required_if:has_sub_tenant,true',
