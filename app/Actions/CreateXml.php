@@ -278,7 +278,7 @@ class CreateXml
       $currentRenter = $xml->createElement('CURRENT_RENTER');
       $currentRent->appendChild($currentRenter);
 
-      $sub_tenant_current_renter_name = $json->sub_tenant_current_renter . ', ' . $json->sub_tenant_current_renter_contact_person;
+      $sub_tenant_current_renter_name = $json->sub_tenant_current_renter_name . ', ' . $json->sub_tenant_current_renter_contact_person;
       $name = $xml->createElement('NAME', $sub_tenant_current_renter_name);
       $currentRenter->appendChild($name);
 
