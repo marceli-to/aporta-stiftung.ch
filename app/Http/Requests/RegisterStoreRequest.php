@@ -1,6 +1,9 @@
 <?php
 namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Log;
 
 class RegisterStoreRequest extends FormRequest
 {
@@ -194,5 +197,14 @@ class RegisterStoreRequest extends FormRequest
       'accomodation_children_living_constantly.required_if' => 'Please enter the number of children living constantly.',
       'accomodation_children_age_group.required_if' => 'Please select the age group of your children.',
     ];
+  }
+
+  protected function failedValidation(Validator $validator)
+  {
+    Log::error('Validation failed: ' . json_encode($validator->errors()));
+    throw new HttpResponseException(response()->json([
+      'message' => 'Validation failed',
+      'errors' => $validator->errors()
+    ], 422));
   }
 }
