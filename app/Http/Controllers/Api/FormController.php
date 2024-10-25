@@ -85,7 +85,7 @@ class FormController extends Controller
    */
   public function storeExisting(RegisterExistingStoreRequest $request)
   { 
-    $this->validateToken($request->token);
+    $this->validateToken($request->token, true);
 
     // Create a slug
     $slug = Str::slug($request->main_tenant_lastname . ' ' . $request->main_tenant_firstname . ' ' . $request->main_tenant_email, '-');
@@ -107,19 +107,27 @@ class FormController extends Controller
     return response()->json(200);
   }
 
-  public function validateToken($token = NULL)
+  public function validateToken($token = NULL, $existing = false)
   {
     if (!$token) {
       return response()->json(['error' => 'Unauthorized'], 401);
     }
     // Validate the request->token with the key.json file
-    $key = json_decode(\Storage::disk('local')->get('key.json'), true);
+    if ($existing)
+    {
+      $key = json_decode(\Storage::disk('local')->get('key-existing.json'), true);
+    }
+    else
+    {
+      $key = json_decode(\Storage::disk('local')->get('key.json'), true);
+    }
+
     foreach ($key as $k => $v)
     {
       if ($v['token'] == $token)
       {
         $key[$k]['used'] = true;
-        \Storage::disk('local')->put('key.json', json_encode($key));
+        \Storage::disk('local')->put($existing ? 'key-existing.json' : 'key.json', json_encode($key));
         return true;
       }
     }
