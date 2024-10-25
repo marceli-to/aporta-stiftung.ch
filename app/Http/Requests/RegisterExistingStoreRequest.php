@@ -41,7 +41,7 @@ class RegisterExistingStoreRequest extends FormRequest
       'sub_tenant_nationality' => Rule::when(fn($input) => in_array($input->sub_tenant_type, [1, 2, 3, 4]), ['required'] ),
       'sub_tenant_residence_permit' => 'required_if:sub_tenant_nationality,Andere',
       'sub_tenant_swiss_residence_since' => 'required_if:sub_tenant_nationality,Andere',
-      'sub_tenant_home_town' => 'required_if:has_sub_tenant,true,sub_tenant_nationality,CH',
+      'sub_tenant_home_town' => Rule::when(fn($input) => in_array($input->sub_tenant_type, [1, 2, 3, 4]), ['required'] ) . 'required_if:sub_tenant_nationality,CH',
       'sub_tenant_email' => Rule::when(fn($input) => in_array($input->sub_tenant_type, [1, 2, 3, 4]), ['required'] ),
       'sub_tenant_private_phone' => Rule::when(fn($input) => in_array($input->sub_tenant_type, [1, 2, 3, 4]), ['required'] ),
       'sub_tenant_occupation' => Rule::when(fn($input) => in_array($input->sub_tenant_type, [1, 2, 3, 4]), ['required'] ),
