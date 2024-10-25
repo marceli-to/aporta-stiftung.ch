@@ -346,7 +346,6 @@ class CreateXml
     {
       mkdir(storage_path('app/xml'), 0777, true);
     }
-
     $xml->save(storage_path('app/xml/bewerbung-'.$xml_filename.'.xml'));
   }
 }

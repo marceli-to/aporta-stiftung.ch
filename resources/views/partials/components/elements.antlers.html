@@ -36,6 +36,11 @@
 {{ /if }}
 
 {{ if type == 'application_form' }}
-  <div id="form-register">asdf</div>
+  <div id="form-register"></div>
   {{ vite src="resources/js/form/register.js" }}
+{{ /if }}
+
+{{ if type == 'application_form_existing' }}
+  <div id="form-register-existing"></div>
+  {{ vite src="resources/js/form/register-existing.js" }}
 {{ /if }}

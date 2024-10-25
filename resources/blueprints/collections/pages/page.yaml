@@ -10,6 +10,7 @@ tabs:
             handle: title
             field:
               type: text
+              required: true
               validate:
                 - required
               display: Titel
@@ -74,6 +75,13 @@ tabs:
                       fields:
                         -
                           import: application_form
+                    application_form_existing:
+                      display: 'Bewerbungsformular Bestehende'
+                      instructions: 'Bewerbungsformular für bestehende Mietende'
+                      icon: form-text-field
+                      fields:
+                        -
+                          import: application_form_existing
               type: replicator
               display: Inhalte
               icon: replicator
@@ -153,6 +161,7 @@ tabs:
             field:
               type: slug
               localizable: true
+              validate: 'max:200'
           -
             handle: parent
             field:
