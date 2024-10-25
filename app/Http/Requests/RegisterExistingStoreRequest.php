@@ -34,7 +34,7 @@ class RegisterExistingStoreRequest extends FormRequest
       'sub_tenant_yn' => 'required',
       'sub_tenant_type' => 'required_if:sub_tenant_yn,1',
       'sub_tenant_salutation' => 'required_if:has_sub_tenant,true',
-      'sub_tenant_lastname' => 'required_if:has_sub_tenant,true',
+      'sub_tenant_lastname' => 
       Rule::when(
         fn($input) => in_array($input->sub_tenant_type, [1, 2, 3, 4]),
         ['required']
