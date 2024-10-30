@@ -182,7 +182,7 @@ class CreateExistingXml
     $accommodation->appendChild($xml->createElement('PETS_YN', $json->accomodation_pets_yn));
     $accommodation->appendChild($xml->createElement('PETS', $json->accomodation_pets));
 
-    $emergencyContact = $json->emergency_contact_firstname . ' ' . $json->emergency_contact_lastname . "\n" . $json->emergency_contact_phone . "\n" . $json->emergency_contact_email;
+    $emergencyContact = "Notfallkontakt:\n" . $json->emergency_contact_firstname . ' ' . $json->emergency_contact_lastname . "\n" . $json->emergency_contact_phone . "\n" . $json->emergency_contact_email;
 
     $accommodation->appendChild($xml->createElement('REMARKS', $emergencyContact . "\n\n" . $json->remarks));
 
