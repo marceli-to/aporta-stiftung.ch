@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
     if (app()->environment('production'))
     {
       $schedule->command('submit:application')->everyMinute();
-      // $schedule->command('submit:existing')->everyMinute();
+      $schedule->command('submit:existing')->everyMinute();
     }
   }
 
