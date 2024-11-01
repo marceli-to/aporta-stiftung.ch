@@ -1002,7 +1002,7 @@ export default {
 
       isSent: false,
       isLoading: false,
-      isAuthenticated: true,
+      isAuthenticated: false,
       hasAuthenticationError: false,
     }
   },
