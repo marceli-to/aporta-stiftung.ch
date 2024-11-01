@@ -44,6 +44,43 @@
               @focus="removeError('main_tenant_firstname')">
             </form-input>
           </form-group>
+          <form-group :error="errors.main_tenant_street">
+            <form-label :error="errors.main_tenant_street">Strasse</form-label>
+            <form-input 
+              type="text" 
+              v-model="form.main_tenant_street" 
+              :error="errors.main_tenant_street"
+              @blur="validateField('main_tenant_street')"
+              @focus="removeError('main_tenant_street')">
+            </form-input>
+          </form-group>
+          <form-group :error="errors.main_tenant_street_number">
+            <form-label :required="false">Hausnummer</form-label>
+            <form-input 
+              type="text" 
+              v-model="form.main_tenant_street_number">
+            </form-input>
+          </form-group>
+          <form-group :error="errors.main_tenant_postal_code">
+            <form-label :error="errors.main_tenant_postal_code">PLZ</form-label>
+            <form-input 
+              type="text" 
+              v-model="form.main_tenant_postal_code" 
+              :error="errors.main_tenant_postal_code"
+              @blur="validateField('main_tenant_postal_code')"
+              @focus="removeError('main_tenant_postal_code')">
+            </form-input>
+          </form-group>
+          <form-group :error="errors.main_tenant_city">
+            <form-label :error="errors.main_tenant_city">Ort</form-label>
+            <form-input 
+              type="text" 
+              v-model="form.main_tenant_city" 
+              :error="errors.main_tenant_city"
+              @blur="validateField('main_tenant_city')"
+              @focus="removeError('main_tenant_city')">
+            </form-input>
+          </form-group>
           <form-group :error="errors.main_tenant_private_phone">
             <form-label :error="errors.main_tenant_private_phone">Telefon</form-label>
             <form-input 
@@ -479,7 +516,6 @@
             </form-textarea>
           </form-group>
         </form-grid>
-
         <form-grid>
           <form-group>
             <button 
@@ -490,7 +526,6 @@
             </button>
           </form-group>
         </form-grid>
-
       </form>
     </template>
   </template>
@@ -562,6 +597,10 @@ export default {
         main_tenant_salutation: 'Frau',
         main_tenant_lastname: null,
         main_tenant_firstname: null,
+        main_tenant_street: null,
+        main_tenant_street_number: null,
+        main_tenant_postal_code: null,
+        main_tenant_city: null,
         main_tenant_birthdate: null,
         main_tenant_marital_status: 1,
         main_tenant_nationality: 'CH',
@@ -610,6 +649,10 @@ export default {
         main_tenant_salutation: null,
         main_tenant_lastname: null,
         main_tenant_firstname: null,
+        main_tenant_street: null,
+        main_tenant_street_number: null,
+        main_tenant_postal_code: null,
+        main_tenant_city: null,
         main_tenant_birthdate: null,
         main_tenant_marital_status: null,
         main_tenant_nationality: null,
@@ -959,7 +1002,7 @@ export default {
 
       isSent: false,
       isLoading: false,
-      isAuthenticated: false,
+      isAuthenticated: true,
       hasAuthenticationError: false,
     }
   },

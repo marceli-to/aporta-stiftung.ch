@@ -60,6 +60,19 @@ class CreateExistingXml
       $mainTenant->appendChild($xml->createElement('LAST_NAME', $json->main_tenant_lastname));
       $mainTenant->appendChild($xml->createElement('FIRST_NAME', $json->main_tenant_firstname));
 
+      $address = $xml->createElement('ADDRESS');
+      $mainTenant->appendChild($address);
+
+      $street = $json->main_tenant_street;
+      if ($json->main_tenant_street_number)
+      {
+        $street .= ' ' . $json->main_tenant_street_number;
+      }
+      $address->appendChild($xml->createElement('STREET', $street));
+
+      $main_tenant_postal_code_city = $json->main_tenant_postal_code . ' ' . $json->main_tenant_city;
+      $address->appendChild($xml->createElement('POSTAL_CODE_CITY', $main_tenant_postal_code_city));
+
       $birthdate = $xml->createElement('BIRTHDATE', $json->main_tenant_birthdate);
       $mainTenant->appendChild($birthdate);
 
