@@ -66,27 +66,27 @@ section.content .responsive-video iframe {
 
 /* Size helpers */
 .width-25 {
-  @apply !w-[25%];
+  @apply md:!w-[25%];
 }
 
 .width-50 {
-  @apply !w-[50%];
+  @apply md:!w-[50%];
 }
 
 .width-70 {
-  @apply !w-[70%];
+  @apply md:!w-[70%];
 }
 
 .width-80 {
-  @apply !w-[80%];
+  @apply md:!w-[80%];
 }
 
 .width-90 {
-  @apply !w-[90%];
+  @apply md:!w-[90%];
 }
 
 .width-100 {
-  @apply !w-full;
+  @apply md:!w-full;
 }
 
 /* Privacy */
