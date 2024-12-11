@@ -20,7 +20,7 @@
       loading="lazy">
   </picture>
   {{ if caption }}
-    <figcaption class="text-lg mt-16 {{ image_size }}">
+    <figcaption class="text-lg mt-16 {{ image_size ? 'text-center' : '' }}">
       {{ caption }}
     </figcaption>
   {{ /if }}
