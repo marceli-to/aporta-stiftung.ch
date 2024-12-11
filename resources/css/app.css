@@ -64,6 +64,31 @@ section.content .responsive-video iframe {
   @apply border-black;
 }
 
+/* Size helpers */
+.width-25 {
+  @apply !w-[25%];
+}
+
+.width-50 {
+  @apply !w-[50%];
+}
+
+.width-70 {
+  @apply !w-[70%];
+}
+
+.width-80 {
+  @apply !w-[80%];
+}
+
+.width-90 {
+  @apply !w-[90%];
+}
+
+.width-100 {
+  @apply !w-full;
+}
+
 /* Privacy */
 main.page-privacy section.content a {
   @apply hover:no-underline underline underline-offset-8 decoration-1

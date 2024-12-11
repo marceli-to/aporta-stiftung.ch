@@ -13,7 +13,7 @@
       title="{{ image:alt }}" 
       height="{{ image:height }}" 
       width="{{ image:width }}"
-      class="block w-full h-auto object-cover {{ image:height > image:width ? 'max-w-[70%]' : '' }}"
+      class="block w-full h-auto object-cover {{ image:height > image:width ? 'max-w-[70%]' : '' }} {{ image_size }}"
       {{ if isPoster }}
       data-poster
       {{ /if }}

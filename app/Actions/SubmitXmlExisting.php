@@ -68,7 +68,7 @@ class SubmitXmlExisting
       }
 
       \Mail::raw($mailtext, function($message) {
-        $message->subject('Daten bestehender Mieter eingereicht');
+        $message->subject('Es wurden Daten bestehender Mieter eingereicht');
         $message->to(env('MAIL_TO_OWNER'));
       });
 
