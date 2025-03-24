@@ -112,6 +112,7 @@ class FormController extends Controller
     if (!$token) {
       return response()->json(['error' => 'Unauthorized'], 401);
     }
+
     // Validate the request->token with the key.json file
     if ($existing)
     {

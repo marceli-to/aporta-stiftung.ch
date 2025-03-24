@@ -158,8 +158,10 @@ class CreateXml
     $subTenantYN = $xml->createElement('SUB_TENANT_YN', $json->sub_tenant_yn);
     $interestRequest->appendChild($subTenantYN);
 
-    if ($json->has_sub_tenant)
-    {
+    if ($json->has_sub_tenant && (
+          (is_array($json->sub_tenant_type) && count(array_intersect([1, 2, 3, 4], $json->sub_tenant_type)) > 0) || 
+          (!is_array($json->sub_tenant_type) && in_array($json->sub_tenant_type, [1, 2, 3, 4]))
+      )) {
       $subTenantType = $xml->createElement('SUB_TENANT_TYPE', implode(',', $json->sub_tenant_type));
       $interestRequest->appendChild($subTenantType);
 

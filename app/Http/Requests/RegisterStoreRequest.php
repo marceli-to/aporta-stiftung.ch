@@ -4,6 +4,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 class RegisterStoreRequest extends FormRequest
 {
@@ -58,33 +59,141 @@ class RegisterStoreRequest extends FormRequest
       'main_tenant_current_renter_previous_renter' => 'required_if:main_tenant_current_renter_rent_duration,1',
       'sub_tenant_yn' => 'required',
       'sub_tenant_type' => 'required_if:sub_tenant_yn,1',
-      'sub_tenant_salutation' => 'required_if:has_sub_tenant,true',
-      'sub_tenant_lastname' => 'required_if:has_sub_tenant,true',
-      'sub_tenant_firstname' => 'required_if:has_sub_tenant,true',
-      'sub_tenant_same_adress' => 'required_if:has_sub_tenant,true',
+      'sub_tenant_salutation' => [
+          Rule::requiredIf(function () {
+              return $this->has_sub_tenant === 'true' && 
+                     $this->sub_tenant_type && 
+                     in_array($this->sub_tenant_type, [1, 2, 3, 4]);
+          })
+      ],
+      'sub_tenant_lastname' => [
+          Rule::requiredIf(function () {
+              return $this->has_sub_tenant === 'true' && 
+                     $this->sub_tenant_type && 
+                     in_array($this->sub_tenant_type, [1, 2, 3, 4]);
+          })
+      ],
+      'sub_tenant_firstname' => [
+          Rule::requiredIf(function () {
+              return $this->has_sub_tenant === 'true' && 
+                     $this->sub_tenant_type && 
+                     in_array($this->sub_tenant_type, [1, 2, 3, 4]);
+          })
+      ],
+      'sub_tenant_same_adress' => [
+          Rule::requiredIf(function () {
+              return $this->has_sub_tenant === 'true' && 
+                     $this->sub_tenant_type && 
+                     in_array($this->sub_tenant_type, [1, 2, 3, 4]);
+          })
+      ],
       'sub_tenant_street' => 'required_if:sub_tenant_same_adress,0',
       'sub_tenant_postal_code' => 'required_if:sub_tenant_same_adress,0',
       'sub_tenant_city' => 'required_if:sub_tenant_same_adress,0',
-      'sub_tenant_birthdate' => 'required_if:has_sub_tenant,true',
-      'sub_tenant_marital_status' => 'required_if:has_sub_tenant,true',
-      'sub_tenant_nationality' => 'required_if:has_sub_tenant,true',
+      'sub_tenant_birthdate' => [
+          Rule::requiredIf(function () {
+              return $this->has_sub_tenant === 'true' && 
+                     $this->sub_tenant_type && 
+                     in_array($this->sub_tenant_type, [1, 2, 3, 4]);
+          })
+      ],
+      'sub_tenant_marital_status' => [
+          Rule::requiredIf(function () {
+              return $this->has_sub_tenant === 'true' && 
+                     $this->sub_tenant_type && 
+                     in_array($this->sub_tenant_type, [1, 2, 3, 4]);
+          })
+      ],
+      'sub_tenant_nationality' => [
+          Rule::requiredIf(function () {
+              return $this->has_sub_tenant === 'true' && 
+                     $this->sub_tenant_type && 
+                     in_array($this->sub_tenant_type, [1, 2, 3, 4]);
+          })
+      ],
       'sub_tenant_residence_permit' => 'required_if:sub_tenant_nationality,Andere',
       'sub_tenant_swiss_residence_since' => 'required_if:sub_tenant_nationality,Andere',
       'sub_tenant_home_town' => 'required_if:sub_tenant_nationality,CH',
-      'sub_tenant_private_phone' => 'required_if:has_sub_tenant,true',
-      'sub_tenant_email' => 'required_if:has_sub_tenant,true',
-      'sub_tenant_occupation' => 'required_if:has_sub_tenant,true',
-      'sub_tenant_employment_status' => 'required_if:has_sub_tenant,true',
+      'sub_tenant_private_phone' => [
+          Rule::requiredIf(function () {
+              return $this->has_sub_tenant === 'true' && 
+                     $this->sub_tenant_type && 
+                     in_array($this->sub_tenant_type, [1, 2, 3, 4]);
+          })
+      ],
+      'sub_tenant_email' => [
+          Rule::requiredIf(function () {
+              return $this->has_sub_tenant === 'true' && 
+                     $this->sub_tenant_type && 
+                     in_array($this->sub_tenant_type, [1, 2, 3, 4]);
+          })
+      ],
+      'sub_tenant_occupation' => [
+          Rule::requiredIf(function () {
+              return $this->has_sub_tenant === 'true' && 
+                     $this->sub_tenant_type && 
+                     in_array($this->sub_tenant_type, [1, 2, 3, 4]);
+          })
+      ],
+      'sub_tenant_employment_status' => [
+          Rule::requiredIf(function () {
+              return $this->has_sub_tenant === 'true' && 
+                     $this->sub_tenant_type && 
+                     in_array($this->sub_tenant_type, [1, 2, 3, 4]);
+          })
+      ],
       'sub_tenant_current_employer_name' => 'required_if:sub_tenant_employment_status,1',
       'sub_tenant_workload' => 'required_if:sub_tenant_employment_status,1',
       'sub_tenant_annual_income' => 'required_if:sub_tenant_employment_status,1',
-      'sub_tenant_debt_enforcement_yn' => 'required_if:has_sub_tenant,true',
-      'sub_tenant_current_rent_tenant_role' => 'required_if:has_sub_tenant,true',
-      'sub_tenant_current_rent_terminator' => 'required_if:has_sub_tenant,true',
-      'sub_tenant_current_renter_name' => 'required_if:has_sub_tenant,true',
-      'sub_tenant_current_renter_contact_person' => 'required_if:has_sub_tenant,true',
-      'sub_tenant_current_renter_phone' => 'required_if:has_sub_tenant,true',
-      'sub_tenant_current_renter_rent_duration' => 'required_if:has_sub_tenant,true',
+      'sub_tenant_debt_enforcement_yn' => [
+          Rule::requiredIf(function () {
+              return $this->has_sub_tenant === 'true' && 
+                     $this->sub_tenant_type && 
+                     in_array($this->sub_tenant_type, [1, 2, 3, 4]);
+          })
+      ],
+      'sub_tenant_current_rent_tenant_role' => [
+          Rule::requiredIf(function () {
+              return $this->has_sub_tenant === 'true' && 
+                     $this->sub_tenant_type && 
+                     in_array($this->sub_tenant_type, [1, 2, 3, 4]);
+          })
+      ],
+      'sub_tenant_current_rent_terminator' => [
+          Rule::requiredIf(function () {
+              return $this->has_sub_tenant === 'true' && 
+                     $this->sub_tenant_type && 
+                     in_array($this->sub_tenant_type, [1, 2, 3, 4]);
+          })
+      ],
+      'sub_tenant_current_renter_name' => [
+          Rule::requiredIf(function () {
+              return $this->has_sub_tenant === 'true' && 
+                     $this->sub_tenant_type && 
+                     in_array($this->sub_tenant_type, [1, 2, 3, 4]);
+          })
+      ],
+      'sub_tenant_current_renter_contact_person' => [
+          Rule::requiredIf(function () {
+              return $this->has_sub_tenant === 'true' && 
+                     $this->sub_tenant_type && 
+                     in_array($this->sub_tenant_type, [1, 2, 3, 4]);
+          })
+      ],
+      'sub_tenant_current_renter_phone' => [
+          Rule::requiredIf(function () {
+              return $this->has_sub_tenant === 'true' && 
+                     $this->sub_tenant_type && 
+                     in_array($this->sub_tenant_type, [1, 2, 3, 4]);
+          })
+      ],
+      'sub_tenant_current_renter_rent_duration' => [
+          Rule::requiredIf(function () {
+              return $this->has_sub_tenant === 'true' && 
+                     $this->sub_tenant_type && 
+                     in_array($this->sub_tenant_type, [1, 2, 3, 4]);
+          })
+      ],
       'sub_tenant_current_renter_previous_renter' => 'required_if:sub_tenant_current_renter_rent_duration,1',
       'sub_tenant_current_rent_terminator_reason' => 'required_if:sub_tenant_current_rent_terminator,1',
       'rent_pref_district_id' => 'required|array|min:1',
