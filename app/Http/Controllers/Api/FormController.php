@@ -58,7 +58,7 @@ class FormController extends Controller
   public function store(RegisterStoreRequest $request)
   { 
 
-    $this->validateToken($request->token);
+    // $this->validateToken($request->token);
 
     // Create a slug
     $slug = Str::slug($request->main_tenant_lastname . ' ' . $request->main_tenant_firstname . ' ' . $request->main_tenant_postal_code . ' ' . $request->main_tenant_city, '-');

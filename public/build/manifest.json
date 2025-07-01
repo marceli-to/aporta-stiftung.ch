@@ -28,7 +28,7 @@
     "src": "resources/js/form/register-existing.js"
   },
   "resources/js/form/register.js": {
-    "file": "assets/register-2cd98fc3.js",
+    "file": "assets/register-9c7df308.js",
     "imports": [
       "_vue-axios.esm.min-511b3503.js"
     ],
