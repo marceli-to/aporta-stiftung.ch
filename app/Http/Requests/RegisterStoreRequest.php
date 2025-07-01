@@ -28,7 +28,7 @@ class RegisterStoreRequest extends FormRequest
   public function rules()
   {
     return [
-      'token' => 'required',
+      // 'token' => 'required',
       'main_tenant_salutation' => 'required',
       'main_tenant_lastname' => 'required',
       'main_tenant_firstname' => 'required',
