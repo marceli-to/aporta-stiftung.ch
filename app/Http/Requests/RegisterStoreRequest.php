@@ -201,7 +201,7 @@ class RegisterStoreRequest extends FormRequest
       'rent_pref_rooms_qty' => 'required|array|min:1',
       'rent_pref_nobalcony_yn' => 'required',
       'rent_pref_noelevator' => 'required',
-      'rent_pref_max_rent' => 'required',
+      'rent_pref_max_rent' => 'required|numeric|min:1200',
       'rent_pref_min_start_date' => 'required|date',
       'accomodation_play_music_yn' => 'required',
       'accomodation_musical_instruments' => 'required_if:accomodation_play_music_yn,1',
