@@ -827,7 +827,7 @@
             </form-select>
           </form-group>
           <form-group :error="errors.rent_pref_max_rent">
-            <form-label :error="errors.rent_pref_max_rent">Mietzins (inkl. Nebenkosten) bis max. CHF (min. CHF 1200)</form-label>
+            <form-label :error="errors.rent_pref_max_rent">max. Mietzins (inkl. Nebenkosten, min. 1200)</form-label>
             <form-input 
               type="number" 
               v-model="form.rent_pref_max_rent" 
