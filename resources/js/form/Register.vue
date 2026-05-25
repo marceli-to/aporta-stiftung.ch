@@ -898,9 +898,9 @@ export default {
 
       isSent: false,
       isLoading: false,
-      // TEMP: password gate disabled for testing. Restore to `false` before shipping.
-      isAuthenticated: true,
+      isAuthenticated: false,
       hasAuthenticationError: false,
+      authToken: null,
     };
   },
 
@@ -980,9 +980,10 @@ export default {
       this.isLoading = true;
       this.validationErrors = [];
       NProgress.start();
-      this.axios.post(this.routes.authenticate, this.auth).then(() => {
+      this.axios.post(this.routes.authenticate, this.auth).then((response) => {
         NProgress.done();
         this.auth.password = null;
+        this.authToken = response.data?.token ?? null;
         this.hasAuthenticationError = false;
         this.isAuthenticated = true;
         this.isLoading = false;
@@ -990,6 +991,7 @@ export default {
         NProgress.done();
         this.errors.password = true;
         this.isAuthenticated = false;
+        this.authToken = null;
         this.isLoading = false;
         this.hasAuthenticationError = true;
       });
@@ -1053,13 +1055,22 @@ export default {
 
       const payload = this.buildPayload();
 
-      this.axios.post(this.routes.store, payload).then(() => {
+      this.axios.post(this.routes.store, payload, {
+        headers: { 'X-Form-Token': this.authToken ?? '' },
+      }).then(() => {
         NProgress.done();
         this.isSent = true;
         this.isLoading = false;
       }).catch((error) => {
         NProgress.done();
         this.isLoading = false;
+        if (error.response?.status === 401) {
+          // Session expired or token invalidated — push the visitor back to the gate.
+          this.isAuthenticated = false;
+          this.hasAuthenticationError = true;
+          this.authToken = null;
+          return;
+        }
         this.handleValidationErrors(error.response?.data);
       });
     },
