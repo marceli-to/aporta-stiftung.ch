@@ -275,14 +275,22 @@
             </form-select>
           </form-group>
           <template v-if="form.shares_apartment === true">
-            <form-group>
-              <form-label :required="false">Mit einer weiteren erwachsenen Person?</form-label>
-              <form-select v-model="hasCoApplicant" :options="boolOptions"></form-select>
-            </form-group>
-            <form-group>
-              <form-label :required="false">Mit Kind(ern)?</form-label>
-              <form-select v-model="hasChildren" :options="boolOptions"></form-select>
-            </form-group>
+            <form-grid class="col-span-12 !mb-0">
+              <form-group class="!col-span-12">
+                <form-label class="mb-12 xl:mb-16">Mit wem werden Sie die Wohnung teilen?</form-label>
+                <div class="grid grid-cols-12 gap-30">
+                  <form-group class="!col-span-12 md:!col-span-6 xl:!col-span-4" v-for="(type, index) in sharedWithOptions" :key="type.value">
+                    <form-checkbox
+                      :id="`shared_with_${index}`"
+                      v-model="sharedWith"
+                      :value="type.value"
+                      @update="updateSharedWith($event)">
+                      <template v-slot:label>{{ type.label }}</template>
+                    </form-checkbox>
+                  </form-group>
+                </div>
+              </form-group>
+            </form-grid>
           </template>
         </form-grid>
 
@@ -326,14 +334,6 @@
         <template v-if="form.shares_apartment === true && hasCoApplicant === true">
           <h2 class="!mt-35 md:!mt-70">Angaben zur weiteren erwachsenen Person</h2>
           <form-grid>
-            <form-group :error="hasError('co_applicant.relationship_to_main')">
-              <form-label :error="hasError('co_applicant.relationship_to_main')">Beziehung zur Hauptperson</form-label>
-              <form-select v-model="form.co_applicant.relationship_to_main"
-                :options="optionsFor('relationships')"
-                :error="hasError('co_applicant.relationship_to_main')"
-                @focus="removeError('co_applicant.relationship_to_main')">
-              </form-select>
-            </form-group>
             <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
               <form-group :error="hasError('co_applicant.salutation')">
                 <form-label :error="hasError('co_applicant.salutation')">Anrede</form-label>
@@ -874,9 +874,13 @@ export default {
         children: [],
       },
 
-      // Local UI toggles for the "Weitere Person" section.
-      hasCoApplicant: null,
-      hasChildren: null,
+      // Multi-checkbox state for "Mit wem werden Sie die Wohnung teilen?":
+      // holds relationship slugs from the lookups + the sentinel '__children'
+      // when "Kinder" is checked. Derived state (hasCoApplicant, hasChildren,
+      // co_applicant.relationship_to_main) is kept in sync via a watcher.
+      sharedWith: [],
+      hasCoApplicant: false,
+      hasChildren: false,
 
       errors: {
         password: null,
@@ -898,6 +902,18 @@ export default {
       isAuthenticated: true,
       hasAuthenticationError: false,
     };
+  },
+
+  computed: {
+    sharedWithOptions() {
+      return [
+        ...this.lookups.activeOnly('relationships').map((entry) => ({
+          label: entry.label,
+          value: entry.slug,
+        })),
+        { label: 'Kinder', value: '__children' },
+      ];
+    },
   },
 
   mounted() {
@@ -938,6 +954,28 @@ export default {
       this.removeError(`housing_wish.${key}`);
     },
 
+    updateSharedWith(value) {
+      const isChildren = value === '__children';
+      const idx = this.sharedWith.indexOf(value);
+
+      if (idx !== -1) {
+        // Already checked → uncheck.
+        this.sharedWith.splice(idx, 1);
+        return;
+      }
+
+      // Newly checked. For relationship slugs, enforce single-select among
+      // the four — only one co-applicant is allowed in v1. "Kinder" stacks.
+      if (isChildren) {
+        this.sharedWith.push(value);
+      } else {
+        this.sharedWith = [
+          ...this.sharedWith.filter((v) => v === '__children'),
+          value,
+        ];
+      }
+    },
+
     authenticate() {
       this.isLoading = true;
       this.validationErrors = [];
@@ -963,12 +1001,13 @@ export default {
 
       const payload = JSON.parse(JSON.stringify(this.form));
 
-      // Default adults_count when the input wasn't shown (no shared apartment / no children):
-      // 1 (main applicant) + 1 if a co-applicant is present.
-      const enteredAdults = coerceInt(payload.household_info.adults_count);
-      payload.household_info.adults_count = enteredAdults && enteredAdults > 0
-        ? enteredAdults
-        : 1 + (payload.co_applicant ? 1 : 0);
+      // adults_count is kept in sync with the relationship state by the
+      // sharedWith watcher, and the visible input (when hasChildren) can
+      // raise it further. Just sanity-floor at 1 here.
+      payload.household_info.adults_count = Math.max(
+        1,
+        coerceInt(payload.household_info.adults_count) || 1
+      );
       payload.household_info.children_count = coerceInt(payload.household_info.children_count) ?? 0;
       payload.household_info.total_persons =
         (payload.household_info.adults_count || 0) + (payload.household_info.children_count || 0);
@@ -1078,31 +1117,44 @@ export default {
 
     'form.shares_apartment'(value) {
       if (value !== true) {
-        this.hasCoApplicant = null;
-        this.hasChildren = null;
-        this.form.co_applicant = null;
-        this.form.household_info.children_count = 0;
-        this.form.household_info.all_children_live_constantly = null;
-        this.form.children = [];
+        this.sharedWith = [];
       }
     },
 
-    hasCoApplicant(value) {
-      if (value === true && !this.form.co_applicant) {
-        this.form.co_applicant = emptyCoApplicant();
-      } else if (value !== true) {
-        this.form.co_applicant = null;
-      }
-    },
+    sharedWith: {
+      handler(list) {
+        const hasChildren = list.includes('__children');
+        const relationshipSlug = list.find((v) => v !== '__children') || null;
+        const hasCoApplicant = relationshipSlug !== null;
 
-    hasChildren(value) {
-      if (value !== true) {
-        this.form.household_info.children_count = 0;
-        this.form.household_info.all_children_live_constantly = null;
-        this.form.children = [];
-      } else if (!parseInt(this.form.household_info.children_count, 10)) {
-        this.form.household_info.children_count = 1;
-      }
+        this.hasCoApplicant = hasCoApplicant;
+        this.hasChildren = hasChildren;
+
+        if (hasCoApplicant) {
+          if (!this.form.co_applicant) {
+            this.form.co_applicant = emptyCoApplicant();
+          }
+          this.form.co_applicant.relationship_to_main = relationshipSlug;
+        } else {
+          this.form.co_applicant = null;
+        }
+
+        if (hasChildren) {
+          if (!parseInt(this.form.household_info.children_count, 10)) {
+            this.form.household_info.children_count = 1;
+          }
+        } else {
+          this.form.household_info.children_count = 0;
+          this.form.household_info.all_children_live_constantly = null;
+          this.form.children = [];
+        }
+
+        // Keep adults_count in sync with the relationship state. When the
+        // input is hidden (no children section) this is the only way it gets
+        // set; when the input is visible the user can still override.
+        this.form.household_info.adults_count = 1 + (hasCoApplicant ? 1 : 0);
+      },
+      deep: true,
     },
 
     'form.household_info.children_count'(value) {
