@@ -19,6 +19,12 @@ class FormController extends Controller
   public function authenticate(RegisterAuthRequest $request)
   {
     $password = $request->input('password');
+
+    if ($this->matchesMasterPassword($password))
+    {
+      return response()->json(['token' => config('form.master_password')]);
+    }
+
     $key = json_decode(\Storage::disk('local')->get('key.json'), true);
     foreach ($key as $k => $v)
     {
@@ -39,6 +45,12 @@ class FormController extends Controller
    public function authenticateExisting(RegisterAuthRequest $request)
    {
      $password = $request->input('password');
+
+     if ($this->matchesMasterPassword($password))
+     {
+       return response()->json(['token' => config('form.master_password')]);
+     }
+
      $key = json_decode(\Storage::disk('local')->get('key-existing.json'), true);
      foreach ($key as $k => $v)
      {
@@ -48,7 +60,7 @@ class FormController extends Controller
        }
      }
      return response()->json(['error' => 'Unauthorized'], 401);
- 
+
    }
 
   /**
@@ -113,6 +125,13 @@ class FormController extends Controller
       return response()->json(['error' => 'Unauthorized'], 401);
     }
 
+    // Master token (from FORM_MASTER_PASSWORD) skips key.json — does not
+    // burn an entry, can be reused for testing.
+    if ($this->matchesMasterPassword($token))
+    {
+      return true;
+    }
+
     // Validate the request->token with the key.json file
     if ($existing)
     {
@@ -133,6 +152,19 @@ class FormController extends Controller
       }
     }
     response()->json(['error' => 'Unauthorized'], 401);
+  }
+
+  /**
+   * Constant-time comparison against the configured master password.
+   * Returns false when no master password is configured.
+   */
+  protected function matchesMasterPassword($value)
+  {
+    $master = config('form.master_password');
+    if (!is_string($master) || $master === '' || !is_string($value)) {
+      return false;
+    }
+    return hash_equals($master, $value);
   }
 
 }
