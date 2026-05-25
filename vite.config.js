@@ -4,6 +4,14 @@ import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
 
 export default defineConfig({
+  server: {
+    cors: {
+      origin: [
+        /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/,
+        /^https?:\/\/.*\.test(?::\d+)?$/,
+      ],
+    },
+  },
   resolve: {
     alias: {
       $img: resolve('resources/img')
@@ -15,8 +23,7 @@ export default defineConfig({
               'resources/css/app.css',
               'resources/js/app.js',
               'resources/js/form/register.js',
-              'resources/js/form/register-existing.js',
-            
+
               // Control Panel assets.
               // https://statamic.dev/extending/control-panel#adding-css-and-js-assets
               // 'resources/css/cp.css',

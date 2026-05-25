@@ -1,12 +1,6 @@
 {
-  "_vue-axios.esm.min-511b3503.js": {
-    "css": [
-      "assets/vue-axios.esm-640dca55.css"
-    ],
-    "file": "assets/vue-axios.esm.min-511b3503.js"
-  },
   "resources/css/app.css": {
-    "file": "assets/app-32c78e65.css",
+    "file": "assets/app-f4fdf3ea.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
@@ -19,24 +13,16 @@
     "isEntry": true,
     "src": "resources/js/app.js"
   },
-  "resources/js/form/register-existing.js": {
-    "file": "assets/register-existing-e823b0b9.js",
-    "imports": [
-      "_vue-axios.esm.min-511b3503.js"
-    ],
-    "isEntry": true,
-    "src": "resources/js/form/register-existing.js"
+  "resources/js/form/register.css": {
+    "file": "assets/register-640dca55.css",
+    "src": "resources/js/form/register.css"
   },
   "resources/js/form/register.js": {
-    "file": "assets/register-e369a047.js",
-    "imports": [
-      "_vue-axios.esm.min-511b3503.js"
+    "css": [
+      "assets/register-640dca55.css"
     ],
+    "file": "assets/register-748e0dfd.js",
     "isEntry": true,
     "src": "resources/js/form/register.js"
-  },
-  "vue-axios.esm.css": {
-    "file": "assets/vue-axios.esm-640dca55.css",
-    "src": "vue-axios.esm.css"
   }
 }
