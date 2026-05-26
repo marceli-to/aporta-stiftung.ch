@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterAuthRequest;
 use App\Http\Requests\SubmitApplicationRequest;
 use App\Jobs\ForwardApplicationToBackend;
+use App\Support\ApplicationStore;
 use Illuminate\Support\Str;
 
 class FormController extends Controller
@@ -45,7 +46,7 @@ class FormController extends Controller
 	 * dispatch the forwarding job, and return immediately. Token validation
 	 * happens upstream in SubmitApplicationRequest::authorize().
 	 */
-	public function store(SubmitApplicationRequest $request)
+	public function store(SubmitApplicationRequest $request, ApplicationStore $store)
 	{
 		$payload = $request->validated();
 
@@ -55,6 +56,10 @@ class FormController extends Controller
 			'user_agent' => substr((string) $request->userAgent(), 0, 512),
 			'submitted_at' => now()->toIso8601String(),
 		];
+
+		// Persist before dispatching so the payload survives even if the queue
+		// is unavailable. The job moves the file to forwarded/ or failed/.
+		$store->store($payload);
 
 		ForwardApplicationToBackend::dispatch($payload);
 
