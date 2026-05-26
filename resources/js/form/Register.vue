@@ -75,7 +75,7 @@
             </form-input>
           </form-group>
           <form-group :error="hasError('main_applicant.street_number')">
-            <form-label :error="hasError('main_applicant.street_number')">Hausnummer</form-label>
+            <form-label :required="false" :error="hasError('main_applicant.street_number')">Hausnummer</form-label>
             <form-input type="text" v-model="form.main_applicant.street_number"
               :error="hasError('main_applicant.street_number')"
               @focus="removeError('main_applicant.street_number')">
@@ -392,7 +392,7 @@
                 </form-input>
               </form-group>
               <form-group :error="hasError('co_applicant.street_number')">
-                <form-label :error="hasError('co_applicant.street_number')">Hausnummer</form-label>
+                <form-label :required="false" :error="hasError('co_applicant.street_number')">Hausnummer</form-label>
                 <form-input type="text" v-model="form.co_applicant.street_number"
                   :error="hasError('co_applicant.street_number')"
                   @focus="removeError('co_applicant.street_number')">
@@ -860,7 +860,7 @@ export default {
 
   data() {
     return {
-      auth: { password: null },
+      auth: { password: 'f2za8clt5xk4so1w' },
 
       form: {
         shares_apartment: null,
