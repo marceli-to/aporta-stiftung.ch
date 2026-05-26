@@ -604,7 +604,7 @@
           <form-group class="!col-span-10 mb-15" :error="hasError('housing_wish.districts')">
             <form-label class="mb-12 xl:mb-16" :error="hasError('housing_wish.districts')">In welchen Stadtkreisen möchten Sie wohnen?</form-label>
             <div class="grid grid-cols-12 gap-30">
-              <form-group class="!col-span-6 md:!col-span-3" v-for="(district, index) in optionsFor('districts')" :key="district.value">
+              <form-group class="!col-span-6 md:!col-span-3" v-for="(district, index) in choicesFor('districts')" :key="district.value">
                 <form-checkbox
                   :id="`housing_wish_districts_${index}`"
                   v-model="form.housing_wish.districts"
@@ -618,7 +618,7 @@
           <form-group class="!col-span-10 mb-15" :error="hasError('housing_wish.floors')">
             <form-label class="mb-12 xl:mb-16" :error="hasError('housing_wish.floors')">In welchem Stockwerk möchten Sie wohnen?</form-label>
             <div class="grid grid-cols-12 gap-30">
-              <form-group class="!col-span-6 md:!col-span-3" v-for="(floor, index) in optionsFor('floors')" :key="floor.value">
+              <form-group class="!col-span-6 md:!col-span-3" v-for="(floor, index) in choicesFor('floors')" :key="floor.value">
                 <form-checkbox
                   :id="`housing_wish_floors_${index}`"
                   v-model="form.housing_wish.floors"
@@ -632,7 +632,7 @@
           <form-group class="!col-span-10" :error="hasError('housing_wish.rooms')">
             <form-label class="mb-12 xl:mb-16" :error="hasError('housing_wish.rooms')">Wie viele Zimmer brauchen Sie?</form-label>
             <div class="grid grid-cols-12 gap-30">
-              <form-group class="!col-span-6 md:!col-span-3" v-for="(room, index) in optionsFor('rooms')" :key="room.value">
+              <form-group class="!col-span-6 md:!col-span-3" v-for="(room, index) in choicesFor('rooms')" :key="room.value">
                 <form-checkbox
                   :id="`housing_wish_rooms_${index}`"
                   v-model="form.housing_wish.rooms"
@@ -951,6 +951,13 @@ export default {
         value: entry.slug,
       }));
       return [...placeholder, ...items];
+    },
+
+    choicesFor(key) {
+      return this.lookups.activeOnly(key).map((entry) => ({
+        label: entry.label,
+        value: entry.slug,
+      }));
     },
 
     hasError(path) {
