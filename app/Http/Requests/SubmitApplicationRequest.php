@@ -93,14 +93,10 @@ class SubmitApplicationRequest extends FormRequest
 				'housing_wish' => ['required', 'array'],
 				'housing_wish.earliest_move_in' => ['required', 'date', 'after_or_equal:today'],
 				'housing_wish.max_gross_rent' => ['required', 'numeric', 'min:1200', 'max:20000'],
-				'housing_wish.wants_balcony' => ['nullable', 'boolean'],
-				'housing_wish.wants_elevator' => ['nullable', 'boolean'],
 				'housing_wish.districts' => ['required', 'array', 'min:1'],
 				'housing_wish.districts.*' => ['string'],
 				'housing_wish.floors' => ['required', 'array', 'min:1'],
 				'housing_wish.floors.*' => ['string'],
-				'housing_wish.rooms' => ['required', 'array', 'min:1'],
-				'housing_wish.rooms.*' => ['string'],
 
 				'household_info' => ['required', 'array'],
 				'household_info.total_persons' => ['required', 'integer', 'min:1'],
@@ -111,8 +107,6 @@ class SubmitApplicationRequest extends FormRequest
 					'nullable',
 					'boolean',
 				],
-				'household_info.plays_music' => ['required', 'boolean'],
-				'household_info.musical_instruments' => ['nullable', 'string', 'max:200', 'required_if:household_info.plays_music,true'],
 				'household_info.has_pets' => ['required', 'boolean'],
 				'household_info.pets_description' => [
 					'nullable',
@@ -218,8 +212,6 @@ class SubmitApplicationRequest extends FormRequest
 			"$prefix.current_housing.landlord_name" => [$required, 'string', 'max:200'],
 			"$prefix.current_housing.landlord_contact_person" => ['nullable', 'string', 'max:200'],
 			"$prefix.current_housing.landlord_phone" => ['nullable', 'string', 'max:30'],
-			"$prefix.current_housing.rent_duration" => [$required, 'string'],
-			"$prefix.current_housing.previous_landlord" => ['nullable', 'string', 'max:200', "required_if:$prefix.current_housing.rent_duration,less_than_1_year"],
 		];
 
 		if ($isMain) {
