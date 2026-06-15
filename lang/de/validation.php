@@ -155,6 +155,7 @@ return [
 
     'attributes' => [
         'shares_apartment' => 'Wohnungsteilung',
+        'co_applicant' => 'ein:e Mitbewohner:in',
 
         'housing_wish.earliest_move_in' => 'Bezugstermin frühestens',
         'housing_wish.max_gross_rent' => 'max. Mietzins',
