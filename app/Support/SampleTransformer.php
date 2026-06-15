@@ -253,6 +253,7 @@ class SampleTransformer
             fn ($id) => $idToSlug('floors', $floorById, $id),
             (array) ($l['rent_pref_floor_id'] ?? [])
         ))));
+        $noElevator = $bool01($l['rent_pref_noelevator'] ?? null);
 
         // Earliest move-in: backend requires >= today. Legacy dates are
         // historical, so floor at tomorrow to keep the sample submittable.
@@ -293,6 +294,7 @@ class SampleTransformer
                     : null,
                 'districts' => $districts,
                 'floors' => $floors,
+                'wants_elevator' => $noElevator === null ? null : ! $noElevator,
             ],
             'household_info' => [
                 'total_persons' => $adults + $childrenCount,

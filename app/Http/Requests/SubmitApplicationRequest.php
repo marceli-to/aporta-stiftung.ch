@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Concerns\MatchesMasterPassword;
+use App\Rules\PhoneNumber;
 use Illuminate\Contracts\Validation\Validator as ValidatorContract;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -93,6 +94,7 @@ class SubmitApplicationRequest extends FormRequest
 				'housing_wish' => ['required', 'array'],
 				'housing_wish.earliest_move_in' => ['required', 'date', 'after_or_equal:today'],
 				'housing_wish.max_gross_rent' => ['required', 'numeric', 'min:1200', 'max:20000'],
+				'housing_wish.wants_elevator' => ['nullable', 'boolean'],
 				'housing_wish.districts' => ['required', 'array', 'min:1'],
 				'housing_wish.districts.*' => ['string'],
 				'housing_wish.floors' => ['required', 'array', 'min:1'],
@@ -193,8 +195,8 @@ class SubmitApplicationRequest extends FormRequest
 			"$prefix.place_of_origin" => ['nullable', 'string', 'max:100', "required_if:$prefix.nationality,CH"],
 			"$prefix.residence_permit" => array_merge($nonSwissRequired, ['nullable', 'string']),
 			"$prefix.swiss_residence_since" => array_merge($nonSwissRequired, ['nullable', 'date']),
-			"$prefix.mobile_phone" => [$required, 'string', 'max:30'],
-			"$prefix.landline_phone" => ['nullable', 'string', 'max:30'],
+			"$prefix.mobile_phone" => [$required, 'string', 'max:30', new PhoneNumber()],
+			"$prefix.landline_phone" => ['nullable', 'string', 'max:30', new PhoneNumber()],
 			"$prefix.email" => [$required, 'email', 'max:255'],
 			"$prefix.occupation" => [$required, 'string', 'max:200'],
 			"$prefix.employment_status" => [$required, 'string'],
@@ -211,7 +213,7 @@ class SubmitApplicationRequest extends FormRequest
 			"$prefix.current_housing.termination_reason" => ['nullable', 'string', 'max:1000', "required_if:$prefix.current_housing.terminated_by_landlord,true"],
 			"$prefix.current_housing.landlord_name" => [$required, 'string', 'max:200'],
 			"$prefix.current_housing.landlord_contact_person" => ['nullable', 'string', 'max:200'],
-			"$prefix.current_housing.landlord_phone" => ['nullable', 'string', 'max:30'],
+			"$prefix.current_housing.landlord_phone" => ['nullable', 'string', 'max:30', new PhoneNumber()],
 		];
 
 		if ($isMain) {

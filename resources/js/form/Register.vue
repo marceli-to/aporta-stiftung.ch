@@ -43,7 +43,7 @@
         <h2>Personendaten</h2>
         <form-grid>
           <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
-            <form-group :error="hasError('main_applicant.salutation')">
+            <form-group :error="hasError('main_applicant.salutation')" :message="errorMessage('main_applicant.salutation')">
               <form-label :error="hasError('main_applicant.salutation')">
                 Anrede
               </form-label>
@@ -55,7 +55,7 @@
               </form-select>
             </form-group>
           </div>
-          <form-group :error="hasError('main_applicant.last_name')">
+          <form-group :error="hasError('main_applicant.last_name')" :message="errorMessage('main_applicant.last_name')">
             <form-label :error="hasError('main_applicant.last_name')">
               Familienname
             </form-label>
@@ -64,7 +64,7 @@
               @focus="removeError('main_applicant.last_name')">
             </form-input>
           </form-group>
-          <form-group :error="hasError('main_applicant.first_name')">
+          <form-group :error="hasError('main_applicant.first_name')" :message="errorMessage('main_applicant.first_name')">
             <form-label :error="hasError('main_applicant.first_name')">
               Vorname
             </form-label>
@@ -73,7 +73,7 @@
               @focus="removeError('main_applicant.first_name')">
             </form-input>
           </form-group>
-          <form-group :error="hasError('main_applicant.street')">
+          <form-group :error="hasError('main_applicant.street')" :message="errorMessage('main_applicant.street')">
             <form-label :error="hasError('main_applicant.street')">
               Strasse
             </form-label>
@@ -82,7 +82,7 @@
               @focus="removeError('main_applicant.street')">
             </form-input>
           </form-group>
-          <form-group :error="hasError('main_applicant.street_number')">
+          <form-group :error="hasError('main_applicant.street_number')" :message="errorMessage('main_applicant.street_number')">
             <form-label :required="false" :error="hasError('main_applicant.street_number')">
               Hausnummer
             </form-label>
@@ -91,7 +91,7 @@
               @focus="removeError('main_applicant.street_number')">
             </form-input>
           </form-group>
-          <form-group :error="hasError('main_applicant.postal_code')">
+          <form-group :error="hasError('main_applicant.postal_code')" :message="errorMessage('main_applicant.postal_code')">
             <form-label :error="hasError('main_applicant.postal_code')">
               PLZ
             </form-label>
@@ -100,7 +100,7 @@
               @focus="removeError('main_applicant.postal_code')">
             </form-input>
           </form-group>
-          <form-group :error="hasError('main_applicant.city')">
+          <form-group :error="hasError('main_applicant.city')" :message="errorMessage('main_applicant.city')">
             <form-label :error="hasError('main_applicant.city')">
               Ort
             </form-label>
@@ -109,7 +109,7 @@
               @focus="removeError('main_applicant.city')">
             </form-input>
           </form-group>
-          <form-group :error="hasError('main_applicant.birth_date')">
+          <form-group :error="hasError('main_applicant.birth_date')" :message="errorMessage('main_applicant.birth_date')">
             <form-label :error="hasError('main_applicant.birth_date')">
               Geburtsdatum
             </form-label>
@@ -118,7 +118,7 @@
               @focus="removeError('main_applicant.birth_date')">
             </form-input>
           </form-group>
-          <form-group :error="hasError('main_applicant.marital_status')">
+          <form-group :error="hasError('main_applicant.marital_status')" :message="errorMessage('main_applicant.marital_status')">
             <form-label :error="hasError('main_applicant.marital_status')">
               Familienstand
             </form-label>
@@ -128,7 +128,7 @@
               @focus="removeError('main_applicant.marital_status')">
             </form-select>
           </form-group>
-          <form-group :error="hasError('main_applicant.nationality')">
+          <form-group :error="hasError('main_applicant.nationality')" :message="errorMessage('main_applicant.nationality')">
             <form-label :error="hasError('main_applicant.nationality')">
               Nationalität
             </form-label>
@@ -138,7 +138,7 @@
               @focus="removeError('main_applicant.nationality')">
             </form-select>
           </form-group>
-          <form-group :error="hasError('main_applicant.place_of_origin')">
+          <form-group :error="hasError('main_applicant.place_of_origin')" :message="errorMessage('main_applicant.place_of_origin')">
             <template v-if="form.main_applicant.nationality == 'CH'">
               <form-label :error="hasError('main_applicant.place_of_origin')">
                 Heimatort
@@ -150,7 +150,7 @@
             </template>
           </form-group>
           <template v-if="form.main_applicant.nationality && form.main_applicant.nationality !== 'CH'">
-            <form-group :error="hasError('main_applicant.residence_permit')">
+            <form-group :error="hasError('main_applicant.residence_permit')" :message="errorMessage('main_applicant.residence_permit')">
               <form-label :error="hasError('main_applicant.residence_permit')">Niederlassungsbewilligung</form-label>
               <form-select v-model="form.main_applicant.residence_permit"
                 :options="optionsFor('residence_permits')"
@@ -158,7 +158,7 @@
                 @focus="removeError('main_applicant.residence_permit')">
               </form-select>
             </form-group>
-            <form-group :error="hasError('main_applicant.swiss_residence_since')">
+            <form-group :error="hasError('main_applicant.swiss_residence_since')" :message="errorMessage('main_applicant.swiss_residence_since')">
               <form-label :error="hasError('main_applicant.swiss_residence_since')">In der Schweiz wohnhaft seit</form-label>
               <form-input type="date" v-model="form.main_applicant.swiss_residence_since" placeholder="TT.MM.JJJJ"
                 :error="hasError('main_applicant.swiss_residence_since')"
@@ -166,7 +166,7 @@
               </form-input>
             </form-group>
           </template>
-          <form-group :error="hasError('main_applicant.mobile_phone')">
+          <form-group :error="hasError('main_applicant.mobile_phone')" :message="errorMessage('main_applicant.mobile_phone')">
             <form-label :error="hasError('main_applicant.mobile_phone')">
               Mobiltelefon
             </form-label>
@@ -175,27 +175,30 @@
               @focus="removeError('main_applicant.mobile_phone')">
             </form-input>
           </form-group>
-          <form-group>
-            <form-label :required="false">
+          <form-group :error="hasError('main_applicant.landline_phone')" :message="errorMessage('main_applicant.landline_phone')">
+            <form-label :required="false" :error="hasError('main_applicant.landline_phone')">
               Telefon (Festnetz)
             </form-label>
-            <form-input type="text" v-model="form.main_applicant.landline_phone"></form-input>
+            <form-input type="text" v-model="form.main_applicant.landline_phone"
+              :error="hasError('main_applicant.landline_phone')"
+              @focus="removeError('main_applicant.landline_phone')">
+            </form-input>
           </form-group>
-          <form-group :error="hasError('main_applicant.email')">
+          <form-group :error="hasError('main_applicant.email')" :message="errorMessage('main_applicant.email')">
             <form-label :error="hasError('main_applicant.email')">E-Mail-Adresse</form-label>
             <form-input type="email" v-model="form.main_applicant.email"
               :error="hasError('main_applicant.email')"
               @focus="removeError('main_applicant.email')">
             </form-input>
           </form-group>
-          <form-group :error="hasError('main_applicant.occupation')">
+          <form-group :error="hasError('main_applicant.occupation')" :message="errorMessage('main_applicant.occupation')">
             <form-label :error="hasError('main_applicant.occupation')">Beruf</form-label>
             <form-input type="text" v-model="form.main_applicant.occupation"
               :error="hasError('main_applicant.occupation')"
               @focus="removeError('main_applicant.occupation')">
             </form-input>
           </form-group>
-          <form-group :error="hasError('main_applicant.employment_status')">
+          <form-group :error="hasError('main_applicant.employment_status')" :message="errorMessage('main_applicant.employment_status')">
             <form-label :error="hasError('main_applicant.employment_status')">
               Erwerbssituation
             </form-label>
@@ -205,7 +208,7 @@
               @focus="removeError('main_applicant.employment_status')">
             </form-select>
           </form-group>
-          <form-group :error="hasError('main_applicant.debt_enforcement_last_2y')">
+          <form-group :error="hasError('main_applicant.debt_enforcement_last_2y')" :message="errorMessage('main_applicant.debt_enforcement_last_2y')">
             <form-label :error="hasError('main_applicant.debt_enforcement_last_2y')">
               Betreibungen/Verlustscheine (letzte 2 Jahre)
             </form-label>
@@ -219,7 +222,7 @@
             <div class="!col-span-12 !mt-15 md:!mt-30">
               <h2>Aktueller Arbeitgeber</h2>
               <div class="sm:grid sm:grid-cols-12 gap-30 mb-30">
-                <form-group :error="hasError('main_applicant.employer.name')">
+                <form-group :error="hasError('main_applicant.employer.name')" :message="errorMessage('main_applicant.employer.name')">
                   <form-label :error="hasError('main_applicant.employer.name')">
                     Aktuelle*r Arbeitgeber*in
                   </form-label>
@@ -230,7 +233,7 @@
                 </form-group>
               </div>
               <div class="sm:grid sm:grid-cols-12 gap-30">
-                <form-group :error="hasError('main_applicant.employer.workload_percent')">
+                <form-group :error="hasError('main_applicant.employer.workload_percent')" :message="errorMessage('main_applicant.employer.workload_percent')">
                   <form-label :error="hasError('main_applicant.employer.workload_percent')">
                     Arbeitspensum (in Prozent)
                   </form-label>
@@ -239,7 +242,7 @@
                     @focus="removeError('main_applicant.employer.workload_percent')">
                   </form-input>
                 </form-group>
-                <form-group :error="hasError('main_applicant.employer.annual_income_bracket')">
+                <form-group :error="hasError('main_applicant.employer.annual_income_bracket')" :message="errorMessage('main_applicant.employer.annual_income_bracket')">
                   <form-label :error="hasError('main_applicant.employer.annual_income_bracket')">
                     Jahreseinkommen (in CHF)
                   </form-label>
@@ -256,7 +259,7 @@
 
         <h2 class="!mt-35 md:!mt-70">Aktuelle Wohnsituation</h2>
         <form-grid>
-          <form-group :error="hasError('main_applicant.current_housing.tenant_role')">
+          <form-group :error="hasError('main_applicant.current_housing.tenant_role')" :message="errorMessage('main_applicant.current_housing.tenant_role')">
             <form-label :error="hasError('main_applicant.current_housing.tenant_role')">
               Aktuelle Wohnsituation
             </form-label>
@@ -266,7 +269,7 @@
               @focus="removeError('main_applicant.current_housing.tenant_role')">
             </form-select>
           </form-group>
-          <form-group :error="hasError('main_applicant.current_housing.terminated_by_landlord')">
+          <form-group :error="hasError('main_applicant.current_housing.terminated_by_landlord')" :message="errorMessage('main_applicant.current_housing.terminated_by_landlord')">
             <form-label :error="hasError('main_applicant.current_housing.terminated_by_landlord')">
               Wurde das aktuelle Mietverhältnis durch den Vermieter*in gekündigt?
             </form-label>
@@ -277,7 +280,7 @@
             </form-select>
           </form-group>
           <template v-if="form.main_applicant.current_housing.terminated_by_landlord === true">
-            <form-group class="!col-span-12" :error="hasError('main_applicant.current_housing.termination_reason')">
+            <form-group class="!col-span-12" :error="hasError('main_applicant.current_housing.termination_reason')" :message="errorMessage('main_applicant.current_housing.termination_reason')">
               <form-label :error="hasError('main_applicant.current_housing.termination_reason')">
                 Geben Sie bitte den Grund an, weshalb Ihnen Ihr*e Vermieter*in gekündigt hat:
               </form-label>
@@ -287,7 +290,7 @@
               </form-textarea>
             </form-group>
           </template>
-          <form-group :error="hasError('main_applicant.current_housing.landlord_name')">
+          <form-group :error="hasError('main_applicant.current_housing.landlord_name')" :message="errorMessage('main_applicant.current_housing.landlord_name')">
             <form-label :error="hasError('main_applicant.current_housing.landlord_name')">
               Aktuelle*r Vermieter*in
             </form-label>
@@ -296,21 +299,27 @@
               @focus="removeError('main_applicant.current_housing.landlord_name')">
             </form-input>
           </form-group>
-          <form-group>
-            <form-label :required="false">
+          <form-group :error="hasError('main_applicant.current_housing.landlord_contact_person')" :message="errorMessage('main_applicant.current_housing.landlord_contact_person')">
+            <form-label :required="false" :error="hasError('main_applicant.current_housing.landlord_contact_person')">
               Vermieter*in Kontaktperson
             </form-label>
-            <form-input type="text" v-model="form.main_applicant.current_housing.landlord_contact_person"></form-input>
+            <form-input type="text" v-model="form.main_applicant.current_housing.landlord_contact_person"
+              :error="hasError('main_applicant.current_housing.landlord_contact_person')"
+              @focus="removeError('main_applicant.current_housing.landlord_contact_person')">
+            </form-input>
           </form-group>
-          <form-group>
-            <form-label :required="false">Vermieter*in Telefon</form-label>
-            <form-input type="text" v-model="form.main_applicant.current_housing.landlord_phone"></form-input>
+          <form-group :error="hasError('main_applicant.current_housing.landlord_phone')" :message="errorMessage('main_applicant.current_housing.landlord_phone')">
+            <form-label :required="false" :error="hasError('main_applicant.current_housing.landlord_phone')">Vermieter*in Telefon</form-label>
+            <form-input type="text" v-model="form.main_applicant.current_housing.landlord_phone"
+              :error="hasError('main_applicant.current_housing.landlord_phone')"
+              @focus="removeError('main_applicant.current_housing.landlord_phone')">
+            </form-input>
           </form-group>
         </form-grid>
 
         <h2 class="!mt-35 md:!mt-70">Weitere Person</h2>
         <form-grid>
-          <form-group :error="hasError('shares_apartment')">
+          <form-group :error="hasError('shares_apartment')" :message="errorMessage('shares_apartment')">
             <form-label :error="hasError('shares_apartment')">
               Werden Sie die Wohnung teilen?
             </form-label>
@@ -345,7 +354,7 @@
         <template v-if="form.shares_apartment === true && hasChildren === true">
           <h2 class="!mt-35 md:!mt-70">Aufteilung Erwachsene/Kinder</h2>
           <form-grid>
-            <form-group :error="hasError('household_info.adults_count')">
+            <form-group :error="hasError('household_info.adults_count')" :message="errorMessage('household_info.adults_count')">
               <form-label :error="hasError('household_info.adults_count')">
                 Anzahl Erwachsene
               </form-label>
@@ -354,7 +363,7 @@
                 @focus="removeError('household_info.adults_count')">
               </form-input>
             </form-group>
-            <form-group :error="hasError('household_info.children_count')">
+            <form-group :error="hasError('household_info.children_count')" :message="errorMessage('household_info.children_count')">
               <form-label :error="hasError('household_info.children_count')">
                 Anzahl Kinder
               </form-label>
@@ -363,7 +372,7 @@
                 @focus="removeError('household_info.children_count')">
               </form-input>
             </form-group>
-            <form-group :error="hasError('household_info.all_children_live_constantly')" v-if="parseInt(form.household_info.children_count) > 0">
+            <form-group :error="hasError('household_info.all_children_live_constantly')" :message="errorMessage('household_info.all_children_live_constantly')" v-if="parseInt(form.household_info.children_count) > 0">
               <form-label :error="hasError('household_info.all_children_live_constantly')">
                 Leben alle Kinder ständig mit Ihnen zusammen?
               </form-label>
@@ -374,7 +383,7 @@
               </form-select>
             </form-group>
             <template v-for="(child, idx) in form.children" :key="idx">
-              <form-group :error="hasError(`children.${idx}.birth_year`)">
+              <form-group :error="hasError(`children.${idx}.birth_year`)" :message="errorMessage(`children.${idx}.birth_year`)">
                 <form-label :error="hasError(`children.${idx}.birth_year`)">
                   Jahrgang Kind {{ child.position }}
                 </form-label>
@@ -393,7 +402,7 @@
           </h2>
           <form-grid>
             <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
-              <form-group :error="hasError('co_applicant.salutation')">
+              <form-group :error="hasError('co_applicant.salutation')" :message="errorMessage('co_applicant.salutation')">
                 <form-label :error="hasError('co_applicant.salutation')">Anrede</form-label>
                 <form-select v-model="form.co_applicant.salutation"
                   :options="optionsFor('salutations')"
@@ -402,7 +411,7 @@
                 </form-select>
               </form-group>
             </div>
-            <form-group :error="hasError('co_applicant.last_name')">
+            <form-group :error="hasError('co_applicant.last_name')" :message="errorMessage('co_applicant.last_name')">
               <form-label :error="hasError('co_applicant.last_name')">
                 Familienname
               </form-label>
@@ -411,7 +420,7 @@
                 @focus="removeError('co_applicant.last_name')">
               </form-input>
             </form-group>
-            <form-group :error="hasError('co_applicant.first_name')">
+            <form-group :error="hasError('co_applicant.first_name')" :message="errorMessage('co_applicant.first_name')">
               <form-label :error="hasError('co_applicant.first_name')">
                 Vorname
               </form-label>
@@ -421,7 +430,7 @@
               </form-input>
             </form-group>
             <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
-              <form-group :error="hasError('co_applicant.same_address_as_main')">
+              <form-group :error="hasError('co_applicant.same_address_as_main')" :message="errorMessage('co_applicant.same_address_as_main')">
                 <form-label :error="hasError('co_applicant.same_address_as_main')">
                   Aktuell gleiche Adresse wie Hauptperson?
                 </form-label>
@@ -433,7 +442,7 @@
               </form-group>
             </div>
             <template v-if="form.co_applicant.same_address_as_main === false">
-              <form-group :error="hasError('co_applicant.street')">
+              <form-group :error="hasError('co_applicant.street')" :message="errorMessage('co_applicant.street')">
                 <form-label :error="hasError('co_applicant.street')">
                   Strasse
                 </form-label>
@@ -442,7 +451,7 @@
                   @focus="removeError('co_applicant.street')">
                 </form-input>
               </form-group>
-              <form-group :error="hasError('co_applicant.street_number')">
+              <form-group :error="hasError('co_applicant.street_number')" :message="errorMessage('co_applicant.street_number')">
                 <form-label :required="false" :error="hasError('co_applicant.street_number')">
                   Hausnummer
                 </form-label>
@@ -451,7 +460,7 @@
                   @focus="removeError('co_applicant.street_number')">
                 </form-input>
               </form-group>
-              <form-group :error="hasError('co_applicant.postal_code')">
+              <form-group :error="hasError('co_applicant.postal_code')" :message="errorMessage('co_applicant.postal_code')">
                 <form-label :error="hasError('co_applicant.postal_code')">
                   PLZ
                 </form-label>
@@ -460,7 +469,7 @@
                   @focus="removeError('co_applicant.postal_code')">
                 </form-input>
               </form-group>
-              <form-group :error="hasError('co_applicant.city')">
+              <form-group :error="hasError('co_applicant.city')" :message="errorMessage('co_applicant.city')">
                 <form-label :error="hasError('co_applicant.city')">
                   Ort
                 </form-label>
@@ -470,14 +479,14 @@
                 </form-input>
               </form-group>
             </template>
-            <form-group :error="hasError('co_applicant.birth_date')">
+            <form-group :error="hasError('co_applicant.birth_date')" :message="errorMessage('co_applicant.birth_date')">
               <form-label :error="hasError('co_applicant.birth_date')">Geburtsdatum</form-label>
               <form-input type="date" v-model="form.co_applicant.birth_date" placeholder="TT.MM.JJJJ"
                 :error="hasError('co_applicant.birth_date')"
                 @focus="removeError('co_applicant.birth_date')">
               </form-input>
             </form-group>
-            <form-group :error="hasError('co_applicant.marital_status')">
+            <form-group :error="hasError('co_applicant.marital_status')" :message="errorMessage('co_applicant.marital_status')">
               <form-label :error="hasError('co_applicant.marital_status')">
                 Familienstand
               </form-label>
@@ -487,7 +496,7 @@
                 @focus="removeError('co_applicant.marital_status')">
               </form-select>
             </form-group>
-            <form-group :error="hasError('co_applicant.nationality')">
+            <form-group :error="hasError('co_applicant.nationality')" :message="errorMessage('co_applicant.nationality')">
               <form-label :error="hasError('co_applicant.nationality')">
                 Nationalität
               </form-label>
@@ -497,7 +506,7 @@
                 @focus="removeError('co_applicant.nationality')">
               </form-select>
             </form-group>
-            <form-group :error="hasError('co_applicant.place_of_origin')">
+            <form-group :error="hasError('co_applicant.place_of_origin')" :message="errorMessage('co_applicant.place_of_origin')">
               <template v-if="form.co_applicant.nationality === 'CH'">
                 <form-label :error="hasError('co_applicant.place_of_origin')">
                   Heimatort
@@ -509,7 +518,7 @@
               </template>
             </form-group>
             <template v-if="form.co_applicant.nationality && form.co_applicant.nationality !== 'CH'">
-              <form-group :error="hasError('co_applicant.residence_permit')">
+              <form-group :error="hasError('co_applicant.residence_permit')" :message="errorMessage('co_applicant.residence_permit')">
                 <form-label :error="hasError('co_applicant.residence_permit')">
                   Niederlassungsbewilligung
                 </form-label>
@@ -519,7 +528,7 @@
                   @focus="removeError('co_applicant.residence_permit')">
                 </form-select>
               </form-group>
-              <form-group :error="hasError('co_applicant.swiss_residence_since')">
+              <form-group :error="hasError('co_applicant.swiss_residence_since')" :message="errorMessage('co_applicant.swiss_residence_since')">
                 <form-label :error="hasError('co_applicant.swiss_residence_since')">
                   In der Schweiz wohnhaft seit
                 </form-label>
@@ -529,7 +538,7 @@
                 </form-input>
               </form-group>
             </template>
-            <form-group :error="hasError('co_applicant.mobile_phone')">
+            <form-group :error="hasError('co_applicant.mobile_phone')" :message="errorMessage('co_applicant.mobile_phone')">
               <form-label :error="hasError('co_applicant.mobile_phone')">
                 Mobiltelefon
               </form-label>
@@ -538,13 +547,16 @@
                 @focus="removeError('co_applicant.mobile_phone')">
               </form-input>
             </form-group>
-            <form-group>
-              <form-label :required="false">
+            <form-group :error="hasError('co_applicant.landline_phone')" :message="errorMessage('co_applicant.landline_phone')">
+              <form-label :required="false" :error="hasError('co_applicant.landline_phone')">
                 Telefon (Festnetz)
               </form-label>
-              <form-input type="text" v-model="form.co_applicant.landline_phone"></form-input>
+              <form-input type="text" v-model="form.co_applicant.landline_phone"
+                :error="hasError('co_applicant.landline_phone')"
+                @focus="removeError('co_applicant.landline_phone')">
+              </form-input>
             </form-group>
-            <form-group :error="hasError('co_applicant.email')">
+            <form-group :error="hasError('co_applicant.email')" :message="errorMessage('co_applicant.email')">
               <form-label :error="hasError('co_applicant.email')">
                 E-Mail-Adresse
               </form-label>
@@ -553,7 +565,7 @@
                 @focus="removeError('co_applicant.email')">
               </form-input>
             </form-group>
-            <form-group :error="hasError('co_applicant.occupation')">
+            <form-group :error="hasError('co_applicant.occupation')" :message="errorMessage('co_applicant.occupation')">
               <form-label :error="hasError('co_applicant.occupation')">
                 Beruf
               </form-label>
@@ -562,7 +574,7 @@
                 @focus="removeError('co_applicant.occupation')">
               </form-input>
             </form-group>
-            <form-group :error="hasError('co_applicant.employment_status')">
+            <form-group :error="hasError('co_applicant.employment_status')" :message="errorMessage('co_applicant.employment_status')">
               <form-label :error="hasError('co_applicant.employment_status')">
                 Erwerbssituation
               </form-label>
@@ -572,7 +584,7 @@
                 @focus="removeError('co_applicant.employment_status')">
               </form-select>
             </form-group>
-            <form-group :error="hasError('co_applicant.debt_enforcement_last_2y')">
+            <form-group :error="hasError('co_applicant.debt_enforcement_last_2y')" :message="errorMessage('co_applicant.debt_enforcement_last_2y')">
               <form-label :error="hasError('co_applicant.debt_enforcement_last_2y')">
                 Betreibungen/Verlustscheine (letzte 2 Jahre)
               </form-label>
@@ -587,7 +599,7 @@
               <div class="!col-span-12 !mt-15 md:!mt-30">
                 <h2>Aktueller Arbeitgeber der weiteren Person</h2>
                 <div class="sm:grid sm:grid-cols-12 gap-30 mb-30">
-                  <form-group :error="hasError('co_applicant.employer.name')">
+                  <form-group :error="hasError('co_applicant.employer.name')" :message="errorMessage('co_applicant.employer.name')">
                     <form-label :error="hasError('co_applicant.employer.name')">
                       Aktuelle*r Arbeitgeber*in
                     </form-label>
@@ -598,7 +610,7 @@
                   </form-group>
                 </div>
                 <div class="sm:grid sm:grid-cols-12 gap-30">
-                  <form-group :error="hasError('co_applicant.employer.workload_percent')">
+                  <form-group :error="hasError('co_applicant.employer.workload_percent')" :message="errorMessage('co_applicant.employer.workload_percent')">
                     <form-label :error="hasError('co_applicant.employer.workload_percent')">
                       Arbeitspensum (in Prozent)
                     </form-label>
@@ -607,7 +619,7 @@
                       @focus="removeError('co_applicant.employer.workload_percent')">
                     </form-input>
                   </form-group>
-                  <form-group :error="hasError('co_applicant.employer.annual_income_bracket')">
+                  <form-group :error="hasError('co_applicant.employer.annual_income_bracket')" :message="errorMessage('co_applicant.employer.annual_income_bracket')">
                     <form-label :error="hasError('co_applicant.employer.annual_income_bracket')">
                       Jahreseinkommen (in CHF)
                     </form-label>
@@ -626,7 +638,7 @@
             Aktuelle Wohnsituation der weiteren Person
           </h2>
           <form-grid>
-            <form-group :error="hasError('co_applicant.current_housing.tenant_role')">
+            <form-group :error="hasError('co_applicant.current_housing.tenant_role')" :message="errorMessage('co_applicant.current_housing.tenant_role')">
               <form-label :error="hasError('co_applicant.current_housing.tenant_role')">Aktuelle Wohnsituation</form-label>
               <form-select v-model="form.co_applicant.current_housing.tenant_role"
                 :options="optionsFor('tenant_roles')"
@@ -634,7 +646,7 @@
                 @focus="removeError('co_applicant.current_housing.tenant_role')">
               </form-select>
             </form-group>
-            <form-group :error="hasError('co_applicant.current_housing.terminated_by_landlord')">
+            <form-group :error="hasError('co_applicant.current_housing.terminated_by_landlord')" :message="errorMessage('co_applicant.current_housing.terminated_by_landlord')">
               <form-label :error="hasError('co_applicant.current_housing.terminated_by_landlord')">Wurde das aktuelle Mietverhältnis durch den Vermieter*in gekündigt?</form-label>
               <form-select v-model="form.co_applicant.current_housing.terminated_by_landlord"
                 :options="boolOptions"
@@ -643,7 +655,7 @@
               </form-select>
             </form-group>
             <template v-if="form.co_applicant.current_housing.terminated_by_landlord === true">
-              <form-group class="!col-span-12" :error="hasError('co_applicant.current_housing.termination_reason')">
+              <form-group class="!col-span-12" :error="hasError('co_applicant.current_housing.termination_reason')" :message="errorMessage('co_applicant.current_housing.termination_reason')">
                 <form-label :error="hasError('co_applicant.current_housing.termination_reason')">Geben Sie bitte den Grund an, weshalb Ihnen Ihr*e Vermieter*in gekündigt hat:</form-label>
                 <form-textarea v-model="form.co_applicant.current_housing.termination_reason"
                   :error="hasError('co_applicant.current_housing.termination_reason')"
@@ -651,31 +663,37 @@
                 </form-textarea>
               </form-group>
             </template>
-            <form-group :error="hasError('co_applicant.current_housing.landlord_name')">
+            <form-group :error="hasError('co_applicant.current_housing.landlord_name')" :message="errorMessage('co_applicant.current_housing.landlord_name')">
               <form-label :error="hasError('co_applicant.current_housing.landlord_name')">Aktuelle*r Vermieter*in</form-label>
               <form-input type="text" v-model="form.co_applicant.current_housing.landlord_name"
                 :error="hasError('co_applicant.current_housing.landlord_name')"
                 @focus="removeError('co_applicant.current_housing.landlord_name')">
               </form-input>
             </form-group>
-            <form-group>
-              <form-label :required="false">
+            <form-group :error="hasError('co_applicant.current_housing.landlord_contact_person')" :message="errorMessage('co_applicant.current_housing.landlord_contact_person')">
+              <form-label :required="false" :error="hasError('co_applicant.current_housing.landlord_contact_person')">
                 Vermieter*in Kontaktperson
               </form-label>
-              <form-input type="text" v-model="form.co_applicant.current_housing.landlord_contact_person"></form-input>
+              <form-input type="text" v-model="form.co_applicant.current_housing.landlord_contact_person"
+                :error="hasError('co_applicant.current_housing.landlord_contact_person')"
+                @focus="removeError('co_applicant.current_housing.landlord_contact_person')">
+              </form-input>
             </form-group>
-            <form-group>
-              <form-label :required="false">
+            <form-group :error="hasError('co_applicant.current_housing.landlord_phone')" :message="errorMessage('co_applicant.current_housing.landlord_phone')">
+              <form-label :required="false" :error="hasError('co_applicant.current_housing.landlord_phone')">
                 Vermieter*in Telefon
               </form-label>
-              <form-input type="text" v-model="form.co_applicant.current_housing.landlord_phone"></form-input>
+              <form-input type="text" v-model="form.co_applicant.current_housing.landlord_phone"
+                :error="hasError('co_applicant.current_housing.landlord_phone')"
+                @focus="removeError('co_applicant.current_housing.landlord_phone')">
+              </form-input>
             </form-group>
           </form-grid>
         </template>
 
         <h2 class="!mt-35 md:!mt-70">Präferenzen</h2>
         <form-grid class="col-span-12 !mb-0">
-          <form-group class="!col-span-10 mb-15" :error="hasError('housing_wish.districts')">
+          <form-group class="!col-span-10 mb-15" :error="hasError('housing_wish.districts')" :message="errorMessage('housing_wish.districts')">
             <form-label class="mb-12 xl:mb-16" :error="hasError('housing_wish.districts')">Stadtkreise</form-label>
             <div class="grid grid-cols-12 gap-30">
               <form-group class="!col-span-6 md:!col-span-3" v-for="(district, index) in choicesFor('districts')" :key="district.value">
@@ -689,7 +707,7 @@
               </form-group>
             </div>
           </form-group>
-          <form-group class="!col-span-10 mb-15" :error="hasError('housing_wish.floors')">
+          <form-group class="!col-span-10 mb-15" :error="hasError('housing_wish.floors')" :message="errorMessage('housing_wish.floors')">
             <form-label class="mb-12 xl:mb-16" :error="hasError('housing_wish.floors')">Stockwerke</form-label>
             <div class="grid grid-cols-12 gap-30">
               <form-group class="!col-span-6 md:!col-span-3" v-for="(floor, index) in choicesFor('floors')" :key="floor.value">
@@ -703,14 +721,22 @@
               </form-group>
             </div>
           </form-group>
-          <form-group :error="hasError('housing_wish.max_gross_rent')">
+          <form-group :error="hasError('housing_wish.wants_elevator')" :message="errorMessage('housing_wish.wants_elevator')">
+            <form-label :error="hasError('housing_wish.wants_elevator')">Benötigen Sie einen Lift</form-label>
+            <form-select v-model="form.housing_wish.wants_elevator"
+              :options="boolOptions"
+              :error="hasError('housing_wish.wants_elevator')"
+              @focus="removeError('housing_wish.wants_elevator')">
+            </form-select>
+          </form-group>
+          <form-group :error="hasError('housing_wish.max_gross_rent')" :message="errorMessage('housing_wish.max_gross_rent')">
             <form-label :error="hasError('housing_wish.max_gross_rent')">max. Mietzins (inkl. Nebenkosten, min. 1200)</form-label>
             <form-input type="number" v-model="form.housing_wish.max_gross_rent"
               :error="hasError('housing_wish.max_gross_rent')"
               @focus="removeError('housing_wish.max_gross_rent')">
             </form-input>
           </form-group>
-          <form-group :error="hasError('housing_wish.earliest_move_in')">
+          <form-group :error="hasError('housing_wish.earliest_move_in')" :message="errorMessage('housing_wish.earliest_move_in')">
             <form-label :error="hasError('housing_wish.earliest_move_in')">Bezugstermin frühestens</form-label>
             <form-input type="date" v-model="form.housing_wish.earliest_move_in" placeholder="TT.MM.JJJJ"
               :error="hasError('housing_wish.earliest_move_in')"
@@ -721,7 +747,7 @@
 
         <h2 class="!mt-35 md:!mt-70">Weitere Angaben</h2>
         <form-grid>
-          <form-group :error="hasError('household_info.has_pets')">
+          <form-group :error="hasError('household_info.has_pets')" :message="errorMessage('household_info.has_pets')">
             <form-label :error="hasError('household_info.has_pets')">
               Halten Sie Haustiere?
             </form-label>
@@ -731,7 +757,7 @@
               @focus="removeError('household_info.has_pets')">
             </form-select>
           </form-group>
-          <form-group v-if="form.household_info.has_pets === true" :error="hasError('household_info.pets_description')">
+          <form-group v-if="form.household_info.has_pets === true" :error="hasError('household_info.pets_description')" :message="errorMessage('household_info.pets_description')">
             <form-label :error="hasError('household_info.pets_description')">
               Welche Haustiere halten Sie? (Hundehaltung ist verboten)
             </form-label>
@@ -740,11 +766,14 @@
               @focus="removeError('household_info.pets_description')">
             </form-input>
           </form-group>
-          <form-group class="!col-span-12">
-            <form-label :required="false">
+          <form-group class="!col-span-12" :error="hasError('household_info.remarks')" :message="errorMessage('household_info.remarks')">
+            <form-label :required="false" :error="hasError('household_info.remarks')">
               Bemerkungen
             </form-label>
-            <form-textarea v-model="form.household_info.remarks"></form-textarea>
+            <form-textarea v-model="form.household_info.remarks"
+              :error="hasError('household_info.remarks')"
+              @focus="removeError('household_info.remarks')">
+            </form-textarea>
           </form-group>
         </form-grid>
 
@@ -902,6 +931,7 @@ export default {
         housing_wish: {
           earliest_move_in: null,
           max_gross_rent: null,
+          wants_elevator: null,
           districts: [],
           floors: [],
         },
@@ -990,6 +1020,11 @@ export default {
 
     hasError(path) {
       return !!this.serverErrors[path];
+    },
+
+    errorMessage(path) {
+      const value = this.serverErrors[path];
+      return typeof value === 'string' ? value : '';
     },
 
     removeError(path) {
@@ -1217,7 +1252,7 @@ export default {
       const summary = [];
       for (const key in data.errors) {
         const msgs = data.errors[key];
-        flat[key] = true;
+        flat[key] = (Array.isArray(msgs) && msgs.length) ? msgs[0] : true;
         if (Array.isArray(msgs) && msgs.length) {
           summary.push(msgs[0]);
         }
