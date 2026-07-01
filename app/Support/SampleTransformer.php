@@ -9,9 +9,8 @@ use Illuminate\Support\Facades\Http;
  * Transforms legacy registration JSON (main_tenant_*, sub_tenant_*, …) into the
  * new nested SubmitApplicationRequest contract, and optionally anonymises PII.
  *
- * Shared by the dev autofill endpoint (DevSampleController, one random sample
- * per form load) and the batch seed exporter (applications:export, every file
- * in .sample-data/). Keep the transform logic here so both stay identical.
+ * Used by the batch seed exporter (applications:export) to transform every
+ * file in .sample-data/ into the new contract.
  */
 class SampleTransformer
 {

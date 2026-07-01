@@ -25,21 +25,6 @@
       </div>
       <form>
 
-        <!-- DEV: sample-data autofill banner. Remove this block to drop the feature. -->
-        <div v-if="devSampleEnabled"
-          class="mb-30 p-10 lg:p-15 border-2 border-dashed border-aqua bg-sky/40 text-base flex flex-wrap items-center gap-15">
-          <span>
-            <strong>Dev autofill:</strong>
-            {{ devSampleFile || 'lade…' }}
-          </span>
-          <button type="button"
-            class="ml-auto bg-black text-white hover:bg-aqua transition-colors font-bold text-base py-8 px-12 leading-none"
-            :class="devSampleLoading ? 'opacity-50 pointer-events-none' : ''"
-            @click.prevent="loadSample()">
-            Neue Stichprobe
-          </button>
-        </div>
-
         <h2>Personendaten</h2>
         <form-grid>
           <div class="sm:col-span-12 sm:grid sm:grid-cols-12 sm:gap-30">
@@ -922,7 +907,7 @@ export default {
 
   data() {
     return {
-      auth: { password: 'f2za8clt5xk4so1w' },
+      auth: { password: '' },
 
       form: {
         shares_apartment: null,
@@ -974,13 +959,6 @@ export default {
       isAuthenticated: false,
       hasAuthenticationError: false,
       authToken: null,
-
-      // DEV: sample autofill (gated by window.APORTA_DEV_SAMPLE).
-      // Remove this block + the dev banner + loadSample()/autoLoadSampleIfEnabled()
-      // to drop the feature.
-      devSampleEnabled: typeof window !== 'undefined' && window.APORTA_DEV_SAMPLE === true,
-      devSampleFile: null,
-      devSampleLoading: false,
     };
   },
 
@@ -1167,85 +1145,6 @@ export default {
       });
     },
 
-    // ---- DEV: sample autofill --------------------------------------------
-    // Fetch a transformed random sample from .sample-data and populate the
-    // form. Sequenced to cooperate with the existing watchers (shares_apartment,
-    // sharedWith, children_count, employment_status, nationality, …).
-    autoLoadSampleIfEnabled() {
-      if (!this.devSampleEnabled) return;
-      if (!this.isAuthenticated || !this.lookups.ready) return;
-      if (this.devSampleLoading || this.devSampleFile) return; // load once on initial show
-      this.loadSample();
-    },
-
-    async loadSample() {
-      if (!this.devSampleEnabled || this.devSampleLoading) return;
-      this.devSampleLoading = true;
-      try {
-        const { data } = await this.axios.get('/api/form/dev/sample-data');
-        this.devSampleFile = data.__source_file || null;
-        delete data.__source_file;
-
-        // 1. Top-level + main applicant (watchers will normalise as needed).
-        this.form.shares_apartment = !!data.shares_apartment;
-
-        Object.assign(this.form.main_applicant, data.main_applicant);
-        if (data.main_applicant?.current_housing) {
-          Object.assign(this.form.main_applicant.current_housing, data.main_applicant.current_housing);
-        }
-        this.form.main_applicant.employer = data.main_applicant?.employer
-          ? { ...data.main_applicant.employer }
-          : { name: null, workload_percent: null, annual_income_bracket: null };
-
-        Object.assign(this.form.housing_wish, data.housing_wish || {});
-        Object.assign(this.form.household_info, data.household_info || {});
-
-        // 2. Drive sharedWith — its watcher mints/destroys form.co_applicant
-        //    and adjusts children_count/adults_count.
-        const sw = [];
-        if (data.co_applicant?.relationship_to_main) {
-          sw.push(data.co_applicant.relationship_to_main);
-        }
-        if ((data.household_info?.children_count || 0) > 0) {
-          sw.push('__children');
-        }
-        this.sharedWith = sw;
-
-        await this.$nextTick();
-
-        // 3. Fill the freshly-minted co-applicant (if any).
-        if (data.co_applicant && this.form.co_applicant) {
-          const co = this.form.co_applicant;
-          Object.assign(co, data.co_applicant);
-          if (data.co_applicant.current_housing) {
-            Object.assign(co.current_housing, data.co_applicant.current_housing);
-          }
-          co.employer = data.co_applicant.employer
-            ? { ...data.co_applicant.employer }
-            : { name: null, workload_percent: null, annual_income_bracket: null };
-        }
-
-        // 4. Children: set count → watcher resizes the array → fill years.
-        const childPayload = Array.isArray(data.children) ? data.children : [];
-        this.form.household_info.children_count = childPayload.length;
-        await this.$nextTick();
-        childPayload.forEach((c, i) => {
-          if (this.form.children[i]) this.form.children[i].birth_year = c.birth_year;
-        });
-
-        // 5. The sharedWith watcher overwrites adults_count — restore the
-        //    payload value if it was higher (e.g. legacy 3-adult households).
-        if (typeof data.household_info?.adults_count === 'number'
-          && data.household_info.adults_count > this.form.household_info.adults_count) {
-          this.form.household_info.adults_count = data.household_info.adults_count;
-        }
-      } catch (e) {
-        console.error('[devSample] load failed', e);
-      } finally {
-        this.devSampleLoading = false;
-      }
-    },
-
     handleValidationErrors(data) {
       if (!data || !data.errors) return;
       const flat = {};
@@ -1269,14 +1168,6 @@ export default {
   },
 
   watch: {
-
-    // DEV: sample autofill triggers (kept with the rest of the watchers).
-    isAuthenticated(val) {
-      if (val) this.autoLoadSampleIfEnabled();
-    },
-    'lookups.ready'(val) {
-      if (val) this.autoLoadSampleIfEnabled();
-    },
 
     'form.main_applicant.employment_status'(value) {
       if (value !== 'employed') {

@@ -10,9 +10,4 @@ return [
 
     'failure_alert_email' => env('APORTA_FAILURE_ALERT_EMAIL'),
 
-    // Dev-only: serve a transformed random legacy-JSON sample to pre-fill the
-    // form. Active only when this flag is on AND the app environment is local.
-    // To disable: set FORM_DEV_SAMPLE=0 (or remove the var).
-    'dev_sample' => (bool) env('FORM_DEV_SAMPLE', false),
-
 ];

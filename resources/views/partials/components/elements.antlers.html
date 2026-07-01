@@ -38,9 +38,6 @@
 {{ if type == 'application_form' }}
   <script>
     window.APORTA_LOOKUPS_URL = "{{ config:aporta:lookups_url }}";
-    {{ if {config:aporta:dev_sample} }}
-      window.APORTA_DEV_SAMPLE = true;
-    {{ /if }}
   </script>
   <div id="form-register"></div>
   {{ vite src="resources/js/form/register.js" }}
