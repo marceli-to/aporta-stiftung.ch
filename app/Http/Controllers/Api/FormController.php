@@ -1,170 +1,70 @@
 <?php
 namespace App\Http\Controllers\Api;
+
+use App\Http\Concerns\MatchesMasterPassword;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterAuthRequest;
-use App\Http\Requests\RegisterStoreRequest;
-use App\Http\Requests\RegisterExistingStoreRequest;
-use App\Actions\CreateXml;
-use App\Actions\CreateExistingXml;
-use Illuminate\Http\Request;
+use App\Http\Requests\SubmitApplicationRequest;
+use App\Jobs\ForwardApplicationToBackend;
+use App\Support\ApplicationStore;
 use Illuminate\Support\Str;
 
 class FormController extends Controller
 {
-  /**
-   * @param RegisterAuthRequest $request 
-   * @return \Illuminate\Http\Response
-   */
+	use MatchesMasterPassword;
 
-  public function authenticate(RegisterAuthRequest $request)
-  {
-    $password = $request->input('password');
+	/**
+	 * Password gate. Visitor enters the shared password to unlock the form.
+	 * On success the response carries a token that the SPA echoes back on
+	 * submit via the X-Form-Token header; SubmitApplicationRequest::authorize()
+	 * verifies it so the form cannot be bypassed by hitting the API directly.
+	 *
+	 * FORM_MASTER_PASSWORD in .env acts as an override that is accepted
+	 * here and on submit without consuming an entry from key.json.
+	 */
+	public function authenticate(RegisterAuthRequest $request)
+	{
+		$password = $request->input('password');
 
-    if ($this->matchesMasterPassword($password))
-    {
-      return response()->json(['token' => config('form.master_password')]);
-    }
+		if ($this->matchesMasterPassword($password)) {
+			return response()->json(['token' => config('form.master_password')]);
+		}
 
-    $key = json_decode(\Storage::disk('local')->get('key.json'), true);
-    foreach ($key as $k => $v)
-    {
-      if ($v['password'] == $password && $v['used'] == false)
-      {
-        return response()->json(['token' => $v['token']]);
-      }
-    }
-    return response()->json(['error' => 'Unauthorized'], 401);
+		$key = json_decode(\Storage::disk('local')->get('key.json'), true);
 
-  }
+		foreach ($key as $k => $v) {
+			if ($v['password'] == $password && $v['used'] == false) {
+				return response()->json(['token' => $v['token']]);
+			}
+		}
 
-  /**
-   * @param RegisterAuthRequest $request 
-   * @return \Illuminate\Http\Response
-   */
+		return response()->json(['error' => 'Unauthorized'], 401);
+	}
 
-   public function authenticateExisting(RegisterAuthRequest $request)
-   {
-     $password = $request->input('password');
+	/**
+	 * Receive the public application form, validate, attach intake metadata,
+	 * dispatch the forwarding job, and return immediately. Token validation
+	 * happens upstream in SubmitApplicationRequest::authorize().
+	 */
+	public function store(SubmitApplicationRequest $request, ApplicationStore $store)
+	{
+		$payload = $request->validated();
 
-     if ($this->matchesMasterPassword($password))
-     {
-       return response()->json(['token' => config('form.master_password')]);
-     }
+		$payload['submission_id'] = (string) Str::ulid();
+		$payload['submitted_meta'] = [
+			'ip' => $request->ip(),
+			'user_agent' => substr((string) $request->userAgent(), 0, 512),
+			'submitted_at' => now()->toIso8601String(),
+		];
 
-     $key = json_decode(\Storage::disk('local')->get('key-existing.json'), true);
-     foreach ($key as $k => $v)
-     {
-       if ($v['password'] == $password && $v['used'] == false)
-       {
-         return response()->json(['token' => $v['token']]);
-       }
-     }
-     return response()->json(['error' => 'Unauthorized'], 401);
+		// Persist before dispatching so the payload survives even if the queue
+		// is unavailable. The job moves the file to forwarded/ or failed/.
+		$store->store($payload);
 
-   }
+		ForwardApplicationToBackend::dispatch($payload);
 
-  /**
-   * @param RegisterStoreRequest $request 
-   * @return \Illuminate\Http\Response
-   */
-  public function store(RegisterStoreRequest $request)
-  { 
-
-    $this->validateToken($request->token);
-
-    // Create a slug
-    $slug = Str::slug($request->main_tenant_lastname . ' ' . $request->main_tenant_firstname . ' ' . $request->main_tenant_postal_code . ' ' . $request->main_tenant_city, '-');
-
-    // Create an array from the request
-    $data = $request->all();
-
-    // As backup service, save data in a json file in /storage/app/json, create the folder if it does not exist
-    if (!file_exists(storage_path('app/json')))
-    {
-      mkdir(storage_path('app/json'), 0777, true);
-    }
-    \Storage::disk('local')->put('json/registration-' . $slug . '-' . date('d-m-Y-H-i-s') . '.json', json_encode($data));
-
-    // Create the xml
-    (new CreateXml())->execute(json_encode($data));
-
-    return response()->json(200);
-  }
-
-  /**
-   * @param RegisterExistingStoreRequest $request 
-   * @return \Illuminate\Http\Response
-   */
-  public function storeExisting(RegisterExistingStoreRequest $request)
-  { 
-    $this->validateToken($request->token, true);
-
-    // Create a slug
-    $slug = Str::slug($request->main_tenant_lastname . ' ' . $request->main_tenant_firstname . ' ' . $request->main_tenant_email, '-');
-
-    // Create an array from the request
-    $data = $request->all();
-
-    // As backup service, save data in a json file in /storage/app/json, create the folder if it does not exist
-    if (!file_exists(storage_path('app/json/existing')))
-    {
-      mkdir(storage_path('app/json/existing'), 0777, true);
-    }
-
-    \Storage::disk('local')->put('json/existing/anmeldung-bestehende-mietende-' . $slug . '-' . date('d-m-Y-H-i-s') . '.json', json_encode($data));
-
-    // Create the xml
-    (new CreateExistingXml())->execute(json_encode($data));
-
-    return response()->json(200);
-  }
-
-  public function validateToken($token = NULL, $existing = false)
-  {
-    if (!$token) {
-      return response()->json(['error' => 'Unauthorized'], 401);
-    }
-
-    // Master token (from FORM_MASTER_PASSWORD) skips key.json — does not
-    // burn an entry, can be reused for testing.
-    if ($this->matchesMasterPassword($token))
-    {
-      return true;
-    }
-
-    // Validate the request->token with the key.json file
-    if ($existing)
-    {
-      $key = json_decode(\Storage::disk('local')->get('key-existing.json'), true);
-    }
-    else
-    {
-      $key = json_decode(\Storage::disk('local')->get('key.json'), true);
-    }
-
-    foreach ($key as $k => $v)
-    {
-      if ($v['token'] == $token)
-      {
-        $key[$k]['used'] = true;
-        \Storage::disk('local')->put($existing ? 'key-existing.json' : 'key.json', json_encode($key));
-        return true;
-      }
-    }
-    response()->json(['error' => 'Unauthorized'], 401);
-  }
-
-  /**
-   * Constant-time comparison against the configured master password.
-   * Returns false when no master password is configured.
-   */
-  protected function matchesMasterPassword($value)
-  {
-    $master = config('form.master_password');
-    if (!is_string($master) || $master === '' || !is_string($value)) {
-      return false;
-    }
-    return hash_equals($master, $value);
-  }
-
+		return response()->json([
+			'submission_id' => $payload['submission_id'],
+		], 200);
+	}
 }

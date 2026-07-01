@@ -5,6 +5,7 @@
         :id="id"
         type="checkbox"
         :value="$props.value"
+        :checked="isChecked"
         :placeholder="placeholder"
         @input="update"
         class="opacity-0 absolute cursor-pointer h-0 w-0"
@@ -23,14 +24,14 @@
 export default {
   name: "FormCheckbox",
   props: {
-    
+
     id: {
       type: String,
       default: "",
     },
-    
+
     modelValue: {
-      type: [String, Number, Array],
+      type: [String, Number, Array, Boolean],
       default: "",
     },
 
@@ -47,6 +48,17 @@ export default {
     placeholder: {
       type: String,
       default: "",
+    },
+  },
+
+  computed: {
+    // Reflect modelValue back onto the native checkbox so programmatic
+    // changes (e.g. auto-uncheck in a watcher) actually update the UI.
+    isChecked() {
+      if (Array.isArray(this.modelValue)) {
+        return this.modelValue.includes(this.value);
+      }
+      return this.modelValue === this.value || this.modelValue === true;
     },
   },
 

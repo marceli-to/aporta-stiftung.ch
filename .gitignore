@@ -29,3 +29,5 @@ resources/forms
 users
 
 INSTALL.txt
+.sample-data
+.docs
