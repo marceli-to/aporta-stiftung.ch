@@ -10,12 +10,8 @@ class Kernel extends ConsoleKernel
    */
   protected function schedule(Schedule $schedule): void
   {
-    // only run this command if the application is in production
-    if (app()->environment('production'))
-    {
-      $schedule->command('submit:application')->everyMinute();
-      $schedule->command('submit:existing')->everyMinute();
-    }
+    // Application forwarding runs via the queue (ForwardApplicationToBackend),
+    // not the scheduler. Nothing is scheduled at the moment.
   }
 
   /**
