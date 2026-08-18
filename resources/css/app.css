@@ -35,6 +35,10 @@ section.content b {
   @apply font-bold;
 }
 
+.lightbox a {
+  @apply underline underline-offset-4 decoration-1 hover:no-underline;
+}
+
 section.content ul {
   @apply list-disc;
 }
