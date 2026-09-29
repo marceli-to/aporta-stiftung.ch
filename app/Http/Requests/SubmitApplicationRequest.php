@@ -21,9 +21,16 @@ class SubmitApplicationRequest extends FormRequest
 	 * master password or any token from key.json. Tokens are not consumed
 	 * (the file is not mutated) — the backend forwarding job is the source
 	 * of truth for submissions in the new flow.
+	 *
+	 * In public mode (form.public) the gate is disabled and every submit
+	 * is authorized.
 	 */
 	public function authorize(): bool
 	{
+		if (config('form.public')) {
+			return true;
+		}
+
 		$token = $this->header('X-Form-Token');
 
 		if (!is_string($token) || $token === '') {

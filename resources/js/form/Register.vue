@@ -956,7 +956,8 @@ export default {
 
       isSent: false,
       isLoading: false,
-      isAuthenticated: false,
+      // Public mode (FORM_PUBLIC) skips the password gate entirely.
+      isAuthenticated: window.APORTA_FORM_PUBLIC === true,
       hasAuthenticationError: false,
       authToken: null,
     };

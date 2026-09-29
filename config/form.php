@@ -15,4 +15,18 @@ return [
 
     'master_password' => env('FORM_MASTER_PASSWORD'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Public mode
+    |--------------------------------------------------------------------------
+    |
+    | When enabled, the password gate is skipped: the form renders directly
+    | and submissions are accepted without an X-Form-Token. Meant for short
+    | open-registration windows. Toggle FORM_PUBLIC in .env, then run
+    | `php artisan config:clear` (or config:cache) to apply.
+    |
+    */
+
+    'public' => (bool) env('FORM_PUBLIC', false),
+
 ];
