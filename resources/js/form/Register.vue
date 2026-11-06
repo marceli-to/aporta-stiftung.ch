@@ -15,11 +15,30 @@
 
   <template v-else-if="lookups.ready">
 
-  <template v-if="isAuthenticated">
-    <template v-if="isSent">
-      <feedback />
+  <!-- Renewal mode (link from the renewal email): load the stored data first. -->
+  <template v-if="isRenewal && renewal.state !== 'ready'">
+    <template v-if="renewal.state === 'loading'">
+      <h2>Ihre Angaben werden geladen…</h2>
+    </template>
+    <template v-else-if="renewal.state === 'invalid'">
+      <h2>Dieser Link ist nicht mehr gültig.</h2>
+      <p class="text-lg mt-15">Der Link ist abgelaufen oder wurde bereits verwendet. Möchten Sie Ihre Bewerbung verlängern oder haben Sie Fragen dazu? Schreiben Sie uns bitte an <a href="mailto:wohnung@aporta-stiftung.ch" class="underline">wohnung@aporta-stiftung.ch</a>, wir senden Ihnen gerne einen neuen Link.</p>
     </template>
     <template v-else>
+      <h2>Ihre Angaben können momentan nicht geladen werden.</h2>
+      <p class="text-lg mt-15">Bitte versuchen Sie es in ein paar Minuten erneut.</p>
+    </template>
+  </template>
+
+  <template v-else-if="isAuthenticated">
+    <template v-if="isSent">
+      <p v-if="isRenewal">Herzlichen Dank. Ihre Angaben wurden aktualisiert und Ihre Bewerbung ist bis am {{ formatDate(renewal.validUntil) }} gültig.</p>
+      <feedback v-else />
+    </template>
+    <template v-else>
+      <div v-if="isRenewal" class="border-2 border-aqua bg-sky p-10 lg:p-20 mb-35 md:mb-70 text-lg">
+        Bewerbung Nr. {{ renewal.referenceNumber }}: Bitte prüfen Sie Ihre Angaben und passen Sie sie bei Bedarf an. Mit dem Speichern wird Ihre Bewerbung um weitere 6 Monate verlängert.
+      </div>
       <div ref="validationErrors">
         <validation-errors :validationErrors="validationErrors" v-if="validationErrors.length > 0" />
       </div>
@@ -172,9 +191,12 @@
           <form-group :error="hasError('main_applicant.email')" :message="errorMessage('main_applicant.email')">
             <form-label :error="hasError('main_applicant.email')">E-Mail-Adresse</form-label>
             <form-input type="email" v-model="form.main_applicant.email"
+              :disabled="isRenewal"
+              :class="{ 'opacity-60': isRenewal }"
               :error="hasError('main_applicant.email')"
               @focus="removeError('main_applicant.email')">
             </form-input>
+            <p v-if="isRenewal" class="mt-5">Die E-Mail-Adresse kann hier nicht geändert werden. Bitte wenden Sie sich dazu an wohnung@aporta-stiftung.ch.</p>
           </form-group>
           <form-group :error="hasError('main_applicant.occupation')" :message="errorMessage('main_applicant.occupation')">
             <form-label :error="hasError('main_applicant.occupation')">Beruf</form-label>
@@ -764,14 +786,14 @@
 
         <form-grid>
           <div class="col-span-full border-2 border-aqua bg-sky p-10 lg:p-20">
-            Bitte beachten Sie, dass Ihre Anmeldung nach 6 Monaten bei uns automatisch gelöscht wird. Sollten Sie dann immer noch eine Wohnung suchen, bitten wir Sie um eine E-Mail an wohnung@aporta-stiftung.ch, um Ihr Profil zu erneuern.
+            Bitte beachten Sie, dass Ihre Anmeldung 6 Monate gültig ist. Möchten Sie sie danach verlängern, melden Sie sich bitte per E-Mail an wohnung@aporta-stiftung.ch oder telefonisch bei uns. Sie erhalten dann einen Link, mit dem Sie Ihre Angaben prüfen und die Anmeldung verlängern können.
           </div>
           <form-group>
             <button
               :class="[!isLoading ? 'bg-black text-white hover:bg-aqua transition-colors' : 'opacity-50 pointer-events-none select-none', 'font-bold text-lg text-white py-15 px-20 leading-none inline-flex items-center w-auto text-left']"
               type="button"
               @click.prevent="submit()">
-              Senden
+              {{ isRenewal ? 'Speichern und verlängern' : 'Senden' }}
             </button>
           </form-group>
         </form-grid>
@@ -875,6 +897,8 @@ function emptyApplicant() {
   };
 }
 
+const renewalToken = new URLSearchParams(window.location.search).get('t');
+
 function emptyCoApplicant() {
   return {
     ...emptyApplicant(),
@@ -952,12 +976,25 @@ export default {
       routes: {
         authenticate: '/api/form/register/authenticate',
         store: '/api/form/register',
+        renewal: '/api/form/renewal',
       },
+
+      // Renewal mode: opened via the link in the renewal email (?t=…). The
+      // token replaces the password gate and is verified by the backend.
+      renewalToken: renewalToken,
+      isRenewal: renewalToken !== null,
+      renewal: {
+        state: 'loading', // loading | ready | invalid | unavailable
+        referenceNumber: null,
+        validUntil: null,
+      },
+      // True while stored data is applied, so watchers don't reset it.
+      isHydrating: false,
 
       isSent: false,
       isLoading: false,
       // Public mode (FORM_PUBLIC) skips the password gate entirely.
-      isAuthenticated: window.APORTA_FORM_PUBLIC === true,
+      isAuthenticated: window.APORTA_FORM_PUBLIC === true || renewalToken !== null,
       hasAuthenticationError: false,
       authToken: null,
     };
@@ -977,6 +1014,9 @@ export default {
 
   mounted() {
     this.lookups.load();
+    if (this.isRenewal) {
+      this.loadRenewal();
+    }
   },
 
   methods: {
@@ -1068,6 +1108,72 @@ export default {
       });
     },
 
+    loadRenewal() {
+      this.axios.get(this.renewalUrl()).then((response) => {
+        this.hydrate(response.data.data);
+        this.renewal.referenceNumber = response.data.meta?.reference_number ?? null;
+        this.renewal.validUntil = response.data.meta?.valid_until ?? null;
+        this.renewal.state = 'ready';
+      }).catch((error) => {
+        this.renewal.state = error.response?.status === 410 ? 'invalid' : 'unavailable';
+      });
+    },
+
+    renewalUrl() {
+      return `${this.routes.renewal}/${encodeURIComponent(this.renewalToken)}`;
+    },
+
+    // Fill the form with the stored application (intake payload shape).
+    hydrate(data) {
+      this.isHydrating = true;
+
+      const applicant = (source, empty) => source ? {
+        ...empty,
+        ...source,
+        employer: source.employer ?? empty.employer,
+        current_housing: { ...empty.current_housing, ...(source.current_housing ?? {}) },
+      } : null;
+
+      // The move-in date must not be in the past; let the applicant pick a new one.
+      const today = new Date().toISOString().slice(0, 10);
+      const moveIn = data.housing_wish?.earliest_move_in ?? null;
+
+      this.form = {
+        shares_apartment: data.shares_apartment ?? null,
+        main_applicant: applicant(data.main_applicant, emptyApplicant()) ?? emptyApplicant(),
+        co_applicant: applicant(data.co_applicant, emptyCoApplicant()),
+        housing_wish: {
+          earliest_move_in: moveIn && moveIn >= today ? moveIn : null,
+          max_gross_rent: data.housing_wish?.max_gross_rent ?? null,
+          wants_elevator: data.housing_wish?.wants_elevator ?? null,
+          districts: data.housing_wish?.districts ?? [],
+          floors: data.housing_wish?.floors ?? [],
+        },
+        household_info: { ...this.form.household_info, ...(data.household_info ?? {}) },
+        children: (data.children ?? []).map((c) => ({ position: c.position, birth_year: c.birth_year })),
+      };
+
+      const sharedWith = [];
+      if (this.form.co_applicant?.relationship_to_main) {
+        sharedWith.push(this.form.co_applicant.relationship_to_main);
+      }
+      if (parseInt(this.form.household_info.children_count, 10) > 0) {
+        sharedWith.push('__children');
+      }
+      this.sharedWith = sharedWith;
+
+      // Watchers triggered above run before this callback.
+      this.$nextTick(() => {
+        this.isHydrating = false;
+      });
+    },
+
+    formatDate(ymd) {
+      if (!ymd) return '';
+      const [y, m, d] = ymd.split('-');
+      return `${d}.${m}.${y}`;
+    },
+
     buildPayload() {
       // Numeric coercion for fields the contract types as integer.
       const coerceInt = (v) => (v === null || v === '' ? null : parseInt(v, 10));
@@ -1126,15 +1232,31 @@ export default {
 
       const payload = this.buildPayload();
 
-      this.axios.post(this.routes.store, payload, {
-        headers: { 'X-Form-Token': this.authToken ?? '' },
-      }).then(() => {
+      const request = this.isRenewal
+        ? this.axios.put(this.renewalUrl(), payload)
+        : this.axios.post(this.routes.store, payload, {
+          headers: { 'X-Form-Token': this.authToken ?? '' },
+        });
+
+      request.then((response) => {
         NProgress.done();
+        if (this.isRenewal) {
+          this.renewal.validUntil = response.data?.data?.valid_until ?? null;
+        }
         this.isSent = true;
         this.isLoading = false;
       }).catch((error) => {
         NProgress.done();
         this.isLoading = false;
+        if (this.isRenewal && error.response?.status === 410) {
+          this.renewal.state = 'invalid';
+          return;
+        }
+        if (this.isRenewal && error.response?.status === 503) {
+          this.validationErrors = ['Ihre Angaben konnten momentan nicht gespeichert werden. Bitte versuchen Sie es in ein paar Minuten erneut.'];
+          this.$nextTick(() => this.$refs.validationErrors?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+          return;
+        }
         if (error.response?.status === 401) {
           // Session expired or token invalidated — push the visitor back to the gate.
           this.isAuthenticated = false;
@@ -1228,7 +1350,10 @@ export default {
         // Keep adults_count in sync with the relationship state. When the
         // input is hidden (no children section) this is the only way it gets
         // set; when the input is visible the user can still override.
-        this.form.household_info.adults_count = 1 + (hasCoApplicant ? 1 : 0);
+        // Stored data keeps its own count.
+        if (!this.isHydrating) {
+          this.form.household_info.adults_count = 1 + (hasCoApplicant ? 1 : 0);
+        }
       },
       deep: true,
     },
