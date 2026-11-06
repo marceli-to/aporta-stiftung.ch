@@ -27,7 +27,7 @@ class ForwardingFailed extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.forwarding-failed',
+            markdown: 'emails.forwarding-failed',
             with: [
                 'submissionId' => $this->submissionId,
                 'reason' => $this->reason,
