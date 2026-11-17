@@ -32,12 +32,12 @@
 
   <template v-else-if="isAuthenticated">
     <template v-if="isSent">
-      <p v-if="isRenewal">Herzlichen Dank. Ihre Angaben wurden aktualisiert und Ihre Bewerbung ist bis am {{ formatDate(renewal.validUntil) }} gültig.</p>
+      <p v-if="isRenewal">Vielen Dank. Ihre Angaben wurden aktualisiert und Ihre Wohnungsbewerbung wurde um weitere 6 Monate verlängert. Sie ist bis am {{ formatDate(renewal.validUntil) }} gültig.</p>
       <feedback v-else />
     </template>
     <template v-else>
       <div v-if="isRenewal" class="border-2 border-aqua bg-sky p-10 lg:p-20 mb-35 md:mb-70 text-lg">
-        Bewerbung Nr. {{ renewal.referenceNumber }}: Bitte prüfen Sie Ihre Angaben und passen Sie sie bei Bedarf an. Mit dem Speichern wird Ihre Bewerbung um weitere 6 Monate verlängert.
+        Bitte aktualisieren und bestätigen Sie Ihre Angaben. Mit dem Speichern wird Ihre Bewerbung um weitere 6 Monate verlängert.
       </div>
       <div ref="validationErrors">
         <validation-errors :validationErrors="validationErrors" v-if="validationErrors.length > 0" />
@@ -196,7 +196,7 @@
               :error="hasError('main_applicant.email')"
               @focus="removeError('main_applicant.email')">
             </form-input>
-            <p v-if="isRenewal" class="mt-5">Die E-Mail-Adresse kann hier nicht geändert werden. Bitte wenden Sie sich dazu an wohnung@aporta-stiftung.ch.</p>
+            <p v-if="isRenewal" class="text-sm mt-8 block">Die E-Mail-Adresse kann hier nicht geändert werden. Bitte wenden Sie sich dazu an wohnung@aporta-stiftung.ch.</p>
           </form-group>
           <form-group :error="hasError('main_applicant.occupation')" :message="errorMessage('main_applicant.occupation')">
             <form-label :error="hasError('main_applicant.occupation')">Beruf</form-label>
@@ -985,7 +985,6 @@ export default {
       isRenewal: renewalToken !== null,
       renewal: {
         state: 'loading', // loading | ready | invalid | unavailable
-        referenceNumber: null,
         validUntil: null,
       },
       // True while stored data is applied, so watchers don't reset it.
@@ -1111,7 +1110,6 @@ export default {
     loadRenewal() {
       this.axios.get(this.renewalUrl()).then((response) => {
         this.hydrate(response.data.data);
-        this.renewal.referenceNumber = response.data.meta?.reference_number ?? null;
         this.renewal.validUntil = response.data.meta?.valid_until ?? null;
         this.renewal.state = 'ready';
       }).catch((error) => {

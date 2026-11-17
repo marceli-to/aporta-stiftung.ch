@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-4ebac845.css",
+    "file": "assets/app-f7844698.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
@@ -21,7 +21,7 @@
     "css": [
       "assets/register-05a70bc9.css"
     ],
-    "file": "assets/register-c670f3cd.js",
+    "file": "assets/register-13e9e772.js",
     "isEntry": true,
     "src": "resources/js/form/register.js"
   }
