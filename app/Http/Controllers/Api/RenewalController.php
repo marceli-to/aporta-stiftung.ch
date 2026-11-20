@@ -25,7 +25,7 @@ class RenewalController extends Controller
 
 	public function update(RenewApplicationRequest $request, string $token): JsonResponse
 	{
-		return $this->forward('put', $token, $request->validated() + ['co_applicant' => null]);
+		return $this->forward('put', $token, $request->forwardable() + ['co_applicant' => null]);
 	}
 
 	private function forward(string $method, string $token, array $payload = []): JsonResponse

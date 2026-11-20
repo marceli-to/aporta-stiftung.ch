@@ -14,4 +14,47 @@ class RenewApplicationRequest extends SubmitApplicationRequest
 	{
 		return true;
 	}
+
+	protected function prepareForValidation(): void
+	{
+		parent::prepareForValidation();
+
+		$confirmation = $this->input('main_applicant.email_confirmation');
+		if (is_string($confirmation)) {
+			$this->merge(['main_applicant' => [
+				...$this->input('main_applicant'),
+				'email_confirmation' => strtolower(trim($confirmation)),
+			]]);
+		}
+	}
+
+	/**
+	 * The form sends a confirmation only when the applicant changed the stored
+	 * email address; then it has to match.
+	 */
+	public function rules(): array
+	{
+		return array_merge(parent::rules(), [
+			'main_applicant.email_confirmation' => ['sometimes', 'required', 'same:main_applicant.email'],
+		]);
+	}
+
+	public function messages(): array
+	{
+		return array_merge(parent::messages(), [
+			'main_applicant.email_confirmation.required' => 'Bitte bestätigen Sie die neue E-Mail-Adresse.',
+			'main_applicant.email_confirmation.same' => 'Die beiden E-Mail-Adressen stimmen nicht überein.',
+		]);
+	}
+
+	/**
+	 * Only for checking here; the backend gets the address itself.
+	 */
+	public function forwardable(): array
+	{
+		$data = $this->validated();
+		unset($data['main_applicant']['email_confirmation']);
+
+		return $data;
+	}
 }

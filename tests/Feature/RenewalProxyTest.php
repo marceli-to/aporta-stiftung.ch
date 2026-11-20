@@ -67,4 +67,25 @@ class RenewalProxyTest extends TestCase
 
         Http::assertNothingSent();
     }
+
+    public function test_a_changed_email_address_has_to_be_confirmed(): void
+    {
+        Http::fake();
+
+        $this->putJson("/api/form/renewal/{$this->token}", ['main_applicant' => [
+            'email' => 'neu@example.com',
+            'email_confirmation' => 'nue@example.com',
+        ]])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['main_applicant.email_confirmation']);
+
+        $this->putJson("/api/form/renewal/{$this->token}", ['main_applicant' => [
+            'email' => 'neu@example.com',
+            'email_confirmation' => ' Neu@Example.com ',
+        ]])
+            ->assertStatus(422)
+            ->assertJsonMissingValidationErrors(['main_applicant.email_confirmation']);
+
+        Http::assertNothingSent();
+    }
 }
