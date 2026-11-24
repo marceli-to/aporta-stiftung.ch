@@ -32,10 +32,7 @@
 
   <template v-else-if="isAuthenticated">
     <template v-if="isSent">
-      <template v-if="isRenewal">
-        <p>Vielen Dank. Ihre Angaben wurden aktualisiert und Ihre Wohnungsbewerbung wurde um weitere 6 Monate verlängert. Sie ist bis am {{ formatDate(renewal.validUntil) }} gültig.</p>
-        <p class="mt-15">Sollten Sie danach weiterhin eine Wohnung suchen, melden Sie sich bitte wieder per E-Mail an <a href="mailto:wohnung@aporta-stiftung.ch" class="underline">wohnung@aporta-stiftung.ch</a> oder telefonisch bei uns.</p>
-      </template>
+      <p v-if="isRenewal">Vielen Dank. Ihre Angaben wurden aktualisiert und Ihre Wohnungsbewerbung wurde um weitere 6 Monate verlängert. Sie ist bis am {{ formatDate(renewal.validUntil) }} gültig.</p>
       <feedback v-else />
     </template>
     <template v-else>
@@ -194,18 +191,12 @@
           <form-group :error="hasError('main_applicant.email')" :message="errorMessage('main_applicant.email')">
             <form-label :error="hasError('main_applicant.email')">E-Mail-Adresse</form-label>
             <form-input type="email" v-model="form.main_applicant.email"
+              :disabled="isRenewal"
+              :class="{ 'opacity-60': isRenewal }"
               :error="hasError('main_applicant.email')"
               @focus="removeError('main_applicant.email')">
             </form-input>
-          </form-group>
-          <!-- Renewal mode: a changed address has to be typed twice, so a typo
-               doesn't cut the applicant off from all further mail. -->
-          <form-group v-if="emailChanged" :error="hasError('main_applicant.email_confirmation')" :message="errorMessage('main_applicant.email_confirmation')">
-            <form-label :error="hasError('main_applicant.email_confirmation')">Neue E-Mail-Adresse bestätigen</form-label>
-            <form-input type="email" v-model="renewal.emailConfirmation"
-              :error="hasError('main_applicant.email_confirmation')"
-              @focus="removeError('main_applicant.email_confirmation')">
-            </form-input>
+            <p v-if="isRenewal" class="text-sm mt-8 block">Die E-Mail-Adresse kann hier nicht geändert werden. Bitte wenden Sie sich dazu an wohnung@aporta-stiftung.ch.</p>
           </form-group>
           <form-group :error="hasError('main_applicant.occupation')" :message="errorMessage('main_applicant.occupation')">
             <form-label :error="hasError('main_applicant.occupation')">Beruf</form-label>
@@ -995,8 +986,6 @@ export default {
       renewal: {
         state: 'loading', // loading | ready | invalid | unavailable
         validUntil: null,
-        originalEmail: null,
-        emailConfirmation: '',
       },
       // True while stored data is applied, so watchers don't reset it.
       isHydrating: false,
@@ -1011,13 +1000,6 @@ export default {
   },
 
   computed: {
-    // Renewal mode: the main applicant changed the stored email address.
-    emailChanged() {
-      const normalize = (v) => (v ?? '').trim().toLowerCase();
-      return this.isRenewal
-        && this.renewal.state === 'ready'
-        && normalize(this.form.main_applicant.email) !== normalize(this.renewal.originalEmail);
-    },
     sharedWithOptions() {
       return [
         ...this.lookups.activeOnly('relationships').map((entry) => ({
@@ -1129,7 +1111,6 @@ export default {
       this.axios.get(this.renewalUrl()).then((response) => {
         this.hydrate(response.data.data);
         this.renewal.validUntil = response.data.meta?.valid_until ?? null;
-        this.renewal.originalEmail = this.form.main_applicant.email;
         this.renewal.state = 'ready';
       }).catch((error) => {
         this.renewal.state = error.response?.status === 410 ? 'invalid' : 'unavailable';
@@ -1235,10 +1216,6 @@ export default {
         if (!Number.isNaN(n)) {
           payload.housing_wish.max_gross_rent = n.toFixed(2);
         }
-      }
-
-      if (this.emailChanged) {
-        payload.main_applicant.email_confirmation = this.renewal.emailConfirmation;
       }
 
       return payload;
